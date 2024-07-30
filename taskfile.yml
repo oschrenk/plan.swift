@@ -1,0 +1,67 @@
+version: '3'
+dotenv: ['VERSION']
+vars:
+  APP_NAME: "plan"
+  BIN_DIR: "$HOME/.local/bin"
+  RELEASE_DIR: ".build/release"
+  SWIFT_VERSION: "5.10"
+tasks:
+  run:
+    cmds:
+      - swift run {{.APP_NAME}} next
+    silent: true
+  build:
+    cmds:
+      - swift build
+    silent: true
+  test:
+    cmds:
+      - swift test
+    silent: true
+  format:
+    cmds:
+      - swiftformat --swiftversion {{.SWIFT_VERSION}} Package.swift Sources Tests
+    silent: true
+  lint:
+    cmds:
+      - swiftlint
+    silent: true
+  artifacts:
+    deps: [test, lint]
+    cmds:
+      - swift build --configuration release --disable-sandbox --arch arm64
+    silent: true
+  install:
+    requires:
+      vars: [APP_NAME, BIN_DIR]
+    deps: [artifacts]
+    cmds:
+      - mkdir -p "{{.BIN_DIR}}"
+      - cp "{{.RELEASE_DIR}}/{{.APP_NAME}}" "{{.BIN_DIR}}"
+  uninstall:
+    requires:
+      vars: [APP_NAME, BIN_DIR]
+    cmds:
+      - rm -rf "{{.BIN_DIR}}/{{.APP_NAME}}"
+    silent: true
+  tag:
+    deps: [artifacts]
+    cmds:
+      - git tag "$APP_VERSION"
+      - git push origin "$APP_VERSION"
+  release:
+    requires:
+      vars: [APP_NAME, RELEASE_DIR]
+    deps: [tag]
+    cmds:
+      - cp {{.RELEASE_DIR}}/{{.APP_NAME}} {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
+      - gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/{{.APP_NAME}}-*
+  sha:
+    requires:
+      vars: [APP_NAME, RELEASE_DIR]
+    cmds:
+      - sha256sum {{.RELEASE_DIR}}/{{.APP_NAME}}-*
+  clean:
+    cmds:
+      - rm -rf .build
+    silent: true

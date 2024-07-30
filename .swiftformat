@@ -1,0 +1,10 @@
+# 2 spaces
+--indent 2
+--smarttabs false
+# braces on same line
+--allman false
+# lf at eof
+--linebreaks lf
+# aligns arguments with indent level - makes swiftlint happier
+--wraparguments before-first
+

@@ -1,0 +1,16 @@
+included:
+  - Package.swift
+  - Sources/plan
+  - Tests/plan
+strict: true
+opt_in_rules:
+  - indentation_width
+line_length: 100
+indentation_width:
+  indentation_width: 2
+identifier_name:
+  excluded: # excluded via string array
+    - id
+    - to
+trailing_comma:
+  mandatory_comma: true
