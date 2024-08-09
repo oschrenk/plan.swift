@@ -1,6 +1,6 @@
 import EventKit
 
-class Filters {
+class FiltersBefore {
   static func accept(_: EKEvent) -> Bool {
     true
   }

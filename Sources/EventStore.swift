@@ -26,7 +26,7 @@ struct EventStore {
     let start = Calendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = Calendar.current.date(byAdding: .day, value: 1, to: today)!
 
-    return fetch(start: start, end: end, filter: Filters.accept)
+    return fetch(start: start, end: end, filterBefore: FiltersBefore.accept)
   }
 
   func calendars() -> [Cal] {
@@ -42,16 +42,16 @@ struct EventStore {
 
   func next(
     within: Int,
-    filter: (EKEvent) -> Bool
+    filterBefore: (EKEvent) -> Bool
   ) -> [Event] {
     let today = Date()
     let start = Calendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = Calendar.current.date(byAdding: .minute, value: within, to: today)!
 
-    return Array(fetch(start: start, end: end, filter: filter))
+    return Array(fetch(start: start, end: end, filterBefore: filterBefore))
   }
 
-  private func fetch(start: Date, end: Date, filter: (EKEvent) -> Bool) -> [Event] {
+  private func fetch(start: Date, end: Date, filterBefore: (EKEvent) -> Bool) -> [Event] {
     let eventStore = grantAccess()
 
     // FIXME: I have no idea why this works but it seems I need to reset
@@ -68,8 +68,9 @@ struct EventStore {
 
     return eventStore.events(matching: predicate)
       .filter { event in
-        filter(event)
-      }.map { event in
+        filterBefore(event)
+      }
+      .map { event in
         event.asEvent()
       }
   }

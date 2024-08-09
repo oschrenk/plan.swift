@@ -18,8 +18,8 @@ struct Plan {
     ignorePatternTitle: String
   ) -> [Event] {
     // TODO: make this better
-    let iade: (EKEvent) -> Bool = Filters.ignoreAllDayEvents
-    let ipt: (EKEvent) -> Bool = Filters.ignorePatternTitle(pattern: ignorePatternTitle)
+    let iade: (EKEvent) -> Bool = FiltersBefore.ignoreAllDayEvents
+    let ipt: (EKEvent) -> Bool = FiltersBefore.ignorePatternTitle(pattern: ignorePatternTitle)
     var f: [(EKEvent) -> Bool] = []
     f.append(iade)
     f.append(ipt)
@@ -28,7 +28,7 @@ struct Plan {
 
     let events = EventStore().next(
       within: within,
-      filter: Filters.combined(filters: f)
+      filterBefore: FiltersBefore.combined(filters: f)
     ).map { event in
       transformer(event)
     }.sorted { $0.endsIn > $1.endsIn }
