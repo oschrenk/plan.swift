@@ -54,3 +54,7 @@ Switch the default SDK location by invoking:
 `$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer`
 
 See also https://stackoverflow.com/a/43418980
+
+## Similar projects
+
+- [mcal](https://github.com/0ihsan/mcal)
