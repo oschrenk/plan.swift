@@ -28,7 +28,8 @@ struct Plan {
 
     let events = EventStore().next(
       within: within,
-      filterBefore: FiltersBefore.combined(filters: f)
+      filterBefore: FiltersBefore.combined(filters: f),
+      filterAfter: FiltersAfter.accept
     ).map { event in
       transformer(event)
     }.sorted { $0.endsIn > $1.endsIn }
