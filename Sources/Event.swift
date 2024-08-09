@@ -10,6 +10,7 @@ struct Event: Codable {
   let startsIn: Int
   let endsAt: Date
   let endsIn: Int
+  let tags: [String]
 
   enum CodingKeys: String, CodingKey {
     case id
@@ -20,6 +21,33 @@ struct Event: Codable {
     case endsAt = "ends_at"
     case startsIn = "starts_in"
     case endsIn = "ends_in"
+    case tags
+  }
+}
+
+extension String {
+  func findTags() -> [String] {
+    let text = self
+
+    var tags = [String]()
+    var startIndex = text.startIndex
+    let endIndex = text.endIndex
+    while let range = text.range(
+      of: "(\\w+):(\\w+)",
+      options: .regularExpression,
+      range: startIndex ..< endIndex
+    ) {
+      let kv = String(text[range]).split(separator: ":")
+      let key = String(kv[0])
+      if key == "tag" {
+        let value = String(kv[1])
+        tags.append(value)
+      }
+
+      startIndex = range.upperBound
+    }
+
+    return tags
   }
 }
 
@@ -47,6 +75,7 @@ extension EKEvent {
     let endsAt = endDate!
     let startsIn = Int((startsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     let endsIn = Int((endsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+    let tags = notes != nil ? notes!.findTags() : [String]()
 
     return Event(
       id: id,
@@ -56,7 +85,8 @@ extension EKEvent {
       startsAt: startsAt,
       startsIn: startsIn,
       endsAt: endsAt,
-      endsIn: endsIn
+      endsIn: endsIn,
+      tags: tags
     )
   }
 }

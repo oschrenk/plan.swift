@@ -63,11 +63,18 @@ struct Next: ParsableCommand {
     valueName: "p"
   )) var ignorePatternTitle: String = ""
 
+  @Option(help: ArgumentHelp(
+    "Reject events which notes contain the tag <t> eg. 'timeblock' ",
+    discussion: "Events with tag will be ignored",
+    valueName: "t"
+  )) var rejectTag: String = ""
+
   mutating func run() {
     Plan().next(
       within: within,
       ignoreAllDayEvents: ignoreAllDayEvents,
-      ignorePatternTitle: ignorePatternTitle
+      ignorePatternTitle: ignorePatternTitle,
+      rejectTag: rejectTag
     ).printAsJson()
   }
 }

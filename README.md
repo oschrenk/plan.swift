@@ -52,17 +52,19 @@ A macOS tool to fetch calendar events as json
     "starts_in": -20,
     "ends_at": "",
     "ends_in": 5
+    "tags": ["timeblock"]
  },
  ...
 ]
 ```
+
+`plan next --reject-tag somekeyword` Returns the current or next event within the next hour ignoring events which notes have text containing `tag:somekeyword`
 
 ## Installation
 
 **Via Github**
 
 - installs to `$HOME/.local/bin/plan` (make sure it's in `$PATH`)
-
 
 ```
 git clone git@github.com:oschrenk/plan.swift.git
