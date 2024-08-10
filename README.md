@@ -1,15 +1,24 @@
 # README
 
-A macOS tool to fetch calendar events as json
+A macOS tool to fetch (the next) calendar events as json
 
 ## Features
 
-- returns json by default
-- extracts leading emojis from event title and returns them as separate description and emoji, in addition to full title
+- returns JSON by default
+- separates leading emojis from event title, and gives you the emoji, short and full title
+- rejects events based on tags `tag:example` within the event notes
+- start and end time in relative and absolute terms
 
 ## Usage
 
-`plan today` Returns all events for today
+Example commands (use `plan --help` for full usage)
+
+- `plan today` Returns all events for today
+- `plan next` Returns the current or next event within the next hour
+- `plan next --reject-tag somekeyword` Returns the current or next event within the next hour ignoring events which notes have text containing `tag:somekeyword`
+- `plan calendars` List available calendars
+
+Example output
 
 ```json
 [
@@ -19,47 +28,18 @@ A macOS tool to fetch calendar events as json
       "id": "UUID",
       "label": "Some calendar"
     },
-    "label": "full title",
+    "label": "🏆 Release plan",
     "legend": {
-      "description": "title without leading emoji"
-      "emoji: "🏆",
+      "description": "Release plan",
+      "icon": "🏆",
     },
-    "starts_at": "",
-    "starts_in": "",
-    "ends_at": "",
-    "ends_in": ""
- },
- ...
+    "starts_at": "2024-08-09T18:00:00+02:00",
+    "starts_in": 30,
+    "ends_at": "2024-08-09T17:00:00+02:00",
+    "ends_in": 90
+ }
 ]
 ```
-
-`plan next` Returns the current or next event within the next hour
-
-```json
-[
-  {
-    "id": "UUID:UUID",
-    "calendar": {
-      "id": "UUID",
-      "label": "Some calendar"
-    },
-    "label": "full title",
-    "legend": {
-      "description": "title without leading emoji",
-      "emoji: "🏆",
-    },
-    "starts_at": "",
-    "starts_in": -20,
-    "ends_at": "",
-    "ends_in": 5
-    "tags": ["timeblock"]
- },
- ...
-]
-```
-
-`plan next --reject-tag somekeyword` Returns the current or next event within the next hour ignoring events which notes have text containing `tag:somekeyword`
-
 ## Installation
 
 **Via Github**
