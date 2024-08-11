@@ -8,6 +8,7 @@ A macOS tool to fetch (the next) calendar events as json
 - separates leading emojis from event title, and gives you the emoji, short and full title
 - rejects events based on tags `tag:example` within the event notes
 - start and end time in relative and absolute terms
+- uses the [`calendarItemIdentifier`](https://developer.apple.com/documentation/eventkit/ekcalendaritem/1507075-calendaritemidentifier) as the leading identifier (to allow easy interaction with Calendar.app)
 
 ## Usage
 
