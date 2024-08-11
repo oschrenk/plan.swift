@@ -53,9 +53,10 @@ extension String {
 
 extension EKEvent {
   func asEvent() -> Event {
-    // TODO: this can be nil???
+    // TODO: when can this be nil???
     let id = eventIdentifier ?? "unknown"
-    // TODO: this can be nil???
+
+    // TODO: when can this be nil???
     let cal = if calendar != nil {
       Cal(
         id: calendar.calendarIdentifier,
