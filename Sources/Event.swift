@@ -35,6 +35,15 @@ struct Event: Codable {
   let startsIn: Int
   let endsAt: Date
   let endsIn: Int
+
+  // contains the url to show the event in the Calendar.app
+  //   "ical://ekevent/\(startTimeAsIso)/\(event.calendarItemIdentifier)?method=show&options=more"
+  // with
+  //   `startTimeAsIso` in "yyyyMMdd'T'HHmmss'Z'"
+  //   `calendaritemidentifier` being the
+  //
+  // see also https://github.com/raycast/extensions/blob/36abdaacac9b02cbbc54dbe33f16b6c40cd23f54/extensions/menubar-calendar/swift/AppleReminders/Sources/Calendar.swift#L61
+  let url: String
   let tags: [String]
 
   enum CodingKeys: String, CodingKey {
@@ -46,6 +55,7 @@ struct Event: Codable {
     case endsAt = "ends_at"
     case startsIn = "starts_in"
     case endsIn = "ends_in"
+    case url
     case tags
   }
 }
@@ -77,6 +87,32 @@ extension String {
 }
 
 extension EKEvent {
+  // generate the url to show the event in the Calendar.app
+  //   "ical://ekevent/\(startTimeAsIso)/\(event.calendarItemIdentifier)?method=show&options=more"
+  // with
+  //   `startTimeAsIso` in "yyyyMMdd'T'HHmmss'Z'"
+  //   `calendaritemidentifier` being the
+  //
+  // the method is basically a copy of https://github.com/raycast/extensions/blob/36abdaacac9b02cbbc54dbe33f16b6c40cd23f54/extensions/menubar-calendar/swift/AppleReminders/Sources/Calendar.swift#L61
+  func generateEventURL(for event: EKEvent) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMMdd'T'HHmmss'Z'"
+    formatter.timeZone = TimeZone.current
+
+    var dateComponent = ""
+    if event.hasRecurrenceRules {
+      if let startDate = event.startDate {
+        formatter.dateFormat = "yyyyMMdd'T'HHmmss'Z'"
+        formatter.timeZone = TimeZone.current
+        if !event.isAllDay {
+          formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        }
+        dateComponent = "/\(formatter.string(from: startDate))"
+      }
+    }
+    return "ical://ekevent\(dateComponent)/\(event.calendarItemIdentifier)?method=show&options=more"
+  }
+
   func asEvent() -> Event {
     let id = calendarItemIdentifier
 
@@ -99,6 +135,9 @@ extension EKEvent {
     let endsAt = endDate!
     let startsIn = Int((startsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     let endsIn = Int((endsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+
+    let url = generateEventURL(for: self)
+
     let tags = notes != nil ? notes!.findTags() : [String]()
 
     return Event(
@@ -110,6 +149,7 @@ extension EKEvent {
       startsIn: startsIn,
       endsAt: endsAt,
       endsIn: endsIn,
+      url: url,
       tags: tags
     )
   }
