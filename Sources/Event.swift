@@ -121,7 +121,7 @@ extension [Event] {
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
     let encoder = JSONEncoder()
     encoder.dateEncodingStrategy = .formatted(dateFormatter)
-    encoder.outputFormatting = .prettyPrinted
+    encoder.outputFormatting = [.withoutEscapingSlashes, .prettyPrinted]
     do {
       let json = try String(
         decoding: encoder.encode(self),
