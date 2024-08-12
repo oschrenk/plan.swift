@@ -4,8 +4,19 @@ import Foundation
 struct Plan {
   let store = EventStore()
 
-  func today() -> [Event] {
-    EventStore().today()
+  func today(
+    rejectTag: String
+  ) -> [Event] {
+    var filtersAfter: [(Event) -> Bool] = []
+    if !rejectTag.isEmpty {
+      let rtf: (Event) -> Bool = FiltersAfter.rejectTag(tag: rejectTag)
+      filtersAfter.append(rtf)
+    }
+    let filterAfter = filtersAfter.count > 0 ? FiltersAfter.combined(filters: filtersAfter) : FiltersAfter.accept
+
+    return EventStore().today(
+      filterAfter: filterAfter
+    )
   }
 
   func calendars() -> [Cal] {

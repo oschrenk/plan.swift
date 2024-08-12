@@ -16,11 +16,12 @@ A macOS tool to fetch (the next) calendar events as json
 Example commands (use `plan --help` for full usage)
 
 - `plan today` Returns all events for today
+- `plan today --format=markdown` Returns all events for today in markdown
 - `plan next` Returns the current or next event within the next hour
 - `plan next --reject-tag somekeyword` Returns the current or next event within the next hour ignoring events which notes have text containing `tag:somekeyword`
 - `plan calendars` List available calendars
 
-Example output
+Example output in json
 
 ```json
 [
@@ -42,6 +43,13 @@ Example output
  }
 ]
 ```
+
+Example output in markdown
+
+```markdown
+- 18:00 - 19:00 🏆 Release plan
+```
+
 ## Installation
 
 **Via Github**

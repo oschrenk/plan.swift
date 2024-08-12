@@ -21,12 +21,14 @@ struct EventStore {
     return eventStore
   }
 
-  func today() -> [Event] {
+  func today(
+    filterAfter: (Event) -> Bool
+  ) -> [Event] {
     let today = Calendar.current.startOfDay(for: Date())
     let start = Calendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = Calendar.current.date(byAdding: .day, value: 1, to: today)!
 
-    return fetch(start: start, end: end, filterBefore: FiltersBefore.accept, filterAfter: FiltersAfter.accept)
+    return fetch(start: start, end: end, filterBefore: FiltersBefore.accept, filterAfter: filterAfter)
   }
 
   func calendars() -> [Cal] {

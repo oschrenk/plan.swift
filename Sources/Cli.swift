@@ -23,8 +23,26 @@ struct Today: ParsableCommand {
     abstract: "List todays schedule"
   )
 
+  @Option(help: ArgumentHelp(
+    "Reject events which notes contain the tag <t> eg. 'timeblock' ",
+    discussion: "Events with tag will be ignored",
+    valueName: "t"
+  )) var rejectTag: String = ""
+
+  @Option(help: ArgumentHelp(
+    "Outpt format <f>. Available: json or markdown ",
+    discussion: "Output format",
+    valueName: "f"
+  )) var format: Format = .json
+
   mutating func run() {
-    Plan().today().printAsJson()
+    let events = Plan().today(rejectTag: rejectTag)
+    switch format {
+    case .json:
+      events.printAsMarkdown()
+    case .markdown:
+      events.printAsJson()
+    }
   }
 }
 
