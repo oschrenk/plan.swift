@@ -172,4 +172,15 @@ extension [Event] {
       print("fail")
     }
   }
+
+  // - 09:00 - 12:00 🚊 Travel Home
+  // - 12:00 - 13:00 🥗 Lunch
+  func printAsMarkdown() {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    for event in self {
+      let line = "- \(event.startsAt) - \(event.endsAt) \(event.label)"
+      print(line)
+    }
+  }
 }
