@@ -30,7 +30,7 @@ struct Today: ParsableCommand {
   )) var rejectTag: String = ""
 
   @Option(help: ArgumentHelp(
-    "Outpt format <f>. Available: json or markdown ",
+    "Output format <f>. Available: json or markdown ",
     discussion: "Output format",
     valueName: "f"
   )) var format: Format = .json
@@ -39,9 +39,9 @@ struct Today: ParsableCommand {
     let events = Plan().today(rejectTag: rejectTag)
     switch format {
     case .json:
-      events.printAsMarkdown()
-    case .markdown:
       events.printAsJson()
+    case .markdown:
+      events.printAsMarkdown()
     }
   }
 }
