@@ -8,7 +8,7 @@ class Log {
     case .quiet:
       fallthrough
     case .normal:
-      if let data = message.data(using: .utf8) {
+      if let data = (message + "\n").data(using: .utf8) {
         FileHandle.standardError.write(data)
       }
     }
