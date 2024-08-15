@@ -19,7 +19,7 @@ struct Plan {
     )
   }
 
-  func calendars() -> [Cal] {
+  func calendars() -> [Calendar] {
     return EventStore().calendars()
   }
 

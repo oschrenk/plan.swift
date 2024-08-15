@@ -28,7 +28,7 @@ struct Event: Codable {
   // for now we pick `calendarItemIdentifier`,
   // as the app is mostly interested in interacting with the Calendar.app
   let id: String
-  let calendar: Cal
+  let calendar: Calendar
   let label: String
   let legend: Legend
   let startsAt: Date
@@ -118,12 +118,12 @@ extension EKEvent {
 
     // TODO: when can this be nil???
     let cal = if calendar != nil {
-      Cal(
+      Calendar(
         id: calendar.calendarIdentifier,
         label: calendar.title
       )
     } else {
-      Cal(
+      Calendar(
         id: "unknown",
         label: "unknown"
       )

@@ -1,5 +1,8 @@
 import EventKit
 import Foundation
+import struct Foundation.Calendar
+
+typealias FCalendar = Foundation.Calendar
 
 struct EventStore {
   let eventStore = EKEventStore()
@@ -24,14 +27,14 @@ struct EventStore {
   func today(
     filterAfter: (Event) -> Bool
   ) -> [Event] {
-    let today = Calendar.current.startOfDay(for: Date())
-    let start = Calendar.current.date(byAdding: .day, value: 0, to: today)!
-    let end = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+    let today = FCalendar.current.startOfDay(for: Date())
+    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
+    let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
 
     return fetch(start: start, end: end, filterBefore: FiltersBefore.accept, filterAfter: filterAfter)
   }
 
-  func calendars() -> [Cal] {
+  func calendars() -> [Calendar] {
     let eventStore = grantAccess()
     // FIXME: I have no idea why this works but it seems I need to reset
     // and then refresh the eventStore, otherwise I silently get no results
@@ -48,8 +51,8 @@ struct EventStore {
     filterAfter: (Event) -> Bool
   ) -> [Event] {
     let today = Date()
-    let start = Calendar.current.date(byAdding: .day, value: 0, to: today)!
-    let end = Calendar.current.date(byAdding: .minute, value: within, to: today)!
+    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
+    let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
 
     return Array(fetch(start: start, end: end, filterBefore: filterBefore, filterAfter: filterAfter))
   }

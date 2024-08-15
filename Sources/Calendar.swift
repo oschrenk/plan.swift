@@ -1,23 +1,23 @@
 import EventKit
 
-struct Cal: Codable {
+struct Calendar: Codable {
   let id: String
   let label: String
 }
 
 extension EKCalendar {
-  func asCal() -> Cal {
+  func asCal() -> Calendar {
     let id = calendarIdentifier
     let label = title
 
-    return Cal(
+    return Calendar(
       id: id,
       label: label
     )
   }
 }
 
-extension [Cal] {
+extension [Calendar] {
   func printAsJson() {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
