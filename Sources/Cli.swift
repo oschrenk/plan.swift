@@ -35,7 +35,15 @@ struct Today: ParsableCommand {
     valueName: "f"
   )) var format: Format = .json
 
+  @Option(help: ArgumentHelp(
+    "Verbosity <v>. Available: quiet or normal ",
+    discussion: "Verbosity level",
+    valueName: "v"
+  )) var verbosity: Verbosity = .quiet
+
   mutating func run() {
+    Log.verbosity = verbosity
+
     let events = Plan().today(rejectTag: rejectTag)
     switch format {
     case .json:
@@ -54,7 +62,15 @@ struct Calendars: ParsableCommand {
     abstract: "List available calendars"
   )
 
+  @Option(help: ArgumentHelp(
+    "Verbosity <v>. Available: quiet or normal ",
+    discussion: "Verbosity level",
+    valueName: "v"
+  )) var verbosity: Verbosity = .quiet
+
   mutating func run() {
+    Log.verbosity = verbosity
+
     Plan().calendars().printAsJson()
   }
 }
@@ -87,7 +103,15 @@ struct Next: ParsableCommand {
     valueName: "t"
   )) var rejectTag: String = ""
 
+  @Option(help: ArgumentHelp(
+    "Verbosity <v>. Available: quiet or normal ",
+    discussion: "Verbosity level",
+    valueName: "v"
+  )) var verbosity: Verbosity = .quiet
+
   mutating func run() {
+    Log.verbosity = verbosity
+
     Plan().next(
       within: within,
       ignoreAllDayEvents: ignoreAllDayEvents,

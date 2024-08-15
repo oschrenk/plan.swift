@@ -3,7 +3,7 @@ import Foundation
 class Log {
   static var verbosity: Verbosity = .quiet
 
-  static func print(message: String) {
+  static func write(message: String) {
     switch verbosity {
     case .quiet:
       fallthrough
