@@ -104,6 +104,12 @@ struct Next: ParsableCommand {
   )) var rejectTag: String = ""
 
   @Option(help: ArgumentHelp(
+    "Output format <f>. Available: json or markdown ",
+    discussion: "Output format",
+    valueName: "f"
+  )) var format: Format = .json
+
+  @Option(help: ArgumentHelp(
     "Verbosity <v>. Available: quiet or normal ",
     discussion: "Verbosity level",
     valueName: "v"
@@ -112,11 +118,17 @@ struct Next: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    Plan().next(
+    let events = Plan().next(
       within: within,
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
       rejectTag: rejectTag
-    ).printAsJson()
+    )
+    switch format {
+    case .json:
+      events.printAsJson()
+    case .markdown:
+      events.printAsMarkdown()
+    }
   }
 }
