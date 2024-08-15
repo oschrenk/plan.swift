@@ -7,12 +7,7 @@ struct Plan {
   func today(
     rejectTag: String
   ) -> [Event] {
-    var filtersAfter: [(Event) -> Bool] = []
-    if !rejectTag.isEmpty {
-      let rtf: (Event) -> Bool = FiltersAfter.rejectTag(tag: rejectTag)
-      filtersAfter.append(rtf)
-    }
-    let filterAfter = filtersAfter.count > 0 ? FiltersAfter.combined(filters: filtersAfter) : FiltersAfter.accept
+    let filterAfter = Refine.build(rejectTag: rejectTag)
 
     return EventStore().today(
       filterAfter: filterAfter
