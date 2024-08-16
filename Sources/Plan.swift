@@ -198,7 +198,11 @@ struct Add: ParsableCommand {
     shouldDisplay: false
   )
 
+  @Argument(help: "Event text to parse")
+  var text: String
+
   mutating func run() {
-    EventStore().add()
+    let addEvent = Parser.parse(text: text)
+    EventStore().add(addEvent: addEvent)
   }
 }
