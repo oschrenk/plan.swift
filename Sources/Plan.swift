@@ -53,7 +53,18 @@ struct Today: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    let events = Service().today(ignoreTag: ignoreTag, ignoreCalendars: ignoreCalendars)
+    let filterBefore = Refine.before(
+      ignoreAllDayEvents: false,
+      ignorePatternTitle: "",
+      ignoreCalendars: ignoreCalendars
+    )
+    let filterAfter = Refine.after(ignoreTag: ignoreTag)
+
+    let events = EventStore().today(
+      filterBefore: filterBefore,
+      filterAfter: filterAfter
+    )
+
     switch format {
     case .json:
       events.printAsJson()
@@ -85,7 +96,7 @@ struct Calendars: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    let calendars = Service().calendars()
+    let calendars = EventStore().calendars()
 
     switch format {
     case .json:
@@ -142,18 +153,37 @@ struct Next: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    let events = Service().next(
-      within: within,
-      ignoreCalendars: ignoreCalendars,
+    let filterBefore = Refine.before(
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
+      ignoreCalendars: ignoreCalendars
+    )
+    let filterAfter = Refine.after(
       ignoreTag: ignoreTag
     )
+    let transformer = Transformers.id
+
+    let events = EventStore().next(
+      within: within,
+      filterBefore: filterBefore,
+      filterAfter: filterAfter
+    ).map { event in
+      transformer(event)
+    }.sorted { $0.endsIn > $1.endsIn }
+
+    var next: [Event]
+    if events.count == 0 {
+      next = Array()
+    }
+
+    // prefix crashes if sequence has no elements
+    next = Array(events.prefix(upTo: 1))
+
     switch format {
     case .json:
-      events.printAsJson()
+      next.printAsJson()
     case .markdown:
-      events.printAsMarkdown()
+      next.printAsMarkdown()
     }
   }
 }
