@@ -12,7 +12,6 @@ class FiltersBefore {
       }
       let id = event.calendar.calendarIdentifier.uppercased()
       if calendars.contains(id) {
-        print("yes")
         return false
       }
       return true

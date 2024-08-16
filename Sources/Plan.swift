@@ -53,8 +53,6 @@ struct Today: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    print(ignoreCalendars)
-
     let events = Service().today(ignoreTag: ignoreTag, ignoreCalendars: ignoreCalendars)
     switch format {
     case .json:
@@ -127,6 +125,11 @@ struct Next: ParsableCommand {
   )) var ignoreTag: String = ""
 
   @Option(help: ArgumentHelp(
+    "Ignore calendars <v>. A comma separated list of calendar UUIDs",
+    valueName: "v"
+  )) var ignoreCalendars: [String] = []
+
+  @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown",
     valueName: "f"
   )) var format: EventFormat = .json
@@ -141,6 +144,7 @@ struct Next: ParsableCommand {
 
     let events = Service().next(
       within: within,
+      ignoreCalendars: ignoreCalendars,
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
       ignoreTag: ignoreTag

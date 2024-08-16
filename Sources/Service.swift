@@ -27,6 +27,7 @@ struct Service {
 
   func next(
     within: Int,
+    ignoreCalendars: [String],
     ignoreAllDayEvents: Bool,
     ignorePatternTitle: String,
     ignoreTag: String
@@ -34,7 +35,7 @@ struct Service {
     let filterBefore = Refine.before(
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
-      ignoreCalendars: []
+      ignoreCalendars: ignoreCalendars
     )
     let filterAfter = Refine.after(
       ignoreTag: ignoreTag
