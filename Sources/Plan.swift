@@ -6,9 +6,9 @@ struct Plan: ParsableCommand {
   static var configuration = CommandConfiguration(
     abstract: "Unofficial Calendar.app companion CLI to view today's events in various forms",
     subcommands: [
-      Today.self,
-      Next.self,
       Calendars.self,
+      Next.self,
+      Today.self,
     ],
     defaultSubcommand: Next.self
   )
