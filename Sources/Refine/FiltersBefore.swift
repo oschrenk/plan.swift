@@ -5,6 +5,20 @@ class FiltersBefore {
     true
   }
 
+  static func ignoreCalendars(calendars: [String]) -> ((EKEvent) -> Bool) {
+    { event in
+      if event.calendar == nil {
+        return false
+      }
+      let id = event.calendar.calendarIdentifier.uppercased()
+      if calendars.contains(id) {
+        print("yes")
+        return false
+      }
+      return true
+    }
+  }
+
   static func ignoreAllDayEvents(event: EKEvent) -> Bool {
     !event.isAllDay
   }

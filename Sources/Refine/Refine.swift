@@ -15,18 +15,27 @@ class Refine {
 
   static func before(
     ignoreAllDayEvents: Bool,
-    ignorePatternTitle: String
+    ignorePatternTitle: String,
+    ignoreCalendars: [String]
   ) -> ((EKEvent) -> Bool) {
     var filtersBefore: [(EKEvent) -> Bool] = []
+
     if ignoreAllDayEvents {
       let iade: (EKEvent) -> Bool = FiltersBefore.ignoreAllDayEvents
       filtersBefore.append(iade)
       Log.write(message: "added filter before: ignoreAllDayEvents")
     }
+
     if !ignorePatternTitle.isEmpty {
       let ipt: (EKEvent) -> Bool = FiltersBefore.ignorePatternTitle(pattern: ignorePatternTitle)
       filtersBefore.append(ipt)
       Log.write(message: "added filter before: ignorePatternTitle(\(ignorePatternTitle))")
+    }
+
+    if !ignoreCalendars.isEmpty {
+      let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendars(calendars: ignoreCalendars)
+      filtersBefore.append(ic)
+      Log.write(message: "added filter before: ignoreCalendars(\(ignoreCalendars))")
     }
 
     let filterBefore = filtersBefore.count > 0 ? FiltersBefore.combined(filters: filtersBefore) : FiltersBefore.accept

@@ -1,6 +1,12 @@
 import ArgumentParser
 import Foundation
 
+extension Array: ExpressibleByArgument where Element == String {
+  public init?(argument: String) {
+    self = argument.split(separator: ",").map { String($0) }
+  }
+}
+
 @main
 struct Plan: ParsableCommand {
   static var configuration = CommandConfiguration(
@@ -39,10 +45,17 @@ struct Today: ParsableCommand {
     valueName: "v"
   )) var verbosity: Verbosity = .quiet
 
+  @Option(help: ArgumentHelp(
+    "Ignore calendars <v>. A comma separated list of calendar UUIDs",
+    valueName: "v"
+  )) var ignoreCalendars: [String] = []
+
   mutating func run() {
     Log.verbosity = verbosity
 
-    let events = Service().today(ignoreTag: ignoreTag)
+    print(ignoreCalendars)
+
+    let events = Service().today(ignoreTag: ignoreTag, ignoreCalendars: ignoreCalendars)
     switch format {
     case .json:
       events.printAsJson()

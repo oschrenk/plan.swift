@@ -25,13 +25,14 @@ struct EventStore {
   }
 
   func today(
+    filterBefore: (EKEvent) -> Bool,
     filterAfter: (Event) -> Bool
   ) -> [Event] {
     let today = FCalendar.current.startOfDay(for: Date())
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
 
-    return fetch(start: start, end: end, filterBefore: FiltersBefore.accept, filterAfter: filterAfter)
+    return fetch(start: start, end: end, filterBefore: filterBefore, filterAfter: filterAfter)
   }
 
   func calendars() -> [Calendar] {
