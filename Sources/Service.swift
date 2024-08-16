@@ -5,9 +5,9 @@ struct Service {
   let store = EventStore()
 
   func today(
-    rejectTag: String
+    ignoreTag: String
   ) -> [Event] {
-    let filterAfter = Refine.after(rejectTag: rejectTag)
+    let filterAfter = Refine.after(ignoreTag: ignoreTag)
 
     return EventStore().today(
       filterAfter: filterAfter
@@ -22,14 +22,14 @@ struct Service {
     within: Int,
     ignoreAllDayEvents: Bool,
     ignorePatternTitle: String,
-    rejectTag: String
+    ignoreTag: String
   ) -> [Event] {
     let filterBefore = Refine.before(
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle
     )
     let filterAfter = Refine.after(
-      rejectTag: rejectTag
+      ignoreTag: ignoreTag
     )
     let transformer = Transformers.id
 

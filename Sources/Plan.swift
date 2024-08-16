@@ -25,9 +25,9 @@ struct Today: ParsableCommand {
   )
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'timeblock' ",
+    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock' ",
     valueName: "t"
-  )) var rejectTag: String = ""
+  )) var ignoreTag: String = ""
 
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown ",
@@ -42,7 +42,7 @@ struct Today: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    let events = Service().today(rejectTag: rejectTag)
+    let events = Service().today(ignoreTag: ignoreTag)
     switch format {
     case .json:
       events.printAsJson()
@@ -109,9 +109,9 @@ struct Next: ParsableCommand {
   )) var ignorePatternTitle: String = ""
 
   @Option(help: ArgumentHelp(
-    "Reject events which notes contain the tag <t> eg. 'timeblock' ",
+    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock' ",
     valueName: "t"
-  )) var rejectTag: String = ""
+  )) var ignoreTag: String = ""
 
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown ",
@@ -130,7 +130,7 @@ struct Next: ParsableCommand {
       within: within,
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
-      rejectTag: rejectTag
+      ignoreTag: ignoreTag
     )
     switch format {
     case .json:

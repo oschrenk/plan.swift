@@ -1,12 +1,12 @@
 import EventKit
 
 class Refine {
-  static func after(rejectTag: String) -> ((Event) -> Bool) {
+  static func after(ignoreTag: String) -> ((Event) -> Bool) {
     var filtersAfter: [(Event) -> Bool] = []
-    if !rejectTag.isEmpty {
-      let rtf: (Event) -> Bool = FiltersAfter.rejectTag(tag: rejectTag)
+    if !ignoreTag.isEmpty {
+      let rtf: (Event) -> Bool = FiltersAfter.ignoreTag(tag: ignoreTag)
       filtersAfter.append(rtf)
-      Log.write(message: "added filter after: rejectTag(\(rejectTag))")
+      Log.write(message: "added filter after: ignoreTag(\(ignoreTag))")
     }
     let filterAfter = filtersAfter.count > 0 ? FiltersAfter.combined(filters: filtersAfter) : FiltersAfter.accept
 

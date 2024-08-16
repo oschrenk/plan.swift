@@ -3,7 +3,7 @@ class FiltersAfter {
     true
   }
 
-  static func rejectTag(tag: String) -> ((Event) -> Bool) {
+  static func ignoreTag(tag: String) -> ((Event) -> Bool) {
     { event in
       !event.tags.contains(tag)
     }
