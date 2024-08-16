@@ -25,17 +25,17 @@ struct Today: ParsableCommand {
   )
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock' ",
+    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'",
     valueName: "t"
   )) var ignoreTag: String = ""
 
   @Option(help: ArgumentHelp(
-    "Output format <f>. Available: json or markdown ",
+    "Output format <f>. Available: json or markdown",
     valueName: "f"
   )) var format: EventFormat = .json
 
   @Option(help: ArgumentHelp(
-    "Verbosity <v>. Available: quiet or normal ",
+    "Verbosity <v>. Available: quiet or normal",
     valueName: "v"
   )) var verbosity: Verbosity = .quiet
 
@@ -61,13 +61,13 @@ struct Calendars: ParsableCommand {
   )
 
   @Option(help: ArgumentHelp(
-    "Verbosity <v>. Available: quiet or normal ",
+    "Verbosity <v>. Available: quiet or normal",
     discussion: "Verbosity level",
     valueName: "v"
   )) var verbosity: Verbosity = .quiet
 
   @Option(help: ArgumentHelp(
-    "Output format <f>. Available: json or plain ",
+    "Output format <f>. Available: json or plain",
     valueName: "f"
   )) var format: CalendarFormat = .json
 
@@ -94,7 +94,7 @@ struct Next: ParsableCommand {
   )
 
   @Option(help: ArgumentHelp(
-    "Fetch events within <m> minutes.",
+    "Fetch events within <m> minutes",
     valueName: "m"
   )) var within: Int = 60
 
@@ -109,17 +109,17 @@ struct Next: ParsableCommand {
   )) var ignorePatternTitle: String = ""
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock' ",
+    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'",
     valueName: "t"
   )) var ignoreTag: String = ""
 
   @Option(help: ArgumentHelp(
-    "Output format <f>. Available: json or markdown ",
+    "Output format <f>. Available: json or markdown",
     valueName: "f"
   )) var format: EventFormat = .json
 
   @Option(help: ArgumentHelp(
-    "Verbosity <v>. Available: quiet or normal ",
+    "Verbosity <v>. Available: quiet or normal",
     valueName: "v"
   )) var verbosity: Verbosity = .quiet
 
