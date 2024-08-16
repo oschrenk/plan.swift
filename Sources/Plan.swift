@@ -1,50 +1,130 @@
-import EventKit
+import ArgumentParser
 import Foundation
 
-struct Plan {
-  let store = EventStore()
+@main
+struct Plan: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "Unofficial Calendar.app companion CLI to view today's events in various forms",
+    subcommands: [
+      Today.self,
+      Next.self,
+      Calendars.self,
+    ],
+    defaultSubcommand: Next.self
+  )
 
-  func today(
-    rejectTag: String
-  ) -> [Event] {
-    let filterAfter = Refine.after(rejectTag: rejectTag)
+  mutating func run() {}
+}
 
-    return EventStore().today(
-      filterAfter: filterAfter
-    )
+/// `plan today`
+///
+/// List today's events
+struct Today: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "List today's events"
+  )
+
+  @Option(help: ArgumentHelp(
+    "Ignore events which notes contain the tag <t> eg. 'timeblock' ",
+    valueName: "t"
+  )) var rejectTag: String = ""
+
+  @Option(help: ArgumentHelp(
+    "Output format <f>. Available: json or markdown ",
+    valueName: "f"
+  )) var format: Format = .json
+
+  @Option(help: ArgumentHelp(
+    "Verbosity <v>. Available: quiet or normal ",
+    valueName: "v"
+  )) var verbosity: Verbosity = .quiet
+
+  mutating func run() {
+    Log.verbosity = verbosity
+
+    let events = Service().today(rejectTag: rejectTag)
+    switch format {
+    case .json:
+      events.printAsJson()
+    case .markdown:
+      events.printAsMarkdown()
+    }
   }
+}
 
-  func calendars() -> [Calendar] {
-    return EventStore().calendars()
+/// `plan calendars`
+///
+/// List available calendars
+struct Calendars: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "List available calendars"
+  )
+
+  @Option(help: ArgumentHelp(
+    "Verbosity <v>. Available: quiet or normal ",
+    discussion: "Verbosity level",
+    valueName: "v"
+  )) var verbosity: Verbosity = .quiet
+
+  mutating func run() {
+    Log.verbosity = verbosity
+
+    Service().calendars().printAsJson()
   }
+}
 
-  func next(
-    within: Int,
-    ignoreAllDayEvents: Bool,
-    ignorePatternTitle: String,
-    rejectTag: String
-  ) -> [Event] {
-    let filterBefore = Refine.before(
+/// `plan next`
+///
+/// List next event(s)
+struct Next: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "List next event"
+  )
+
+  @Option(help: ArgumentHelp(
+    "Fetch events within <m> minutes.",
+    valueName: "m"
+  )) var within: Int = 60
+
+  @Flag(help: ArgumentHelp(
+    "Ignore all day events"
+  ))
+  var ignoreAllDayEvents: Bool = false
+
+  @Option(help: ArgumentHelp(
+    "Ignore titles matching the given pattern <p>",
+    valueName: "p"
+  )) var ignorePatternTitle: String = ""
+
+  @Option(help: ArgumentHelp(
+    "Reject events which notes contain the tag <t> eg. 'timeblock' ",
+    valueName: "t"
+  )) var rejectTag: String = ""
+
+  @Option(help: ArgumentHelp(
+    "Output format <f>. Available: json or markdown ",
+    valueName: "f"
+  )) var format: Format = .json
+
+  @Option(help: ArgumentHelp(
+    "Verbosity <v>. Available: quiet or normal ",
+    valueName: "v"
+  )) var verbosity: Verbosity = .quiet
+
+  mutating func run() {
+    Log.verbosity = verbosity
+
+    let events = Service().next(
+      within: within,
       ignoreAllDayEvents: ignoreAllDayEvents,
-      ignorePatternTitle: ignorePatternTitle
-    )
-    let filterAfter = Refine.after(
+      ignorePatternTitle: ignorePatternTitle,
       rejectTag: rejectTag
     )
-    let transformer = Transformers.id
-
-    let events = EventStore().next(
-      within: within,
-      filterBefore: filterBefore,
-      filterAfter: filterAfter
-    ).map { event in
-      transformer(event)
-    }.sorted { $0.endsIn > $1.endsIn }
-
-    if events.count == 0 {
-      return Array(events)
+    switch format {
+    case .json:
+      events.printAsJson()
+    case .markdown:
+      events.printAsMarkdown()
     }
-    // prefix crashes if sequence has no elements
-    return Array(events.prefix(upTo: 1))
   }
 }
