@@ -199,6 +199,6 @@ struct Add: ParsableCommand {
   )
 
   mutating func run() {
-    print("Add new event")
+    EventStore().add()
   }
 }
