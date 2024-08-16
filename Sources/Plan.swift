@@ -66,10 +66,22 @@ struct Calendars: ParsableCommand {
     valueName: "v"
   )) var verbosity: Verbosity = .quiet
 
+  @Option(help: ArgumentHelp(
+    "Output format <f>. Available: json or plain ",
+    valueName: "f"
+  )) var format: CalendarFormat = .json
+
   mutating func run() {
     Log.verbosity = verbosity
 
-    Service().calendars().printAsJson()
+    let calendars = Service().calendars()
+
+    switch format {
+    case .json:
+      calendars.printAsJson()
+    case .plain:
+      calendars.printAsPlain()
+    }
   }
 }
 

@@ -34,4 +34,13 @@ extension [Calendar] {
       print("fail")
     }
   }
+
+  func printAsPlain() {
+    let sorted = self.sorted(by: { cal1, cal2 in
+      cal1.label < cal2.label
+    })
+    for calendar in sorted {
+      print("\(calendar.id) \(calendar.label)")
+    }
+  }
 }
