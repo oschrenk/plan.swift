@@ -32,7 +32,7 @@ struct Today: ParsableCommand {
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown ",
     valueName: "f"
-  )) var format: Format = .json
+  )) var format: EventFormat = .json
 
   @Option(help: ArgumentHelp(
     "Verbosity <v>. Available: quiet or normal ",
@@ -104,7 +104,7 @@ struct Next: ParsableCommand {
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown ",
     valueName: "f"
-  )) var format: Format = .json
+  )) var format: EventFormat = .json
 
   @Option(help: ArgumentHelp(
     "Verbosity <v>. Available: quiet or normal ",

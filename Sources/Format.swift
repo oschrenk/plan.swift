@@ -1,5 +1,5 @@
 import ArgumentParser
 
-enum Format: String, ExpressibleByArgument {
+enum EventFormat: String, ExpressibleByArgument {
   case json, markdown
 }
