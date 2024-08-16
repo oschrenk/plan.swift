@@ -12,6 +12,7 @@ struct Plan: ParsableCommand {
   static var configuration = CommandConfiguration(
     abstract: "Unofficial Calendar.app companion CLI to view today's events in various forms",
     subcommands: [
+      Add.self,
       Calendars.self,
       Next.self,
       Today.self,
@@ -185,5 +186,19 @@ struct Next: ParsableCommand {
     case .markdown:
       next.printAsMarkdown()
     }
+  }
+}
+
+/// `plan add`
+///
+/// Add new event
+struct Add: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "Add new event",
+    shouldDisplay: false
+  )
+
+  mutating func run() {
+    print("Add new event")
   }
 }
