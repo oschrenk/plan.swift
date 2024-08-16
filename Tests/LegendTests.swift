@@ -1,7 +1,7 @@
 @testable import plan
 import XCTest
 
-final class SampleTests: XCTestCase {
+final class LegendTests: XCTestCase {
   func testWithoutEmoji() {
     // arrange
     let input = "Banana"
