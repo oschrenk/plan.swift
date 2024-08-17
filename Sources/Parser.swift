@@ -14,7 +14,7 @@ class Parser {
   static func parse(text: String) -> AddEvent? {
     let eventParser = Parse(input: Substring.self) {
       Skip { Whitespace() }
-      "-"
+      Skip { Optionally { "-" } }
       Skip { Whitespace() }
       Digits(2).filter { $0 < 24 }
       ":"
