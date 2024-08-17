@@ -179,10 +179,10 @@ struct Next: ParsableCommand {
     var next: [Event]
     if events.count == 0 {
       next = Array()
+    } else {
+      // prefix crashes if sequence has no elements
+      next = Array(events.prefix(upTo: 1))
     }
-
-    // prefix crashes if sequence has no elements
-    next = Array(events.prefix(upTo: 1))
 
     switch format {
     case .json:
