@@ -16,15 +16,15 @@ class Parser {
       Skip { Whitespace() }
       "-"
       Skip { Whitespace() }
-      Int.parser()
+      Digits(2).filter { $0 < 24 }
       ":"
-      Int.parser()
+      Digits(2).filter { $0 < 60 }
       Skip { Whitespace() }
       "-"
       Skip { Whitespace() }
-      Int.parser()
+      Digits(2).filter { $0 < 24 }
       ":"
-      Int.parser()
+      Digits(2).filter { $0 < 60 }
       Skip { Whitespace() }
       Rest().map { String($0).trimmingCharacters(in: .whitespaces) }
     }.map { (a: Int, b: Int, c: Int, d: Int, e: String) in
