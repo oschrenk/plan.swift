@@ -29,9 +29,9 @@ extension [Calendar] {
         decoding: encoder.encode(self),
         as: UTF8.self
       )
-      print(json)
+      Swift.print(json)
     } catch {
-      print("fail")
+      Swift.print("fail")
     }
   }
 
@@ -40,7 +40,7 @@ extension [Calendar] {
       cal1.label < cal2.label
     })
     for calendar in sorted {
-      print("\(calendar.id) \(calendar.label)")
+      Swift.print("\(calendar.id) \(calendar.label)")
     }
   }
 }
