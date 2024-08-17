@@ -13,8 +13,7 @@ final class ParserTests: XCTestCase {
     let expected = AddEvent(
       title: input,
       startsAt: Date(),
-      endsAt: Date(),
-      notes: "Some notes"
+      endsAt: Date()
     )
 
     XCTAssertEqual(output.title, expected.title, "The title was not correct")

@@ -6,8 +6,7 @@ class Parser {
     AddEvent(
       title: text,
       startsAt: Date(),
-      endsAt: Date(),
-      notes: "Some notes"
+      endsAt: Date()
     )
   }
 }

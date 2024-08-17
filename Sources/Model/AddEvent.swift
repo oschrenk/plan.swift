@@ -5,7 +5,6 @@ struct AddEvent {
   let title: String
   let startsAt: Date
   let endsAt: Date
-  let notes: String
 }
 
 extension AddEvent {
@@ -15,7 +14,6 @@ extension AddEvent {
     event.title = title
     event.startDate = startsAt
     event.endDate = endsAt
-    event.notes = notes
     event.calendar = calendar
 
     return event
