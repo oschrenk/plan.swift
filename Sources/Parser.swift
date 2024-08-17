@@ -20,12 +20,11 @@ class Parser {
       ":"
       Digits(2).filter { $0 < 60 }
       Skip { Whitespace() }
-      "-"
+      Skip { Optionally { "-" } }
       Skip { Whitespace() }
       Digits(2).filter { $0 < 24 }
       ":"
       Digits(2).filter { $0 < 60 }
-      Skip { Whitespace() }
       Rest().map { String($0).trimmingCharacters(in: .whitespaces) }
     }.map { (a: Int, b: Int, c: Int, d: Int, e: String) in
       let now = Date()
