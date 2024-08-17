@@ -4,14 +4,14 @@ import XCTest
 final class ParserTests: XCTestCase {
   func testParse() {
     // arrange
-    let input = "foo"
+    let input = "- 10:00 - 12:00 🥗 Lunch"
 
     // act
-    let output = Parser.parse(text: input)
+    let output = Parser.parse(text: input)!
 
     // assert
     let expected = AddEvent(
-      title: input,
+      title: "🥗 Lunch",
       startsAt: Date(),
       endsAt: Date()
     )

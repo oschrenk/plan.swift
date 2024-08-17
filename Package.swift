@@ -10,12 +10,14 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.0"),
+    .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.12.0"),
   ],
   targets: [
     .executableTarget(
       name: "plan",
       dependencies: [
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
+        .product(name: "Parsing", package: "swift-parsing"),
       ],
       path: "Sources"
     ),

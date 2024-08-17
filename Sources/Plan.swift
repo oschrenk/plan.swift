@@ -1,11 +1,11 @@
 import ArgumentParser
 import Foundation
 
-extension Array: ExpressibleByArgument where Element == String {
-  public init?(argument: String) {
-    self = argument.split(separator: ",").map { String($0) }
-  }
-}
+// extension Array: ExpressibleByArgument where Element == String {
+//  public init?(argument: String) {
+//    self = argument.split(separator: ",").map { String($0) }
+//  }
+// }
 
 @main
 struct Plan: ParsableCommand {
@@ -206,7 +206,10 @@ struct Add: ParsableCommand {
   var text: String
 
   mutating func run() {
-    let addEvent = Parser.parse(text: text)
-    EventStore().add(addEvent: addEvent)
+    if let addEvent = Parser.parse(text: text) {
+      EventStore().add(addEvent: addEvent)
+    } else {
+      Swift.print("error parsing")
+    }
   }
 }
