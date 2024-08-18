@@ -25,6 +25,7 @@ struct EventStore {
   }
 
   func today(
+    selectCalendars: [String]?,
     filterBefore: (EKEvent) -> Bool,
     filterAfter: (Event) -> Bool
   ) -> [Event] {
@@ -32,22 +33,34 @@ struct EventStore {
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
 
-    return fetch(start: start, end: end, filterBefore: filterBefore, filterAfter: filterAfter)
+    return fetch(
+      start: start,
+      end: end,
+      selectCalendars: selectCalendars,
+      filterBefore: filterBefore,
+      filterAfter: filterAfter
+    )
   }
 
-  func calendars() -> [Calendar] {
+  private func fetchCalendars() -> [EKCalendar] {
     let eventStore = grantAccess()
     // FIXME: I have no idea why this works but it seems I need to reset
     // and then refresh the eventStore, otherwise I silently get no results
     eventStore.reset()
     eventStore.refreshSourcesIfNecessary()
-    return eventStore.calendars(for: EKEntityType.event).map { calendar in
+
+    return eventStore.calendars(for: EKEntityType.event)
+  }
+
+  func calendars() -> [Calendar] {
+    return fetchCalendars().map { calendar in
       calendar.asCal()
     }
   }
 
   func next(
     within: Int,
+    selectCalendars: [String]?,
     filterBefore: (EKEvent) -> Bool,
     filterAfter: (Event) -> Bool
   ) -> [Event] {
@@ -55,10 +68,22 @@ struct EventStore {
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
 
-    return Array(fetch(start: start, end: end, filterBefore: filterBefore, filterAfter: filterAfter))
+    return Array(fetch(
+      start: start,
+      end: end,
+      selectCalendars: selectCalendars,
+      filterBefore: filterBefore,
+      filterAfter: filterAfter
+    ))
   }
 
-  private func fetch(start: Date, end: Date, filterBefore: (EKEvent) -> Bool, filterAfter: (Event) -> Bool) -> [Event] {
+  private func fetch(
+    start: Date,
+    end: Date,
+    selectCalendars: [String]?,
+    filterBefore: (EKEvent) -> Bool,
+    filterAfter: (Event) -> Bool
+  ) -> [Event] {
     let eventStore = grantAccess()
 
     // FIXME: I have no idea why this works but it seems I need to reset
@@ -67,10 +92,27 @@ struct EventStore {
     eventStore.reset()
     eventStore.refreshSourcesIfNecessary()
 
+    var calendars: [EKCalendar]?
+    if selectCalendars != nil, selectCalendars!.count > 0 {
+      calendars = fetchCalendars().filter { cal in
+        selectCalendars!.contains(cal.calendarIdentifier)
+      }
+    } else {
+      calendars = nil
+    }
+
+    // unfortunately the eventstore API is limited
+    // calling it with an emoty Array of calendars is the same
+    // as calling it with nil, although it is semantically different
+    // so we return an empty array ourselves and short circuit the logic
+    if calendars == nil {
+      return Array()
+    }
+
     let predicate = eventStore.predicateForEvents(
       withStart: start,
       end: end,
-      calendars: nil
+      calendars: calendars
     )
 
     return eventStore.events(matching: predicate)

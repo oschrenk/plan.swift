@@ -47,6 +47,11 @@ struct Today: ParsableCommand {
   )) var verbosity: Verbosity = .quiet
 
   @Option(help: ArgumentHelp(
+    "Select calendars <v>. A comma separated list of calendar UUIDs",
+    valueName: "v"
+  )) var selectCalendars: [String] = []
+
+  @Option(help: ArgumentHelp(
     "Ignore calendars <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
   )) var ignoreCalendars: [String] = []
@@ -62,6 +67,7 @@ struct Today: ParsableCommand {
     let filterAfter = Refine.after(ignoreTag: ignoreTag)
 
     let events = EventStore().today(
+      selectCalendars: selectCalendars,
       filterBefore: filterBefore,
       filterAfter: filterAfter
     )
@@ -137,6 +143,11 @@ struct Next: ParsableCommand {
   )) var ignoreTag: String = ""
 
   @Option(help: ArgumentHelp(
+    "Select calendars <v>. A comma separated list of calendar UUIDs",
+    valueName: "v"
+  )) var selectCalendars: [String]? = nil
+
+  @Option(help: ArgumentHelp(
     "Ignore calendars <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
   )) var ignoreCalendars: [String] = []
@@ -168,6 +179,7 @@ struct Next: ParsableCommand {
 
     let events = EventStore().next(
       within: within,
+      selectCalendars: selectCalendars,
       filterBefore: filterBefore,
       filterAfter: filterAfter
     ).map { event in
