@@ -18,7 +18,7 @@ struct HourTimeParser: ParserPrinter {
 }
 
 class Parser {
-  static func updateDate(date: Date, hourMinute: HourMinute) -> Date? {
+  private static func updateDate(date: Date, hourMinute: HourMinute) -> Date? {
     let calendar = FCalendar.current
     var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
     components.hour = hourMinute.hour
@@ -47,8 +47,7 @@ class Parser {
     }
 
     do {
-      let event = try eventParser.parse(text)
-      return event
+      return try eventParser.parse(text)
     } catch {
       Swift.print(error)
       return nil
