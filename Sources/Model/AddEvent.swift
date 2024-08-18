@@ -5,6 +5,7 @@ struct AddEvent {
   let title: String
   let startsAt: Date
   let endsAt: Date
+  let tag: String?
 }
 
 extension AddEvent {

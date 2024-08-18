@@ -1,5 +1,4 @@
 import Foundation
-import struct Foundation.Calendar
 import Parsing
 
 struct HourMinute {
@@ -27,23 +26,34 @@ class Parser {
   }
 
   static func parse(text: String) -> AddEvent? {
+    let l = CharacterSet.lowercaseLetters
+    let s = CharacterSet(charactersIn: "-_/")
+    let n: CharacterSet = .decimalDigits
+
     let eventParser = Parse(input: Substring.self) {
-      Skip { Whitespace() }
-      Skip { Optionally { "-" } }
-      Skip { Whitespace() }
+      Skip {
+        Whitespace()
+        Optionally { "-" }
+        Whitespace()
+      }
       HourTimeParser()
       Skip { Whitespace() }
       Skip { Optionally { "-" } }
       Skip { Whitespace() }
       HourTimeParser()
-      Rest().map { String($0).trimmingCharacters(in: .whitespaces) }
-    }.map { (start: HourMinute, end: HourMinute, title: String) in
+      Whitespace()
+      Prefix { $0 != "#" }.map(String.init)
+      Optionally {
+        "#"
+        l.union(s).union(n).map(String.init)
+      }
+    }.map { (start: HourMinute, end: HourMinute, title: String, maybeTag: String?) in
       let now = Date()
       let startsAt = updateDate(date: now, hourMinute: start)!
       let endsAt = updateDate(date: now, hourMinute: end)!
-      let title = String(title)
+      let title = String(title.trimmingCharacters(in: .whitespacesAndNewlines))
 
-      return AddEvent(title: title, startsAt: startsAt, endsAt: endsAt)
+      return AddEvent(title: title, startsAt: startsAt, endsAt: endsAt, tag: maybeTag)
     }
 
     do {
