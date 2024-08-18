@@ -1,11 +1,11 @@
 import ArgumentParser
 import Foundation
 
-// extension Array: ExpressibleByArgument where Element == String {
-//  public init?(argument: String) {
-//    self = argument.split(separator: ",").map { String($0) }
-//  }
-// }
+extension Array: ExpressibleByArgument where Element == String {
+  public init?(argument: String) {
+    self = argument.split(separator: ",").map { String($0) }
+  }
+}
 
 @main
 struct Plan: ParsableCommand {
