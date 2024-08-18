@@ -2,12 +2,27 @@ import Foundation
 import struct Foundation.Calendar
 import Parsing
 
+struct HourMinute {
+  let hour: Int
+  let minute: Int
+}
+
+struct HourTimeParser: ParserPrinter {
+  var body: some ParserPrinter<Substring, HourMinute> {
+    ParsePrint(.memberwise(HourMinute.init)) {
+      Digits(2).filter { $0 < 24 }
+      ":"
+      Digits(2).filter { $0 < 60 }
+    }
+  }
+}
+
 class Parser {
-  static func updateDate(date: Date, hour: Int, minute: Int) -> Date? {
+  static func updateDate(date: Date, hourMinute: HourMinute) -> Date? {
     let calendar = FCalendar.current
     var components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-    components.hour = hour
-    components.minute = minute
+    components.hour = hourMinute.hour
+    components.minute = hourMinute.minute
     return calendar.date(from: components)
   }
 
@@ -16,21 +31,17 @@ class Parser {
       Skip { Whitespace() }
       Skip { Optionally { "-" } }
       Skip { Whitespace() }
-      Digits(2).filter { $0 < 24 }
-      ":"
-      Digits(2).filter { $0 < 60 }
+      HourTimeParser()
       Skip { Whitespace() }
       Skip { Optionally { "-" } }
       Skip { Whitespace() }
-      Digits(2).filter { $0 < 24 }
-      ":"
-      Digits(2).filter { $0 < 60 }
+      HourTimeParser()
       Rest().map { String($0).trimmingCharacters(in: .whitespaces) }
-    }.map { (a: Int, b: Int, c: Int, d: Int, e: String) in
+    }.map { (start: HourMinute, end: HourMinute, title: String) in
       let now = Date()
-      let startsAt = updateDate(date: now, hour: a, minute: b)!
-      let endsAt = updateDate(date: now, hour: c, minute: d)!
-      let title = String(e)
+      let startsAt = updateDate(date: now, hourMinute: start)!
+      let endsAt = updateDate(date: now, hourMinute: end)!
+      let title = String(title)
 
       return AddEvent(title: title, startsAt: startsAt, endsAt: endsAt)
     }
