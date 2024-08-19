@@ -59,12 +59,12 @@ struct Today: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    let filterBefore = Refine.before(
+    let filterBefore = FiltersBefore.build(
       ignoreAllDayEvents: false,
       ignorePatternTitle: "",
       ignoreCalendars: ignoreCalendars
     )
-    let filterAfter = Refine.after(ignoreTag: ignoreTag)
+    let filterAfter = FiltersAfter.build(ignoreTag: ignoreTag)
 
     let events = EventStore().today(
       selectCalendars: selectCalendars,
@@ -165,12 +165,12 @@ struct Next: ParsableCommand {
   mutating func run() {
     Log.verbosity = verbosity
 
-    let filterBefore = Refine.before(
+    let filterBefore = FiltersBefore.build(
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
       ignoreCalendars: ignoreCalendars
     )
-    let filterAfter = Refine.after(
+    let filterAfter = FiltersAfter.build(
       ignoreTag: ignoreTag
     )
     let transformer = Transformers.id
