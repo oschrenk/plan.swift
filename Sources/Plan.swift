@@ -218,7 +218,19 @@ struct Add: ParsableCommand {
   var text: String
 
   mutating func run() {
-    if let addEvent = Parser.parse(text: text) {
+    var lines: [String] = []
+    if text == "-" {
+      if StdIn.hasData() {
+        lines = StdIn.readLines()
+      } else {
+        StdErr.print("No input")
+        return
+      }
+    } else {
+      lines.append(text)
+    }
+    // TODO: parse all lines
+    if let addEvent = Parser.parse(text: lines[0]) {
       EventStore().add(addEvent: addEvent)
     } else {
       Swift.print("error parsing")
