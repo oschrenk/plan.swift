@@ -16,8 +16,9 @@ struct Plan: ParsableCommand {
       Calendars.self,
       Next.self,
       Today.self,
+      Usage.self,
     ],
-    defaultSubcommand: Next.self
+    defaultSubcommand: Usage.self
   )
 
   mutating func run() {}
@@ -234,6 +235,29 @@ struct Add: ParsableCommand {
       EventStore().add(addEvent: addEvent)
     } else {
       Swift.print("error parsing")
+    }
+  }
+}
+
+/// `plan usage`
+///
+/// Show usage and version
+struct Usage: ParsableCommand {
+  static var configuration = CommandConfiguration(
+    abstract: "Show help",
+    shouldDisplay: false
+  )
+
+  @Flag(help: ArgumentHelp(
+    "Show version"
+  ))
+  var version: Bool = false
+
+  mutating func run() {
+    if version {
+      Swift.print(Version.value)
+    } else {
+      Swift.print(Plan.helpMessage())
     }
   }
 }
