@@ -4,6 +4,7 @@ struct Calendar: Codable {
   let id: String
   let label: String
   let color: String
+  let type: String
 }
 
 extension CGColor {
@@ -23,11 +24,13 @@ extension EKCalendar {
     let id = calendarIdentifier
     let label = title
     let color = cgColor.asHexString()
+    let type = String(describing: type)
 
     return Calendar(
       id: id,
       label: label,
-      color: color
+      color: color,
+      type: type
     )
   }
 }

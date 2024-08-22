@@ -123,7 +123,8 @@ extension EKEvent {
       Calendar(
         id: "unknown",
         label: "unknown",
-        color: "unknown"
+        color: "unknown",
+        type: "unknown"
       )
     }
     let now = Date()
