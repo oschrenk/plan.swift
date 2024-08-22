@@ -29,7 +29,9 @@ Example output in json
     "id": "UUID:UUID",
     "calendar": {
       "id": "UUID",
-      "label": "Some calendar"
+      "color": "#E195DA",
+      "label": "Some calendar",
+      "type": "caldav"
     },
     "label": "🏆 Release plan",
     "legend": {
@@ -39,7 +41,9 @@ Example output in json
     "starts_at": "2024-08-09T18:00:00+02:00",
     "starts_in": 30,
     "ends_at": "2024-08-09T17:00:00+02:00",
-    "ends_in": 90
+    "ends_in": 90,
+    "url": "ical://ekevent/93109B45-776C-43AA-A6E9-A04606EF9F1C?method=show&options=more",
+    "tags": []
  }
 ]
 ```
