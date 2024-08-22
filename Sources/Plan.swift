@@ -42,10 +42,10 @@ struct Today: ParsableCommand {
     valueName: "f"
   )) var format: EventFormat = .json
 
-  @Option(help: ArgumentHelp(
-    "Verbosity <v>. Available: quiet or normal",
-    valueName: "v"
-  )) var verbosity: Verbosity = .quiet
+  @Flag(help: ArgumentHelp(
+    "Print debug statements"
+  ))
+  var debug: Bool = false
 
   @Option(help: ArgumentHelp(
     "Select calendars <v>. A comma separated list of calendar UUIDs",
@@ -58,7 +58,7 @@ struct Today: ParsableCommand {
   )) var ignoreCalendars: [String] = []
 
   mutating func run() {
-    Log.verbosity = verbosity
+    Log.setDebug(debug)
 
     let filterBefore = FiltersBefore.build(
       ignoreAllDayEvents: false,
@@ -90,11 +90,10 @@ struct Calendars: ParsableCommand {
     abstract: "List available calendars"
   )
 
-  @Option(help: ArgumentHelp(
-    "Verbosity <v>. Available: quiet or normal",
-    discussion: "Verbosity level",
-    valueName: "v"
-  )) var verbosity: Verbosity = .quiet
+  @Flag(help: ArgumentHelp(
+    "Print debug statements"
+  ))
+  var debug: Bool = false
 
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or plain",
@@ -102,7 +101,7 @@ struct Calendars: ParsableCommand {
   )) var format: CalendarFormat = .json
 
   mutating func run() {
-    Log.verbosity = verbosity
+    Log.setDebug(debug)
 
     let calendars = EventStore().calendars()
 
@@ -158,13 +157,13 @@ struct Next: ParsableCommand {
     valueName: "f"
   )) var format: EventFormat = .json
 
-  @Option(help: ArgumentHelp(
-    "Verbosity <v>. Available: quiet or normal",
-    valueName: "v"
-  )) var verbosity: Verbosity = .quiet
+  @Flag(help: ArgumentHelp(
+    "Print debug statements"
+  ))
+  var debug: Bool = false
 
   mutating func run() {
-    Log.verbosity = verbosity
+    Log.setDebug(debug)
 
     let filterBefore = FiltersBefore.build(
       ignoreAllDayEvents: ignoreAllDayEvents,
