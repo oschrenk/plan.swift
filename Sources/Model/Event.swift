@@ -118,14 +118,12 @@ extension EKEvent {
 
     // TODO: when can this be nil???
     let cal = if calendar != nil {
-      Calendar(
-        id: calendar.calendarIdentifier,
-        label: calendar.title
-      )
+      calendar.asCal()
     } else {
       Calendar(
         id: "unknown",
-        label: "unknown"
+        label: "unknown",
+        color: "unknown"
       )
     }
     let now = Date()

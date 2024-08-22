@@ -3,16 +3,31 @@ import EventKit
 struct Calendar: Codable {
   let id: String
   let label: String
+  let color: String
+}
+
+extension CGColor {
+  func asHexString() -> String {
+    let components = components
+    let r: CGFloat = components?[0] ?? 0.0
+    let g: CGFloat = components?[1] ?? 0.0
+    let b: CGFloat = components?[2] ?? 0.0
+
+    let hexString = String(format: "#%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
+    return hexString
+  }
 }
 
 extension EKCalendar {
   func asCal() -> Calendar {
     let id = calendarIdentifier
     let label = title
+    let color = cgColor.asHexString()
 
     return Calendar(
       id: id,
-      label: label
+      label: label,
+      color: color
     )
   }
 }
