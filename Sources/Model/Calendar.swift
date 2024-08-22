@@ -19,12 +19,31 @@ extension CGColor {
   }
 }
 
+extension EKCalendarType: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .local:
+      return "local"
+    case .calDAV:
+      return "caldav"
+    case .exchange:
+      return "exchange"
+    case .subscription:
+      return "subscription"
+    case .birthday:
+      return "birthday"
+    default:
+      return "unknown"
+    }
+  }
+}
+
 extension EKCalendar {
   func asCal() -> Calendar {
     let id = calendarIdentifier
     let label = title
     let color = cgColor.asHexString()
-    let type = String(describing: type)
+    let type = type.description
 
     return Calendar(
       id: id,
