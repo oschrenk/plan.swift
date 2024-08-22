@@ -167,9 +167,9 @@ extension [Event] {
         decoding: encoder.encode(self),
         as: UTF8.self
       )
-      Swift.print(json)
+      StdOut.print(json)
     } catch {
-      Swift.print("fail")
+      StdErr.print("fail")
     }
   }
 
@@ -184,7 +184,7 @@ extension [Event] {
       let startHour = dateFormatter.string(from: event.startsAt)
       let endHour = dateFormatter.string(from: event.endsAt)
       let line = "- \(startHour) - \(endHour) \(event.label)"
-      Swift.print(line)
+      StdOut.print(line)
     }
   }
 }

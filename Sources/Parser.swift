@@ -59,7 +59,7 @@ class Parser {
     do {
       return try eventParser.parse(text)
     } catch {
-      Swift.print(error)
+      StdErr.print("\(error)")
       return nil
     }
   }

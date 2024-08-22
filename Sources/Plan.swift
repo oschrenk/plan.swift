@@ -234,7 +234,7 @@ struct Add: ParsableCommand {
     if let addEvent = Parser.parse(text: lines[0]) {
       EventStore().add(addEvent: addEvent)
     } else {
-      Swift.print("error parsing")
+      StdErr.print("error parsing")
     }
   }
 }
@@ -255,9 +255,9 @@ struct Usage: ParsableCommand {
 
   mutating func run() {
     if version {
-      Swift.print(Version.value)
+      StdOut.print(Version.value)
     } else {
-      Swift.print(Plan.helpMessage())
+      StdOut.print(Plan.helpMessage())
     }
   }
 }
