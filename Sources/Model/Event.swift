@@ -120,12 +120,7 @@ extension EKEvent {
     let cal = if calendar != nil {
       calendar.asCal()
     } else {
-      Calendar(
-        id: "unknown",
-        label: "unknown",
-        color: "unknown",
-        type: "unknown"
-      )
+      Calendar.Unknown
     }
     let now = Date()
     let label = title ?? "unknown"

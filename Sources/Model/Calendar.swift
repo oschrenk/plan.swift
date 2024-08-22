@@ -5,6 +5,8 @@ struct Calendar: Codable {
   let label: String
   let color: String
   let type: String
+
+  static let Unknown = Calendar(id: "unknown", label: "No Label", color: "#FFFFFF", type: "unknown")
 }
 
 extension CGColor {
