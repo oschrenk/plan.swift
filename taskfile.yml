@@ -28,8 +28,13 @@ tasks:
     silent: true
   artifacts:
     deps: [test, lint]
+    env:
+      CURRENT_HASH:
+        sh: git rev-parse --short HEAD
     cmds:
+      - sed -i '' "s/APP_VERSION/$APP_VERSION-$CURRENT_HASH/g" Sources/Version.swift
       - swift build --configuration release --disable-sandbox --arch arm64
+      - git checkout Sources/Version.swift
     silent: true
   install:
     requires:
