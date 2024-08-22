@@ -60,7 +60,7 @@ tasks:
     deps: [tag]
     cmds:
       - cp {{.RELEASE_DIR}}/{{.APP_NAME}} {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
-      - gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/{{.APP_NAME}}-*
+      - /opt/homebrew/bin/gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/{{.APP_NAME}}-*
   sha:
     requires:
       vars: [APP_NAME, RELEASE_DIR]
