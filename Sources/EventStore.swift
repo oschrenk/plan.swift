@@ -102,10 +102,10 @@ struct EventStore {
     }
 
     // unfortunately the eventstore API is limited
-    // calling it with an emoty Array of calendars is the same
+    // calling it with an empty Array of calendars is the same
     // as calling it with nil, although it is semantically different
     // so we return an empty array ourselves and short circuit the logic
-    if calendars == nil {
+    if calendars == nil, selectCalendars != nil, selectCalendars!.count > 0 {
       return Array()
     }
 
