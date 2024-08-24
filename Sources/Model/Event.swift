@@ -35,6 +35,7 @@ struct Event: Codable {
   let startsIn: Int
   let endsAt: Date
   let endsIn: Int
+  let location: String
 
   // contains the url to show the event in the Calendar.app
   //   "ical://ekevent/\(startTimeAsIso)/\(event.calendarItemIdentifier)?method=show&options=more"
@@ -55,6 +56,7 @@ struct Event: Codable {
     case endsAt = "ends_at"
     case startsIn = "starts_in"
     case endsIn = "ends_in"
+    case location
     case url
     case tags
   }
@@ -129,11 +131,9 @@ extension EKEvent {
     let endsAt = endDate!
     let startsIn = Int((startsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     let endsIn = Int((endsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
-
+    let location = location ?? ""
     let url = generateEventURL(for: self)
-
     let tags = notes != nil ? notes!.findTags() : [String]()
-
     return Event(
       id: id,
       calendar: cal,
@@ -143,6 +143,7 @@ extension EKEvent {
       startsIn: startsIn,
       endsAt: endsAt,
       endsIn: endsIn,
+      location: location,
       url: url,
       tags: tags
     )
