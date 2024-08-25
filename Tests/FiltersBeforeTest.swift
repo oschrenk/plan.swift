@@ -76,4 +76,28 @@ final class FiltersBeforeTests: XCTestCase {
 
     XCTAssertEqual(actual, expected, "The event was rejected")
   }
+
+  func testSelectCalendarTypesMatching() {
+    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let expected = true
+    let actual = FiltersBefore.selectCalendarTypes(types: [event.calendar.type])(event)
+
+    XCTAssertEqual(actual, expected, "The event was rejected")
+  }
+
+  func testSelectCalendarTypesNotMatching() {
+    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let expected = false
+    let actual = FiltersBefore.selectCalendarTypes(types: [EKCalendarType.birthday])(event)
+
+    XCTAssertEqual(actual, expected, "The event was accepted")
+  }
+
+  func testSelectCalendarTypesEmptyArray() {
+    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let expected = true
+    let actual = FiltersBefore.selectCalendarTypes(types: [])(event)
+
+    XCTAssertEqual(actual, expected, "The event was rejected")
+  }
 }

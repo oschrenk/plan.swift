@@ -38,14 +38,17 @@ class FiltersBefore {
 
   static func selectCalendarTypes(types: [EKCalendarType]) -> ((EKEvent) -> Bool) {
     { event in
+      // if no selection, allow everything
+      if types.isEmpty {
+        return true
+      }
+
+      // if event has no valid calendar, don't show
       if event.calendar == nil {
         return false
       }
-      let id = event.calendar.type
-      if types.contains(id) {
-        return true
-      }
-      return false
+
+      return types.contains(event.calendar.type)
     }
   }
 
