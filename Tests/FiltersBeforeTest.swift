@@ -36,4 +36,12 @@ final class FiltersBeforeTests: XCTestCase {
 
     XCTAssertEqual(actual, expected, "The event was not accepted")
   }
+
+  func testSelectCalendarsEmptyArray() {
+    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let expected = true
+    let actual = FiltersBefore.selectCalendars(calendars: [])(event)
+
+    XCTAssertEqual(actual, expected, "The event was not accepted")
+  }
 }
