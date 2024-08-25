@@ -158,7 +158,7 @@ struct Next: ParsableCommand {
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
-    "Output format <f>. Available: json or markdown",
+    "Output format <f>. Available: [json|markdown]",
     valueName: "f"
   )) var format: EventFormat = .json
 
