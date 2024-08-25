@@ -2,7 +2,7 @@ import EventKit
 import Foundation
 
 struct Event: Codable {
-  // An event has (at least) three different identifiers
+  // An EKEvent has three different identifiers
   // 1. calendarItemIdentifier (via EKCalendarItem)
   // 2. calendarItemExternalIdentifier (via EKCalendarItem)
   // 3. eventIdentifier (via EKEvent)
