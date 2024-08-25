@@ -1,11 +1,6 @@
 import ArgumentParser
+import EventKit
 import Foundation
-
-extension Array: ExpressibleByArgument where Element == String {
-  public init?(argument: String) {
-    self = argument.split(separator: ",").map { String($0) }
-  }
-}
 
 @main
 struct Plan: ParsableCommand {
@@ -151,6 +146,16 @@ struct Next: ParsableCommand {
     "Ignore calendars <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
   )) var ignoreCalendars: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Select calendar types <v>. A comma separated list of calendar types",
+    valueName: "v"
+  )) var selectCalendarTypes: [EKCalendarType] = []
+
+  @Option(help: ArgumentHelp(
+    "Ignore calendar types <v>. A comma separated list of calendar types",
+    valueName: "v"
+  )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown",
