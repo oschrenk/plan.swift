@@ -173,7 +173,9 @@ struct Next: ParsableCommand {
     let filterBefore = FiltersBefore.build(
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
-      ignoreCalendars: ignoreCalendars
+      ignoreCalendars: ignoreCalendars,
+      selectCalendarTypes: selectCalendarTypes,
+      ignoreCalendarTypes: ignoreCalendarTypes
     )
     let filterAfter = FiltersAfter.build(
       ignoreTag: ignoreTag

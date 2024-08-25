@@ -18,6 +18,19 @@ class FiltersBefore {
     }
   }
 
+  static func ignoreCalendarTypes(types: [EKCalendarType]) -> ((EKEvent) -> Bool) {
+    { event in
+      if event.calendar == nil {
+        return false
+      }
+      let id = event.calendar.type
+      if types.contains(id) {
+        return false
+      }
+      return true
+    }
+  }
+
   static func ignoreAllDayEvents(event: EKEvent) -> Bool {
     !event.isAllDay
   }
@@ -41,7 +54,9 @@ class FiltersBefore {
   static func build(
     ignoreAllDayEvents: Bool,
     ignorePatternTitle: String,
-    ignoreCalendars: [String]
+    ignoreCalendars: [String] = [],
+    selectCalendarTypes _: [EKCalendarType] = [],
+    ignoreCalendarTypes: [EKCalendarType] = []
   ) -> ((EKEvent) -> Bool) {
     var filtersBefore: [(EKEvent) -> Bool] = []
 
@@ -61,6 +76,12 @@ class FiltersBefore {
       let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendars(calendars: ignoreCalendars)
       filtersBefore.append(ic)
       Log.write(message: "added filter before: ignoreCalendars(\(ignoreCalendars))")
+    }
+
+    if !ignoreCalendarTypes.isEmpty {
+      let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendarTypes(types: ignoreCalendarTypes)
+      filtersBefore.append(ic)
+      Log.write(message: "added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 
     let filterBefore = filtersBefore.count > 0 ? FiltersBefore.combined(filters: filtersBefore) : FiltersBefore.accept
