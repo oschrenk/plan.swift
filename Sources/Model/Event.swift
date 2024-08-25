@@ -119,19 +119,16 @@ extension EKEvent {
   func asEvent() -> Event {
     let id = calendarItemIdentifier
 
-    // TODO: when can this be nil???
-    let cal = if calendar != nil {
-      calendar.asCal()
-    } else {
-      Calendar.Unknown
-    }
-    let now = Date()
+    let cal = calendar?.asCal() ?? Calendar.Unknown
     let label = title ?? "unknown"
     let legend = label.asLegend()
     let startsAt = startDate!
     let endsAt = endDate!
+
+    let now = Date()
     let startsIn = Int((startsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     let endsIn = Int((endsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+
     let location = location ?? ""
     let url = generateEventURL(for: self)
     let tags = notes != nil ? notes!.findTags() : [String]()
