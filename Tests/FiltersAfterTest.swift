@@ -3,8 +3,7 @@ import XCTest
 
 final class FiltersAfterTests: XCTestCase {
   private func genEvent() -> Event {
-    let id = "some-uuid"
-
+    let id = UUID().uuidString
     let cal = Calendar.Unknown
     let title = Title(text: "unknown")
     let schedule = Schedule(
