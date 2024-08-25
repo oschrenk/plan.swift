@@ -11,7 +11,7 @@ class Log {
     }
   }
 
-  static func write(message: String) {
+  static func write(_ message: String) {
     switch verbosity {
     case .quiet:
       break

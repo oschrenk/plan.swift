@@ -90,37 +90,37 @@ class FiltersBefore {
     if ignoreAllDayEvents {
       let iade: (EKEvent) -> Bool = FiltersBefore.ignoreAllDayEvents
       filtersBefore.append(iade)
-      Log.write(message: "added filter before: ignoreAllDayEvents")
+      Log.write("added filter before: ignoreAllDayEvents")
     }
 
     if !ignorePatternTitle.isEmpty {
       let ipt: (EKEvent) -> Bool = FiltersBefore.ignorePatternTitle(pattern: ignorePatternTitle)
       filtersBefore.append(ipt)
-      Log.write(message: "added filter before: ignorePatternTitle(\(ignorePatternTitle))")
+      Log.write("added filter before: ignorePatternTitle(\(ignorePatternTitle))")
     }
 
     if !selectCalendars.isEmpty {
       let sc: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: ignoreCalendars)
       filtersBefore.append(sc)
-      Log.write(message: "added filter before: selectCalendars(\(selectCalendars))")
+      Log.write("added filter before: selectCalendars(\(selectCalendars))")
     }
 
     if !ignoreCalendars.isEmpty {
       let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendars(calendars: ignoreCalendars)
       filtersBefore.append(ic)
-      Log.write(message: "added filter before: ignoreCalendars(\(ignoreCalendars))")
+      Log.write("added filter before: ignoreCalendars(\(ignoreCalendars))")
     }
 
     if !selectCalendarTypes.isEmpty {
       let ic: (EKEvent) -> Bool = FiltersBefore.selectCalendarTypes(types: selectCalendarTypes)
       filtersBefore.append(ic)
-      Log.write(message: "added filter before: selectCalendarTypes(\(selectCalendarTypes))")
+      Log.write("added filter before: selectCalendarTypes(\(selectCalendarTypes))")
     }
 
     if !ignoreCalendarTypes.isEmpty {
       let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendarTypes(types: ignoreCalendarTypes)
       filtersBefore.append(ic)
-      Log.write(message: "added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
+      Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 
     let filterBefore = filtersBefore.count > 0 ? FiltersBefore.combined(filters: filtersBefore) : FiltersBefore.accept

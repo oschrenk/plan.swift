@@ -76,7 +76,7 @@ struct Next: ParsableCommand {
     )
     let transformer = Transformers.id
 
-    Log.write(message: "next: About to call eventstore")
+    Log.write("next: About to call eventstore")
 
     let events = EventStore().next(
       within: within,
@@ -87,7 +87,7 @@ struct Next: ParsableCommand {
       transformer(event)
     }.sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
-    Log.write(message: "next: Called eventstore")
+    Log.write("next: Called eventstore")
 
     var next: [Event]
     if events.count == 0 {

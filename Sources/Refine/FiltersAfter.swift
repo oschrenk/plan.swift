@@ -20,7 +20,7 @@ class FiltersAfter {
     if !ignoreTag.isEmpty {
       let rtf: (Event) -> Bool = FiltersAfter.ignoreTag(tag: ignoreTag)
       filtersAfter.append(rtf)
-      Log.write(message: "added filter after: ignoreTag(\(ignoreTag))")
+      Log.write("added filter after: ignoreTag(\(ignoreTag))")
     }
     let filterAfter = filtersAfter.count > 0 ? FiltersAfter.combined(filters: filtersAfter) : FiltersAfter.accept
 
