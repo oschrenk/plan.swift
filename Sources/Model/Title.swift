@@ -1,3 +1,16 @@
+struct Title: Codable {
+  let full: String
+  let label: String
+  let icon: String
+
+  init(text: String) {
+    full = text
+    let legend = full.asLegend()
+    label = legend.description
+    icon = legend.icon
+  }
+}
+
 struct Legend: Codable, Equatable {
   let description: String
   let icon: String

@@ -29,8 +29,7 @@ struct Event: Codable {
   // as the app is mostly interested in interacting with the Calendar.app
   let id: String
   let calendar: Calendar
-  let label: String
-  let legend: Legend
+  let title: Title
   let schedule: Schedule
   let location: String
   let services: [String: String]
@@ -39,8 +38,7 @@ struct Event: Codable {
   enum CodingKeys: String, CodingKey {
     case id
     case calendar
-    case label
-    case legend
+    case title
     case schedule
     case location
     case services
@@ -106,8 +104,7 @@ extension EKEvent {
     let id = calendarItemIdentifier
 
     let cal = calendar?.asCal() ?? Calendar.Unknown
-    let label = title ?? "unknown"
-    let legend = label.asLegend()
+    let title = Title(text: title ?? "unknown")
     let schedule = Schedule(
       now: Date(),
       startDate: startDate!,
@@ -121,8 +118,7 @@ extension EKEvent {
     return Event(
       id: id,
       calendar: cal,
-      label: label,
-      legend: legend,
+      title: title,
       schedule: schedule,
       location: location,
       services: services,
@@ -158,7 +154,7 @@ extension [Event] {
     for event in self {
       let startTime = dateFormatter.string(from: event.schedule.start.at)
       let endTime = dateFormatter.string(from: event.schedule.end.at)
-      let line = "- \(startTime) - \(endTime) \(event.label)"
+      let line = "- \(startTime) - \(endTime) \(event.title.full)"
       StdOut.print(line)
     }
   }
