@@ -108,21 +108,11 @@ extension EKEvent {
     let cal = calendar?.asCal() ?? Calendar.Unknown
     let label = title ?? "unknown"
     let legend = label.asLegend()
-
-    let now = Date()
-    let start = Temporal(
-      at: startDate!,
-      inMinutes: Int((startDate!.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
-    )
-    let end = Temporal(
-      at: endDate!,
-      inMinutes: Int((endDate!.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
-    )
     let schedule = Schedule(
-      start: start,
-      end: end
+      now: Date(),
+      startDate: startDate!,
+      endDate: endDate!
     )
-
     let location = location ?? ""
     let services = [
       "ical": generateIcalURL(for: self),
