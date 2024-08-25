@@ -31,10 +31,8 @@ struct Event: Codable {
   let calendar: Calendar
   let label: String
   let legend: Legend
-  let startsAt: Date
-  let startsIn: Int
-  let endsAt: Date
-  let endsIn: Int
+  let starts: Temporal
+  let ends: Temporal
   let location: String
   let services: [String: String]
   let tags: [String]
@@ -44,10 +42,8 @@ struct Event: Codable {
     case calendar
     case label
     case legend
-    case startsAt = "starts_at"
-    case endsAt = "ends_at"
-    case startsIn = "starts_in"
-    case endsIn = "ends_in"
+    case starts
+    case ends
     case location
     case services
     case tags
@@ -114,12 +110,16 @@ extension EKEvent {
     let cal = calendar?.asCal() ?? Calendar.Unknown
     let label = title ?? "unknown"
     let legend = label.asLegend()
-    let startsAt = startDate!
-    let endsAt = endDate!
 
     let now = Date()
-    let startsIn = Int((startsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
-    let endsIn = Int((endsAt.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+    let starts = Temporal(
+      at: startDate!,
+      inMinutes: Int((startDate!.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+    )
+    let ends = Temporal(
+      at: endDate!,
+      inMinutes: Int((endDate!.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+    )
 
     let location = location ?? ""
     let services = [
@@ -131,10 +131,8 @@ extension EKEvent {
       calendar: cal,
       label: label,
       legend: legend,
-      startsAt: startsAt,
-      startsIn: startsIn,
-      endsAt: endsAt,
-      endsIn: endsIn,
+      starts: starts,
+      ends: ends,
       location: location,
       services: services,
       tags: tags
@@ -167,9 +165,9 @@ extension [Event] {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "HH:mm"
     for event in self {
-      let startHour = dateFormatter.string(from: event.startsAt)
-      let endHour = dateFormatter.string(from: event.endsAt)
-      let line = "- \(startHour) - \(endHour) \(event.label)"
+      let startTime = dateFormatter.string(from: event.starts.at)
+      let endTime = dateFormatter.string(from: event.ends.at)
+      let line = "- \(startTime) - \(endTime) \(event.label)"
       StdOut.print(line)
     }
   }
