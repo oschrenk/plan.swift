@@ -148,12 +148,12 @@ struct Next: ParsableCommand {
   )) var ignoreCalendars: [String] = []
 
   @Option(help: ArgumentHelp(
-    "Select calendar types <v>. A comma separated list of calendar types",
+    "Select calendar types <v>. A comma separated list of calendar types. Available: [local|caldav|exchange|subscription|bihrtyday]",
     valueName: "v"
   )) var selectCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
-    "Ignore calendar types <v>. A comma separated list of calendar types",
+    "Ignore calendar types <v>. A comma separated list of calendar types. Available: [local|caldav|exchange|subscription|bihrtyday]",
     valueName: "v"
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 

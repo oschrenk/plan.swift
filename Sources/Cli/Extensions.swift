@@ -12,6 +12,10 @@ extension EKCalendarType: ExpressibleByArgument {
     switch argument.lowercased() {
     case "local":
       self = .local
+    case "birthday":
+      self = .birthday
+    case "exchange":
+      self = .exchange
     case "caldav":
       self = .calDAV
     case "subscription":
