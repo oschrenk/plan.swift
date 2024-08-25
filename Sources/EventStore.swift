@@ -136,8 +136,8 @@ struct EventStore {
     do {
       try eventStore.save(event, span: .thisEvent)
     } catch let error as NSError {
-      print("failed to save event with error : \(error)")
+      StdErr.print("failed to save event with error : \(error)")
     }
-    print("Saved Event")
+    StdOut.print("Saved Event")
   }
 }
