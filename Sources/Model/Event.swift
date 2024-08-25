@@ -106,7 +106,6 @@ extension EKEvent {
     var dateComponent = ""
     if event.hasRecurrenceRules {
       if let startDate = event.startDate {
-        formatter.dateFormat = "yyyyMMdd'T'HHmmss'Z'"
         formatter.timeZone = TimeZone.current
         if !event.isAllDay {
           formatter.timeZone = TimeZone(secondsFromGMT: 0)
