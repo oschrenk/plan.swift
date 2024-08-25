@@ -33,7 +33,7 @@ struct Next: ParsableCommand {
   @Option(help: ArgumentHelp(
     "Select calendars <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
-  )) var selectCalendars: [String]? = nil
+  )) var selectCalendars: [String] = []
 
   @Option(help: ArgumentHelp(
     "Ignore calendars <v>. A comma separated list of calendar UUIDs",
@@ -66,6 +66,7 @@ struct Next: ParsableCommand {
     let filterBefore = FiltersBefore.build(
       ignoreAllDayEvents: ignoreAllDayEvents,
       ignorePatternTitle: ignorePatternTitle,
+      selectCalendars: selectCalendars,
       ignoreCalendars: ignoreCalendars,
       selectCalendarTypes: selectCalendarTypes,
       ignoreCalendarTypes: ignoreCalendarTypes

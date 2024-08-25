@@ -5,6 +5,19 @@ class FiltersBefore {
     true
   }
 
+  static func selectCalendars(calendars: [String]) -> ((EKEvent) -> Bool) {
+    { event in
+      if event.calendar == nil {
+        return false
+      }
+      let id = event.calendar.calendarIdentifier.uppercased()
+      if calendars.contains(id) {
+        return true
+      }
+      return false
+    }
+  }
+
   static func ignoreCalendars(calendars: [String]) -> ((EKEvent) -> Bool) {
     { event in
       if event.calendar == nil {
@@ -67,6 +80,7 @@ class FiltersBefore {
   static func build(
     ignoreAllDayEvents: Bool,
     ignorePatternTitle: String,
+    selectCalendars: [String] = [],
     ignoreCalendars: [String] = [],
     selectCalendarTypes: [EKCalendarType] = [],
     ignoreCalendarTypes: [EKCalendarType] = []
@@ -83,6 +97,12 @@ class FiltersBefore {
       let ipt: (EKEvent) -> Bool = FiltersBefore.ignorePatternTitle(pattern: ignorePatternTitle)
       filtersBefore.append(ipt)
       Log.write(message: "added filter before: ignorePatternTitle(\(ignorePatternTitle))")
+    }
+
+    if !selectCalendars.isEmpty {
+      let sc: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: ignoreCalendars)
+      filtersBefore.append(sc)
+      Log.write(message: "added filter before: selectCalendars(\(selectCalendars))")
     }
 
     if !ignoreCalendars.isEmpty {
