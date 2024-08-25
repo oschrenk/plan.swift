@@ -14,6 +14,7 @@ final class FiltersBeforeTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+    eventStore = EKEventStore()
   }
 
   override func tearDown() {
