@@ -20,11 +20,11 @@ struct Event: Codable {
   // > identifier as provided by the calendar server.
   // > allows you to access the same event or reminder across multiple devices
   // see also https://developer.apple.com/documentation/eventkit/ekcalendaritem/1507283-calendaritemexternalidentifier
-
+  //
   // re 3)
   // use this identifier to look up an event with the EKEventStore method event(withIdentifier:)
   // see also https://developer.apple.com/documentation/eventkit/ekevent/1507437-eventidentifier
-
+  //
   // for now we pick `calendarItemIdentifier`,
   // as the app is mostly interested in interacting with the Calendar.app
   let id: String
@@ -168,8 +168,7 @@ extension [Event] {
     }
   }
 
-  //
-
+  // Examples:
   // - 09:00 - 12:00 🚊 Travel Home
   // - 12:00 - 13:00 🥗 Lunch
   func printAsMarkdown() {
