@@ -65,6 +65,8 @@ struct Event: Codable {
 extension String {
   func findTags() -> [String] {
     let text = self
+    let separator = ":"
+    let tag = "tag"
 
     var tags = [String]()
     var startIndex = text.startIndex
@@ -74,9 +76,9 @@ extension String {
       options: .regularExpression,
       range: startIndex ..< endIndex
     ) {
-      let kv = String(text[range]).split(separator: ":")
+      let kv = String(text[range]).split(separator: separator)
       let key = String(kv[0])
-      if key == "tag" {
+      if key == tag {
         let value = String(kv[1])
         tags.append(value)
       }
