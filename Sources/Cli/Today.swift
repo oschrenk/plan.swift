@@ -11,9 +11,9 @@ struct Today: ParsableCommand {
   )
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'",
+    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'. A comma separated list of tags.",
     valueName: "t"
-  )) var ignoreTag: String = ""
+  )) var ignoreTags: [String] = []
 
   @Option(help: ArgumentHelp(
     "Output format <f>. Available: json or markdown",
@@ -43,7 +43,7 @@ struct Today: ParsableCommand {
       ignorePatternTitle: "",
       ignoreCalendars: ignoreCalendars
     )
-    let filterAfter = FiltersAfter.build(ignoreTag: ignoreTag)
+    let filterAfter = FiltersAfter.build(ignoreTags: ignoreTags)
 
     let events = EventStore().today(
       selectCalendars: selectCalendars,

@@ -26,9 +26,9 @@ struct Next: ParsableCommand {
   )) var ignorePatternTitle: String = ""
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'",
+    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'. A comma separated list of tags.",
     valueName: "t"
-  )) var ignoreTag: String = ""
+  )) var ignoreTags: [String] = []
 
   @Option(help: ArgumentHelp(
     "Select calendars <v>. A comma separated list of calendar UUIDs",
@@ -72,7 +72,7 @@ struct Next: ParsableCommand {
       ignoreCalendarTypes: ignoreCalendarTypes
     )
     let filterAfter = FiltersAfter.build(
-      ignoreTag: ignoreTag
+      ignoreTags: ignoreTags
     )
     let transformer = Transformers.id
 

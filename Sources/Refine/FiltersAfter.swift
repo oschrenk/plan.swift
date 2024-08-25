@@ -3,9 +3,12 @@ class FiltersAfter {
     true
   }
 
-  static func ignoreTag(tag: String) -> ((Event) -> Bool) {
+  static func ignoreTags(tags: [String]) -> ((Event) -> Bool) {
     { event in
-      !event.tags.contains(tag)
+      let intersection = Set(tags).intersection(Set(event.tags))
+      let hasMatchingTag = !intersection.isEmpty
+      Log.write("Event \"\(event.title.full)\" has tags: \(event.tags). We are ignoring \(tags). hasMatchingTag: \(hasMatchingTag)")
+      return !hasMatchingTag
     }
   }
 
@@ -15,12 +18,12 @@ class FiltersAfter {
     }
   }
 
-  static func build(ignoreTag: String) -> ((Event) -> Bool) {
+  static func build(ignoreTags: [String]) -> ((Event) -> Bool) {
     var filtersAfter: [(Event) -> Bool] = []
-    if !ignoreTag.isEmpty {
-      let rtf: (Event) -> Bool = FiltersAfter.ignoreTag(tag: ignoreTag)
+    if !ignoreTags.isEmpty {
+      let rtf: (Event) -> Bool = FiltersAfter.ignoreTags(tags: ignoreTags)
       filtersAfter.append(rtf)
-      Log.write("added filter after: ignoreTag(\(ignoreTag))")
+      Log.write("added filter after: ignoreTags(\(ignoreTags))")
     }
     let filterAfter = filtersAfter.count > 0 ? FiltersAfter.combined(filters: filtersAfter) : FiltersAfter.accept
 
