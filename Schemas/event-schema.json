@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "calendar": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "color",
+        "label",
+        "type"
+      ]
+    },
+    "title": {
+      "type": "object",
+      "properties": {
+        "full": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "full",
+        "description",
+        "icon"
+      ]
+    },
+    "schedule": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "object",
+          "properties": {
+            "at": {
+              "type": "string"
+            },
+            "in": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "at",
+            "in"
+          ]
+        },
+        "end": {
+          "type": "object",
+          "properties": {
+            "at": {
+              "type": "string"
+            },
+            "in": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "at",
+            "in"
+          ]
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ]
+    },
+    "services": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "ical": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "ical"
+          ]
+        }
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "calendar",
+    "title",
+    "schedule",
+    "services",
+    "tags"
+  ]
+}
