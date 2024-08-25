@@ -4,10 +4,20 @@ import EventKit
 import XCTest
 
 final class FiltersBeforeTests: XCTestCase {
-  private let eventStore = EKEventStore()
+  private var eventStore: EKEventStore = .init()
+
   func genEKEvent() -> EKEvent {
     let event = EKEvent(eventStore: eventStore)
     return event
+  }
+
+  override func setUp() {
+    super.setUp()
+  }
+
+  override func tearDown() {
+    eventStore.reset()
+    super.tearDown()
   }
 
   func testAlwaysAccept() {
