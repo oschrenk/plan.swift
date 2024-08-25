@@ -184,7 +184,7 @@ struct Next: ParsableCommand {
       filterAfter: filterAfter
     ).map { event in
       transformer(event)
-    }.sorted { $0.ends.inMinutes > $1.ends.inMinutes }
+    }.sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
     Log.write(message: "next: Called eventstore")
 

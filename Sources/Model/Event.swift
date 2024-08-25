@@ -31,8 +31,7 @@ struct Event: Codable {
   let calendar: Calendar
   let label: String
   let legend: Legend
-  let starts: Temporal
-  let ends: Temporal
+  let schedule: Schedule
   let location: String
   let services: [String: String]
   let tags: [String]
@@ -42,8 +41,7 @@ struct Event: Codable {
     case calendar
     case label
     case legend
-    case starts
-    case ends
+    case schedule
     case location
     case services
     case tags
@@ -112,13 +110,17 @@ extension EKEvent {
     let legend = label.asLegend()
 
     let now = Date()
-    let starts = Temporal(
+    let start = Temporal(
       at: startDate!,
       inMinutes: Int((startDate!.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     )
-    let ends = Temporal(
+    let end = Temporal(
       at: endDate!,
       inMinutes: Int((endDate!.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
+    )
+    let schedule = Schedule(
+      start: start,
+      end: end
     )
 
     let location = location ?? ""
@@ -131,8 +133,7 @@ extension EKEvent {
       calendar: cal,
       label: label,
       legend: legend,
-      starts: starts,
-      ends: ends,
+      schedule: schedule,
       location: location,
       services: services,
       tags: tags
@@ -165,8 +166,8 @@ extension [Event] {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "HH:mm"
     for event in self {
-      let startTime = dateFormatter.string(from: event.starts.at)
-      let endTime = dateFormatter.string(from: event.ends.at)
+      let startTime = dateFormatter.string(from: event.schedule.start.at)
+      let endTime = dateFormatter.string(from: event.schedule.end.at)
       let line = "- \(startTime) - \(endTime) \(event.label)"
       StdOut.print(line)
     }
