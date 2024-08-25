@@ -2,7 +2,7 @@
 import XCTest
 
 final class FiltersAfterTests: XCTestCase {
-  private func genEvent() -> Event {
+  private func genEvent(tags: [String] = []) -> Event {
     let id = UUID().uuidString
     let cal = Calendar.Unknown
     let title = Title(text: "unknown")
@@ -13,7 +13,7 @@ final class FiltersAfterTests: XCTestCase {
     )
     let location = ""
     let services: [String: String] = [:]
-    let tags: [String] = []
+
     return Event(
       id: id,
       calendar: cal,
@@ -31,5 +31,29 @@ final class FiltersAfterTests: XCTestCase {
     let actual = FiltersAfter.accept(event)
 
     XCTAssertEqual(actual, expected, "The event was not accepted")
+  }
+
+  func testIgnoreTagsNoTags() {
+    let event = genEvent(tags: ["timeblock"])
+    let expected = true
+    let actual = FiltersAfter.ignoreTags(tags: [])(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+  }
+
+  func testIgnoreTagsMatchingTags() {
+    let event = genEvent(tags: ["timeblock"])
+    let expected = false
+    let actual = FiltersAfter.ignoreTags(tags: ["timeblock"])(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+  }
+
+  func testIgnoreTagsNotMatchingTags() {
+    let event = genEvent(tags: ["foo"])
+    let expected = true
+    let actual = FiltersAfter.ignoreTags(tags: ["timeblock"])(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely ignored")
   }
 }
