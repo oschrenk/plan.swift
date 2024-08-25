@@ -22,14 +22,17 @@ class FiltersBefore {
 
   static func ignoreCalendars(calendars: [String]) -> ((EKEvent) -> Bool) {
     { event in
+      // if no selection, allow everything
+      if calendars.isEmpty {
+        return true
+      }
+
+      // if event has no valid calendar, don't show
       if event.calendar == nil {
         return false
       }
-      let id = event.calendar.calendarIdentifier.uppercased()
-      if calendars.contains(id) {
-        return false
-      }
-      return true
+
+      return !calendars.contains(event.calendar.calendarIdentifier.uppercased())
     }
   }
 
