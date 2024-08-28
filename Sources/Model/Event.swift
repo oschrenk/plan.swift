@@ -75,13 +75,14 @@ extension String {
 }
 
 extension EKEvent {
-  // convenience method to build ical url from EKEvent
-  func generateIcalURL(for event: EKEvent) -> String {
-    Service.buildIcalURL(
-      calendarItemIdentifier: event.calendarItemIdentifier,
-      isAllDay: event.isAllDay,
-      hasRecurrenceRules: event.hasRecurrenceRules,
-      startDate: event.startDate
+  // convenience method to build services urls from EKEvent
+  func listServices() -> [String: String] {
+    Service.fromEvent(
+      notes: notes ?? "",
+      calendarItemIdentifier: calendarItemIdentifier,
+      isAllDay: isAllDay,
+      hasRecurrenceRules: hasRecurrenceRules,
+      startDate: startDate
     )
   }
 
@@ -96,9 +97,7 @@ extension EKEvent {
       endDate: endDate!
     )
     let location = location ?? ""
-    let services = [
-      "ical": generateIcalURL(for: self),
-    ]
+    let services = listServices()
     let tags = notes != nil ? notes!.findTags() : [String]()
     return Event(
       id: id,
