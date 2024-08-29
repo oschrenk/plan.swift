@@ -15,11 +15,6 @@ struct Today: ParsableCommand {
     valueName: "t"
   )) var ignoreTags: [String] = []
 
-  @Option(help: ArgumentHelp(
-    "Output format <f>. Available: json or markdown",
-    valueName: "f"
-  )) var format: EventFormat = .json
-
   @Flag(help: ArgumentHelp(
     "Print debug statements"
   ))
@@ -51,11 +46,6 @@ struct Today: ParsableCommand {
       filterAfter: filterAfter
     )
 
-    switch format {
-    case .json:
-      events.printAsJson()
-    case .markdown:
-      events.printAsMarkdown()
-    }
+    events.printAsJson()
   }
 }

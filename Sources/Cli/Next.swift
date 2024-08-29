@@ -51,9 +51,9 @@ struct Next: ParsableCommand {
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
-    "Output format <f>. Available: [json|markdown]",
-    valueName: "f"
-  )) var format: EventFormat = .json
+    "Template path <p>.",
+    valueName: "p"
+  )) var templatePath: String = ""
 
   @Flag(help: ArgumentHelp(
     "Print debug statements"
@@ -97,11 +97,16 @@ struct Next: ParsableCommand {
       next = Array(events.prefix(upTo: 1))
     }
 
-    switch format {
-    case .json:
+    if templatePath.isEmpty {
       next.printAsJson()
-    case .markdown:
-      next.printAsMarkdown()
+    } else {
+      let render = Template.render(path: templatePath, events: events)
+
+      if render == nil {
+        StdErr.print("Failed to render template at `\(templatePath)")
+      } else {
+        print(render!)
+      }
     }
   }
 }
