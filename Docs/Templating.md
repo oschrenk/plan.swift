@@ -10,15 +10,6 @@ As a general layout, I see these variants
 - 08:00 - 10:00 [[path/to/file.md|Meeting with Jane]] [↗](ical://...)
 ```
 
-As for templates
-
-```
-- {{start:"HH:mm"}} - {{end:"HH:mm"}}{{title}} [↗]({{url}}) #calendar/{{calendar:id}}
-- {{start:"HH:mm"}} - {{end:"HH:mm"}}{{title}} [↗]({{url}}) #calendar/{{calendar:uuid}}
-- {{start:"HH:mm"}} - {{end:"HH:mm"}}{{title}} [↗]({{url}}) ({{calendar:title.lowercased}})
-
-```
-
 - start and time are zero prefixed for consistent formatting
 - title after
 - event url hidden behind an arrow
@@ -44,3 +35,22 @@ ideally that meeting page is at a certain location already
 - maybe use "tags" in the notes
 - the arrow points to the calendar entry
 
+
+## Mustache
+
+```
+- {{start:"HH:mm"}} - {{end:"HH:mm"}}{{title}} [↗]({{url}}) #calendar/{{calendar:id}}
+- {{start:"HH:mm"}} - {{end:"HH:mm"}}{{title}} [↗]({{url}}) #calendar/{{calendar:uuid}}
+- {{start:"HH:mm"}} - {{end:"HH:mm"}}{{title}} [↗]({{url}}) ({{calendar:title.lowercased}})
+
+```
+
+## Stencil
+
+```
+## Schedule
+
+{% for e in events %}
+- {{ e.start.at|format:"HH:mm" }} - {{ e.end.at|format:"HH:mm" }}{{e.title.full}} [↗]({{e.services["ical"].url}}) ({{e.calendar.title|lowercased}})
+{% endfor %}
+```

@@ -1,6 +1,7 @@
 import ArgumentParser
 import EventKit
 import Foundation
+import Stencil
 
 /// `plan next`
 ///
@@ -51,9 +52,9 @@ struct Next: ParsableCommand {
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
-    "Output format <f>. Available: [json|markdown]",
-    valueName: "f"
-  )) var format: EventFormat = .json
+    "Template path <p>.",
+    valueName: "p"
+  )) var templatePath: String = ""
 
   @Flag(help: ArgumentHelp(
     "Print debug statements"
@@ -97,11 +98,15 @@ struct Next: ParsableCommand {
       next = Array(events.prefix(upTo: 1))
     }
 
-    switch format {
-    case .json:
+    if templatePath.isEmpty {
       next.printAsJson()
-    case .markdown:
-      next.printAsMarkdown()
+    } else {
+      let context = [
+        "events": events,
+      ]
+      let environment = Environment(loader: DictionaryLoader(templates: ["index.html": "Hello World"]))
+      let rendered = try! environment.renderTemplate(name: "index.html", context: context)
+      print(rendered)
     }
   }
 }
