@@ -4,11 +4,7 @@ enum Log {
   static var verbosity: Verbosity = .quiet
 
   static func setDebug(_ debug: Bool) {
-    if debug {
-      Log.verbosity = Verbosity.debug
-    } else {
-      Log.verbosity = Verbosity.quiet
-    }
+    verbosity = debug ? .debug : .quiet
   }
 
   static func write(_ message: String) {
