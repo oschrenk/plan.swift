@@ -1,6 +1,6 @@
 # Obsidian
 
-You can setup Obsidian to insert today's schedule into your notes.
+You can setup [Obsidian](https://obsidian.md/) to insert today's schedule into your notes.
 
 ## Preparation
 
