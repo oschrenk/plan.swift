@@ -1,6 +1,11 @@
+import ArgumentParser
 import Foundation
 
 enum Log {
+  enum Verbosity: String, ExpressibleByArgument {
+    case quiet, debug
+  }
+
   static var verbosity: Verbosity = .quiet
 
   static func setDebug(_ debug: Bool) {
