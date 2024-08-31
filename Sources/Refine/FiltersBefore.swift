@@ -111,7 +111,7 @@ class FiltersBefore {
     }
 
     if !selectCalendars.isEmpty {
-      let scf: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: ignoreCalendars)
+      let scf: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: selectCalendars)
       filtersBefore.append(scf)
       Log.write("added filter before: selectCalendars(\(selectCalendars))")
     }
