@@ -3,19 +3,14 @@ import Stencil
 
 class Template {
   static func render(path: String, events: [Event]) -> String? {
-    let template = File.read(from: path)
-
-    if template == nil {
+    guard let template = File.read(from: path) else {
       return nil
     }
+
     let ext = Extension()
     ext.registerFilter("format") { (value: Any?, arguments: [Any?]) in
-      let format: String
-
-      if let value = arguments.first as? String {
-        format = value
-      } else {
-        throw TemplateSyntaxError("not a valid format")
+      guard let format = arguments.first as? String else {
+        throw TemplateSyntaxError("Not a valid format")
       }
 
       if let value = value as? Date {
@@ -30,7 +25,7 @@ class Template {
 
     let context = ["events": events]
     let environment = Environment(
-      loader: DictionaryLoader(templates: ["default": template!]),
+      loader: DictionaryLoader(templates: ["default": template]),
       extensions: [ext]
     )
     do {
