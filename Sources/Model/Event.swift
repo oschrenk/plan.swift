@@ -125,7 +125,7 @@ extension [Event] {
       )
       StdOut.print(json)
     } catch {
-      StdErr.print("fail")
+      StdErr.print("Failed to print events as JSON")
     }
   }
 }
