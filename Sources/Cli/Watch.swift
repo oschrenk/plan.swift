@@ -9,6 +9,11 @@ struct Watch: ParsableCommand {
     abstract: "Fire Sketchybar event on calendar changes"
   )
 
+  @Option(help: ArgumentHelp(
+    "Sketchybar event <e>.",
+    valueName: "e"
+  )) var sketchybarEvent: String = "calendar_changed"
+
   mutating func run() {
     let home = FileManager.default.homeDirectoryForCurrentUser
     let dir = home.appendingPathComponent("/Library/Calendars").path
@@ -21,7 +26,7 @@ struct Watch: ParsableCommand {
       "Extras.db-wal",
     ].map { dir + "/" + $0 }
 
-    let sketchybar = Sketchybar(event: "calendar_changed")
+    let sketchybar = Sketchybar(event: sketchybarEvent)
     let watcher = FileWatcher(paths: files, callback: sketchybar.trigger)
     watcher.start()
 
