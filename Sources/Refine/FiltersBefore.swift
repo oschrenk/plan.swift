@@ -134,9 +134,9 @@ class FiltersBefore {
       Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 
-    let filterBefore = filtersBefore.count > 0 ?
-      FiltersBefore.combined(filters: filtersBefore) :
-      FiltersBefore.accept
+    let filterBefore = filtersBefore.isEmpty ?
+      FiltersBefore.accept :
+      FiltersBefore.combined(filters: filtersBefore)
 
     return filterBefore
   }
