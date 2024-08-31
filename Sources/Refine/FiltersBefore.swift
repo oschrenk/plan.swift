@@ -111,26 +111,26 @@ class FiltersBefore {
     }
 
     if !selectCalendars.isEmpty {
-      let sc: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: ignoreCalendars)
-      filtersBefore.append(sc)
+      let scf: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: ignoreCalendars)
+      filtersBefore.append(scf)
       Log.write("added filter before: selectCalendars(\(selectCalendars))")
     }
 
     if !ignoreCalendars.isEmpty {
-      let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendars(calendars: ignoreCalendars)
-      filtersBefore.append(ic)
+      let icf: (EKEvent) -> Bool = FiltersBefore.ignoreCalendars(calendars: ignoreCalendars)
+      filtersBefore.append(icf)
       Log.write("added filter before: ignoreCalendars(\(ignoreCalendars))")
     }
 
     if !selectCalendarTypes.isEmpty {
-      let ic: (EKEvent) -> Bool = FiltersBefore.selectCalendarTypes(types: selectCalendarTypes)
-      filtersBefore.append(ic)
+      let sctf: (EKEvent) -> Bool = FiltersBefore.selectCalendarTypes(types: selectCalendarTypes)
+      filtersBefore.append(sctf)
       Log.write("added filter before: selectCalendarTypes(\(selectCalendarTypes))")
     }
 
     if !ignoreCalendarTypes.isEmpty {
-      let ic: (EKEvent) -> Bool = FiltersBefore.ignoreCalendarTypes(types: ignoreCalendarTypes)
-      filtersBefore.append(ic)
+      let ictf: (EKEvent) -> Bool = FiltersBefore.ignoreCalendarTypes(types: ignoreCalendarTypes)
+      filtersBefore.append(ictf)
       Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 

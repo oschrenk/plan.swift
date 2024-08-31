@@ -8,8 +8,8 @@ struct StdErrOutputStream: TextOutputStream {
 }
 
 enum StdErr {
-  static func print(_ s: String) {
+  static func print(_ string: String) {
     var errStream = StdErrOutputStream()
-    Swift.print(s, to: &errStream)
+    Swift.print(string, to: &errStream)
   }
 }

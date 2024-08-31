@@ -60,10 +60,10 @@ extension String {
       options: .regularExpression,
       range: startIndex ..< endIndex
     ) {
-      let kv = String(text[range]).split(separator: separator)
-      let key = String(kv[0])
+      let keyValue = String(text[range]).split(separator: separator)
+      let key = String(keyValue[0])
       if key == tag {
-        let value = String(kv[1])
+        let value = String(keyValue[1])
         tags.append(value)
       }
 

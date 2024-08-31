@@ -51,9 +51,9 @@ class FileWatcher {
     return true
   }
 
-  private func stopMonitoring(_ fd: Int32) {
-    sources[fd]?.cancel()
-    sources.removeValue(forKey: fd)
+  private func stopMonitoring(_ fileDescriptor: Int32) {
+    sources[fileDescriptor]?.cancel()
+    sources.removeValue(forKey: fileDescriptor)
   }
 
   private func handleWriteEvent(at _: String) {
@@ -66,9 +66,9 @@ class FileWatcher {
   }
 
   deinit {
-    for (fd, source) in sources {
+    for (fileDescriptor, source) in sources {
       source.cancel()
-      close(fd)
+      close(fileDescriptor)
     }
   }
 }

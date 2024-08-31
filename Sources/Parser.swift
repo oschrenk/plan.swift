@@ -26,9 +26,9 @@ class Parser {
   }
 
   static func parse(text: String) -> AddEvent? {
-    let l = CharacterSet.lowercaseLetters
-    let s = CharacterSet(charactersIn: "-_/")
-    let n: CharacterSet = .decimalDigits
+    let lowerCaseLetters = CharacterSet.lowercaseLetters
+    let specialChars = CharacterSet(charactersIn: "-_/")
+    let digits: CharacterSet = .decimalDigits
 
     let eventParser = Parse(input: Substring.self) {
       Skip {
@@ -45,7 +45,7 @@ class Parser {
       Prefix { $0 != "#" }.map(String.init)
       Optionally {
         "#"
-        l.union(s).union(n).map(String.init)
+        lowerCaseLetters.union(specialChars).union(digits).map(String.init)
       }
     }.map { (start: HourMinute, end: HourMinute, title: String, maybeTag: String?) in
       let now = Date()
