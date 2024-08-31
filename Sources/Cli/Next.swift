@@ -89,13 +89,7 @@ struct Next: ParsableCommand {
 
     Log.write("next: Called eventstore")
 
-    var next: [Event]
-    if events.count == 0 {
-      next = Array()
-    } else {
-      // prefix crashes if sequence has no elements
-      next = Array(events.prefix(upTo: 1))
-    }
+    let next = Array(events.prefix(1))
 
     if templatePath.isEmpty {
       next.printAsJson()
