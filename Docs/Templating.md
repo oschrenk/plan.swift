@@ -16,8 +16,8 @@ I want to be able to inject today's schedule into my notes
 
 - start and time are zero prefixed for consistent formatting
 - title with emoji
-- normalied calendar name with a hashtag
-- clickable event url to open Calendar app
+- normalized calendar name with a hashtag
+- clickable event URL to open Calendar app
 - links to open/create files for more details when it's a meeting
 
 Create a `template.md`  (mine lives in `~/.config/plan`)
@@ -36,7 +36,7 @@ You have access to
 - a custom `format` filter for date/time formatting (see cheatsheet [here](https://www.advancedswift.com/date-formatter-cheatsheet-formulas-swift/))
 
 It assumes:
-- that your Calendar names are without spaces
+- that your calendar names are without spaces
 - that you have Google Meet events at work
 
 ## Appendix
@@ -55,6 +55,6 @@ You can use any of the following characters in your tags:
 
 Tags must contain at least one non-numerical character. For example, #1984 isn't a valid tag, but #y1984 is.
 
-Tags are case-insensitive. For example, #tag and #TAG willbe treated as identical.
+Tags are case-insensitive. For example, #tag and #TAG will be treated as identical.
 
 See also [Tag format](https://help.obsidian.md/Editing+and+formatting/Tags#Tag+format)

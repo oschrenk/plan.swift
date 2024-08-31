@@ -7,7 +7,7 @@ import Foundation
 /// List next event(s)
 struct Next: ParsableCommand {
   static var configuration = CommandConfiguration(
-    abstract: "List next event"
+    abstract: "List next event(s)"
   )
 
   @Option(help: ArgumentHelp(
@@ -43,13 +43,13 @@ struct Next: ParsableCommand {
 
   @Option(help: ArgumentHelp(
     "Select calendar types <v>. A comma separated list of calendar types. " +
-      "Available: [local|caldav|exchange|subscription|bihrtyday]",
+      "Available: [local|caldav|exchange|subscription|birthday]",
     valueName: "v"
   )) var selectCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
     "Ignore calendar types <v>. A comma separated list of calendar types. " +
-      "Available: [local|caldav|exchange|subscription|bihrtyday]",
+      "Available: [local|caldav|exchange|subscription|birthday]",
     valueName: "v"
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 

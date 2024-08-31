@@ -6,17 +6,17 @@ A macOS tool to fetch (the next) calendar events as json
 
 - return JSON by default
 - for emoji lovers: separate leading emojis from event title, giving you the emoji, short and full title
-- ignore events based on tags eg. `tag:example` within the event notes
+- ignore events based on tags e.g. `tag:example` within the event notes
 - return start and end time in relative and absolute terms
 - return an `ical` URL that can be used to `open $URL` to show the particular event in Calendar.app
-- parse Google meet urls from notes
+- parse Google meet URLs from notes
 - print out calendar entries with a templating engine
 
 ## Examples
 
 ### JSON
 
-Example output in json
+Example output in JSON
 
 `plan next`
 
@@ -99,7 +99,7 @@ For more details, consult [Docs/Templating](Docs/Templating.md).
 
 ## Installation
 
-**Via Github**
+**Via GitHub**
 
 - installs to `$HOME/.local/bin/plan` (make sure it's in `$PATH`)
 
@@ -109,7 +109,7 @@ cd plan.swift
 task install
 ```
 
-**Via homebrew**
+**Via Homebrew**
 
 ```
 brew tap oschrenk/made git@github.com:oschrenk/homebrew-made

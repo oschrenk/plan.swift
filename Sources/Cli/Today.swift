@@ -57,7 +57,7 @@ struct Today: ParsableCommand {
     } else {
       let render = Template.render(path: templatePath, events: events)
       if render == nil {
-        StdErr.print("Failed to render template at `\(templatePath)")
+        StdErr.print("Failed to render template at `\(templatePath)`")
       } else {
         print(render!)
       }
