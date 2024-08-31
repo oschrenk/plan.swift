@@ -91,26 +91,18 @@ extension EKEvent {
 
   /// Converts an EKEvent to an Event struct
   func asEvent() -> Event {
-    let id = calendarItemIdentifier
-    let cal = calendar?.asCal() ?? Calendar.Unknown
-    let title = Title(text: title ?? "unknown")
-    let schedule = Schedule(
-      now: Date(),
-      startDate: startDate!,
-      endDate: endDate!
-    )
-    let location = location ?? ""
-    let services = listServices()
-    let tags = notes?.findTags() ?? []
+    guard let startDate = startDate, let endDate = endDate else {
+      fatalError("Event start or end date is missing")
+    }
 
     return Event(
-      id: id,
-      calendar: cal,
-      title: title,
-      schedule: schedule,
-      location: location,
-      services: services,
-      tags: tags
+      id: calendarItemIdentifier,
+      calendar: calendar?.asCal() ?? Calendar.Unknown,
+      title: Title(text: title ?? "Unknown"),
+      schedule: Schedule(now: Date(), startDate: startDate, endDate: endDate),
+      location: location ?? "",
+      services: listServices(),
+      tags: notes?.findTags() ?? []
     )
   }
 }
