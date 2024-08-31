@@ -26,9 +26,10 @@ struct Watch: ParsableCommand {
       "Extras.db-wal",
     ].map { dir + "/" + $0 }
 
-    let sketchybar = Sketchybar(event: sketchybarEvent)
-    let watcher = FileWatcher(paths: files, callback: sketchybar.trigger)
-    watcher.start()
+    FileWatcher(
+      paths: files,
+      callback: Sketchybar(event: sketchybarEvent).trigger
+    ).start()
 
     dispatchMain()
   }
