@@ -46,7 +46,10 @@ struct Event: Codable {
   }
 }
 
+/// Extension to String for finding tags in the text
 extension String {
+  /// Finds and returns an array of tags in the string
+  /// Tags are in the format "tag:value"
   func findTags() -> [String] {
     let text = self
     let separator = ":"
@@ -75,7 +78,7 @@ extension String {
 }
 
 extension EKEvent {
-  // convenience method to build services urls from EKEvent
+  /// Convenience method to build services URLs from EKEvent
   func listServices() -> [String: String] {
     Service.fromEvent(
       notes: notes ?? "",
@@ -86,6 +89,7 @@ extension EKEvent {
     )
   }
 
+  /// Converts an EKEvent to an Event struct
   func asEvent() -> Event {
     let id = calendarItemIdentifier
     let cal = calendar?.asCal() ?? Calendar.Unknown
@@ -112,6 +116,7 @@ extension EKEvent {
 }
 
 extension [Event] {
+  /// Prints the array of Events as JSON
   func printAsJson() {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
