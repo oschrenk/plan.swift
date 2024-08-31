@@ -6,9 +6,13 @@ class Service {
   ]
 
   private static func findMatch(in text: String, using pattern: String) -> String? {
-    let regex = try! Regex<Substring>(pattern)
-    if let match = text.firstMatch(of: regex) {
-      return String(match.output)
+    do {
+      let regex = try Regex<Substring>(pattern)
+      if let match = text.firstMatch(of: regex) {
+        return String(match.output)
+      }
+    } catch {
+      StdErr.print("Error creating regex: \(error)")
     }
     return nil
   }

@@ -33,8 +33,11 @@ class Template {
       loader: DictionaryLoader(templates: ["default": template!]),
       extensions: [ext]
     )
-    let rendered = try! environment.renderTemplate(name: "default", context: context)
-
-    return rendered
+    do {
+      return try environment.renderTemplate(name: "default", context: context)
+    } catch {
+      StdErr.print("Error rendering template: \(error)")
+      return nil
+    }
   }
 }
