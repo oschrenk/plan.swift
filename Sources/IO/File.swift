@@ -1,6 +1,6 @@
 import Foundation
 
-class File {
+enum File {
   static func read(from path: String) -> String? {
     do {
       let url = URL(fileURLWithPath: path)
