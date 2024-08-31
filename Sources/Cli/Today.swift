@@ -11,6 +11,11 @@ struct Today: ParsableCommand {
   )
 
   @Option(help: ArgumentHelp(
+    "Template path <p>.",
+    valueName: "p"
+  )) var templatePath: String = ""
+
+  @Option(help: ArgumentHelp(
     "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'. A comma separated list of tags.",
     valueName: "t"
   )) var ignoreTags: [String] = []
@@ -46,6 +51,15 @@ struct Today: ParsableCommand {
       filterAfter: filterAfter
     )
 
-    events.printAsJson()
+    if templatePath.isEmpty {
+      events.printAsJson()
+    } else {
+      let render = Template.render(path: templatePath, events: events)
+      if render == nil {
+        StdErr.print("Failed to render template at `\(templatePath)")
+      } else {
+        print(render!)
+      }
+    }
   }
 }
