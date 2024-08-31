@@ -77,7 +77,6 @@ struct Next: ParsableCommand {
     let filterAfter = FiltersAfter.build(
       ignoreTags: ignoreTags
     )
-    let transformer = Transformers.id
 
     Log.write("next: About to call eventstore")
 
@@ -86,9 +85,7 @@ struct Next: ParsableCommand {
       selectCalendars: selectCalendars,
       filterBefore: filterBefore,
       filterAfter: filterAfter
-    ).map { event in
-      transformer(event)
-    }.sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
+    ).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
     Log.write("next: Called eventstore")
 
