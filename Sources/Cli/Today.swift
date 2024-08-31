@@ -23,8 +23,7 @@ struct Today: ParsableCommand {
 
   @Flag(help: ArgumentHelp(
     "Print debug statements"
-  ))
-  var debug: Bool = false
+  )) var debug: Bool = false
 
   @Option(help: ArgumentHelp(
     "Select calendars <v>. A comma separated list of calendar UUIDs",
@@ -55,11 +54,10 @@ struct Today: ParsableCommand {
     if templatePath.isEmpty {
       events.printAsJson()
     } else {
-      let render = Template.render(path: templatePath, events: events)
-      if render == nil {
-        StdErr.print("Failed to render template at `\(templatePath)`")
+      if let render = Template.render(path: templatePath, events: events) {
+        print(render)
       } else {
-        print(render!)
+        StdErr.print("Failed to render template at `\(templatePath)`")
       }
     }
   }
