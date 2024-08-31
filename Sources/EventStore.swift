@@ -1,5 +1,4 @@
 import EventKit
-import Foundation
 import struct Foundation.Calendar
 
 typealias FCalendar = Foundation.Calendar
