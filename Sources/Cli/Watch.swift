@@ -12,7 +12,8 @@ struct Watch: ParsableCommand {
 
   mutating func run() {
     let home = FileManager.default.homeDirectoryForCurrentUser
-    let dir = home.path + "/Library/Calendars"
+    let dir = home.appendingPathComponent("/Library/Calendars").path
+
     let files = [
       dir + "/Calendar.sqlitedb",
       dir + "/Calendar.sqlitedb-wal",
