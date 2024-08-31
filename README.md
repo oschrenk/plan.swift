@@ -88,7 +88,7 @@ Example commands (use `plan --help` for full usage)
 `plan` can help with your "productivity" setup. You can use it
 
 - with [Sketchybar](https://felixkratz.github.io/SketchyBar/) to show the next event.
-For more details, consult [Docs/Templating](./Docs/Templating.md).
+For more details, consult [Docs/Sketchybar](./Docs/Sketchybar.md).
 - with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Templating](Docs/Templating.md).
 
 But with the default output being JSON, and the templating engine, you can easily make `plan` fit your individual needs.
