@@ -12,6 +12,7 @@ struct Plan: ParsableCommand {
       Next.self,
       Today.self,
       Usage.self,
+      Watch.self,
     ],
     defaultSubcommand: Usage.self
   )
