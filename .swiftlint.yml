@@ -12,5 +12,7 @@ identifier_name:
   excluded: # excluded via string array
     - id
     - to
+    - at
+    - in
 trailing_comma:
   mandatory_comma: true

@@ -8,8 +8,8 @@ struct StdOutOutputStream: TextOutputStream {
 }
 
 enum StdOut {
-  static func print(_ s: String) {
+  static func print(_ string: String) {
     var outStream = StdOutOutputStream()
-    Swift.print(s, to: &outStream)
+    Swift.print(string, to: &outStream)
   }
 }
