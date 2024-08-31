@@ -28,9 +28,9 @@ class FiltersAfter {
       filtersAfter.append(rtf)
       Log.write("added filter after: ignoreTags(\(ignoreTags))")
     }
-    let filterAfter = filtersAfter.count > 0 ?
-      FiltersAfter.combined(filters: filtersAfter) :
-      FiltersAfter.accept
+    let filterAfter = filtersAfter.isEmpty ?
+      FiltersAfter.accept :
+      FiltersAfter.combined(filters: filtersAfter)
 
     return filterAfter
   }
