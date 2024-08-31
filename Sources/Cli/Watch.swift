@@ -15,12 +15,12 @@ struct Watch: ParsableCommand {
     let dir = home.appendingPathComponent("/Library/Calendars").path
 
     let files = [
-      dir + "/Calendar.sqlitedb",
-      dir + "/Calendar.sqlitedb-wal",
-      dir + "/Extras.db",
-      dir + "/Extras.db-shm",
-      dir + "/Extras.db-wal",
-    ]
+      "Calendar.sqlitedb",
+      "Calendar.sqlitedb-wal",
+      "Extras.db",
+      "Extras.db-shm",
+      "Extras.db-wal",
+    ].map { dir + "/" + $0 }
     let sketchybar = Sketchybar(event: "calendar_changed")
     let watcher = FileWatcher(paths: files, callback: sketchybar.trigger)
     watcher.start()
