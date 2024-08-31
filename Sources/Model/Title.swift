@@ -19,6 +19,8 @@ struct Legend: Codable, Equatable {
     lhs.description == rhs.description &&
       lhs.icon == rhs.icon
   }
+
+  static let Empty = Legend(description: "", icon: "")
 }
 
 extension Character {
@@ -38,20 +40,15 @@ extension Character {
 
 extension String {
   func asLegend() -> Legend {
-    let chars = Array(self)
-
-    guard let firstChar = chars.first else {
-      return Legend(description: "", icon: "")
+    guard let firstChar = first else {
+      return Legend.Empty
     }
-
-    var description = self
-    var icon = ""
 
     if firstChar.isEmoji {
-      description = String(chars.dropFirst()).trimmingCharacters(in: .whitespacesAndNewlines)
-      icon = String(firstChar)
+      let description = String(dropFirst()).trimmingCharacters(in: .whitespacesAndNewlines)
+      return Legend(description: description, icon: String(firstChar))
     }
 
-    return Legend(description: description, icon: icon)
+    return Legend(description: self, icon: "")
   }
 }
