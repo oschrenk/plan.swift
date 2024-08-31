@@ -73,25 +73,30 @@ You get
 
 For more details, consult [Docs/Templating](Docs/Templating.md).
 
-## Basic Usage
+## Usage
 
-### Basic
+### Commands
 
 Example commands (use `plan --help` for full usage)
 
 - `plan calendars` List available calendars
 - `plan next` Returns the current or next event within the next hour
 - `plan today` Returns all events for today
+- `plan watch` Trigger Sketchybar event on calendar changes. See [Docs/Sketchybar](./Docs/Sketchybar.md) for more.
 
 ## Use cases
 
-`plan` can help with your "productivity" setup. You can use it
-
-- with [Sketchybar](https://felixkratz.github.io/SketchyBar/) to show the next event.
-For more details, consult [Docs/Sketchybar](./Docs/Sketchybar.md).
-- with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Templating](Docs/Templating.md).
-
+`plan` can help with your "productivity" setup. It plays very well with Sketchybar and Obsidian.
 But with the default output being JSON, and the templating engine, you can easily make `plan` fit your individual needs.
+
+### Sketchybar
+
+You can use it with [Sketchybar](https://felixkratz.github.io/SketchyBar/) to show the next event.
+For more details, consult [Docs/Sketchybar](./Docs/Sketchybar.md).
+
+### Obsidian
+
+You can use it with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Templating](Docs/Templating.md).
 
 ## Templating
 
