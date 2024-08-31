@@ -33,7 +33,8 @@ final class FiltersBeforeTests: XCTestCase {
   func testSelectCalendarsMatching() {
     let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
     let expected = true
-    let actual = FiltersBefore.selectCalendars(calendars: [event.calendar.calendarIdentifier])(event)
+    let actual = FiltersBefore.selectCalendars(
+      calendars: [event.calendar.calendarIdentifier])(event)
 
     XCTAssertEqual(actual, expected, "The event was not accepted")
   }
@@ -49,7 +50,8 @@ final class FiltersBeforeTests: XCTestCase {
   func testIgnoreCalendarsMatching() {
     let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
     let expected = false
-    let actual = FiltersBefore.ignoreCalendars(calendars: [event.calendar.calendarIdentifier])(event)
+    let actual = FiltersBefore.ignoreCalendars(
+      calendars: [event.calendar.calendarIdentifier])(event)
 
     XCTAssertEqual(actual, expected, "The event was accepted")
   }

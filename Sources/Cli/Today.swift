@@ -16,7 +16,8 @@ struct Today: ParsableCommand {
   )) var templatePath: String = ""
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'. A comma separated list of tags.",
+    "Ignore events which notes contain the tag <t> " +
+      " eg. 'tag:timeblock'. A comma separated list of tags.",
     valueName: "t"
   )) var ignoreTags: [String] = []
 

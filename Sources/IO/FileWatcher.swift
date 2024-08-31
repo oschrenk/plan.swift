@@ -28,7 +28,11 @@ class FileWatcher {
     let fileDescriptor = open(path, O_EVTONLY)
     guard fileDescriptor != -1 else { return false }
 
-    let source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor, eventMask: [.write, .delete, .rename, .extend, .attrib], queue: queue)
+    let source = DispatchSource.makeFileSystemObjectSource(
+      fileDescriptor: fileDescriptor,
+      eventMask: [.write, .delete, .rename, .extend, .attrib],
+      queue: queue
+    )
 
     source.setEventHandler { [weak self] in
       guard let self = self else { return }

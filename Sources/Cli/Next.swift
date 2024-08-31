@@ -26,7 +26,8 @@ struct Next: ParsableCommand {
   )) var ignorePatternTitle: String = ""
 
   @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> eg. 'tag:timeblock'. A comma separated list of tags.",
+    "Ignore events which notes contain the tag <t> " +
+      "eg. 'tag:timeblock'. A comma separated list of tags.",
     valueName: "t"
   )) var ignoreTags: [String] = []
 
@@ -41,12 +42,14 @@ struct Next: ParsableCommand {
   )) var ignoreCalendars: [String] = []
 
   @Option(help: ArgumentHelp(
-    "Select calendar types <v>. A comma separated list of calendar types. Available: [local|caldav|exchange|subscription|bihrtyday]",
+    "Select calendar types <v>. A comma separated list of calendar types. " +
+      "Available: [local|caldav|exchange|subscription|bihrtyday]",
     valueName: "v"
   )) var selectCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
-    "Ignore calendar types <v>. A comma separated list of calendar types. Available: [local|caldav|exchange|subscription|bihrtyday]",
+    "Ignore calendar types <v>. A comma separated list of calendar types. " +
+      "Available: [local|caldav|exchange|subscription|bihrtyday]",
     valueName: "v"
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 

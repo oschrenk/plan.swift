@@ -7,7 +7,10 @@ class FiltersAfter {
     { event in
       let intersection = Set(tags).intersection(Set(event.tags))
       let hasMatchingTag = !intersection.isEmpty
-      Log.write("Event \"\(event.title.full)\" has tags: \(event.tags). We are ignoring \(tags). hasMatchingTag: \(hasMatchingTag)")
+
+      Log.write("Event \"\(event.title.full)\" has tags: \(event.tags).")
+      Log.write("Ignoring \(tags). hasMatchingTag: \(hasMatchingTag)")
+
       return !hasMatchingTag
     }
   }
@@ -25,7 +28,9 @@ class FiltersAfter {
       filtersAfter.append(rtf)
       Log.write("added filter after: ignoreTags(\(ignoreTags))")
     }
-    let filterAfter = filtersAfter.count > 0 ? FiltersAfter.combined(filters: filtersAfter) : FiltersAfter.accept
+    let filterAfter = filtersAfter.count > 0 ?
+      FiltersAfter.combined(filters: filtersAfter) :
+      FiltersAfter.accept
 
     return filterAfter
   }
