@@ -1,6 +1,6 @@
 import Foundation
 
-class Log {
+enum Log {
   static var verbosity: Verbosity = .quiet
 
   static func setDebug(_ debug: Bool) {
