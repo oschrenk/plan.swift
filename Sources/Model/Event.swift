@@ -97,7 +97,7 @@ extension EKEvent {
     )
     let location = location ?? ""
     let services = listServices()
-    let tags = notes != nil ? notes!.findTags() : [String]()
+    let tags = notes?.findTags() ?? []
 
     return Event(
       id: id,
