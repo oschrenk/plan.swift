@@ -6,8 +6,7 @@ import Foundation
 /// Watch for calendar changes
 struct Watch: ParsableCommand {
   static var configuration = CommandConfiguration(
-    abstract: "Watch for changes",
-    shouldDisplay: false
+    abstract: "Fire Sketchybar event on calendar changes"
   )
 
   mutating func run() {
@@ -21,6 +20,7 @@ struct Watch: ParsableCommand {
       "Extras.db-shm",
       "Extras.db-wal",
     ].map { dir + "/" + $0 }
+
     let sketchybar = Sketchybar(event: "calendar_changed")
     let watcher = FileWatcher(paths: files, callback: sketchybar.trigger)
     watcher.start()
