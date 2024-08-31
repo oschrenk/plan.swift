@@ -7,15 +7,16 @@ An EKEvent has three different identifiers
 2. `calendarItemExternalIdentifier` (via `EKCalendarItem`)
 3. `eventIdentifier` (via `EKEvent`)
 
-My current understanding is, to use
-1) to interact with the Calendar.app eg. show an event
-2) to interact with external systems
-3) to retrieve items from the underlying local event store
+My current understanding is to use
+1. `calendarItemIdentifier` to interact with the Calendar.app e.g. show an event
+2. `calendarItemExternalIdentifier` to interact with external systems
+3. `eventIdentifier` to retrieve items from the underlying local event store
+
+For more information
 
 re 1) `calendarItemIdentifier`
 > is set when the calendar item is created and can be used as a local identifier
 see [also](https://developer.apple.com/documentation/eventkit/ekcalendaritem/1507075-calendaritemidentifier)
-
 re 2) `calendarItemExternalIdentifier`
 > identifier as provided by the calendar server.
 > allows you to access the same event or reminder across multiple devices
@@ -29,7 +30,7 @@ For now we pick `calendarItemIdentifier` as the leading identifier as the app is
 
 ### Calendars
 
-- have an `id`, namely `calendarIdentifier` (uppercased UUIDv4)
+- have an `id`, namely `calendarIdentifier` (upper-case [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)))
 - have a type `EKCalendar.type`: `EKCalendarType`
   - `local` A local calendar.
   - `calDAV` A CalDAV or iCloud calendar.
