@@ -26,7 +26,6 @@ struct Add: ParsableCommand {
     } else {
       lines.append(text)
     }
-    // TODO: parse all lines
     if let addEvent = Parser.parse(text: lines[0]) {
       EventStore().add(addEvent: addEvent)
     } else {
