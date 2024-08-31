@@ -84,7 +84,7 @@ class FiltersBefore {
 
   static func combined(filters: [(EKEvent) -> Bool]) -> ((EKEvent) -> Bool) {
     { event in
-      filters.first!(event)
+      filters.allSatisfy { $0(event) }
     }
   }
 
