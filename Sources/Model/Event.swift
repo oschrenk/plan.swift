@@ -88,7 +88,6 @@ extension EKEvent {
 
   func asEvent() -> Event {
     let id = calendarItemIdentifier
-
     let cal = calendar?.asCal() ?? Calendar.Unknown
     let title = Title(text: title ?? "unknown")
     let schedule = Schedule(
@@ -99,6 +98,7 @@ extension EKEvent {
     let location = location ?? ""
     let services = listServices()
     let tags = notes != nil ? notes!.findTags() : [String]()
+
     return Event(
       id: id,
       calendar: cal,
@@ -126,20 +126,6 @@ extension [Event] {
       StdOut.print(json)
     } catch {
       StdErr.print("fail")
-    }
-  }
-
-  // Examples:
-  // - 09:00 - 12:00 🚊 Travel Home
-  // - 12:00 - 13:00 🥗 Lunch
-  func printAsMarkdown() {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "HH:mm"
-    for event in self {
-      let startTime = dateFormatter.string(from: event.schedule.start.at)
-      let endTime = dateFormatter.string(from: event.schedule.end.at)
-      let line = "- \(startTime) - \(endTime) \(event.title.full)"
-      StdOut.print(line)
     }
   }
 }
