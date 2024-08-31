@@ -1,7 +1,7 @@
 included:
   - Package.swift
-  - Sources/plan
-  - Tests/plan
+  - Sources/
+  - Tests/
 strict: true
 opt_in_rules:
   - indentation_width
