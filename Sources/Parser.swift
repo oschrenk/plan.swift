@@ -20,8 +20,7 @@ class Parser {
   private static func updateDate(date: Date, hourMinute: HourMinute) -> Date? {
     let calendar = FCalendar.current
     var components = calendar.dateComponents(
-      [.year, .month, .day,
-       .hour, .minute, .second],
+      [.year, .month, .day, .hour, .minute, .second],
       from: date
     )
     components.hour = hourMinute.hour
