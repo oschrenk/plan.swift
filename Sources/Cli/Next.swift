@@ -94,11 +94,10 @@ struct Next: ParsableCommand {
     if templatePath.isEmpty {
       next.printAsJson()
     } else {
-      let render = Template.render(path: templatePath, events: next)
-      if render == nil {
-        StdErr.print("Failed to render template at `\(templatePath)")
+      if let render = Template.render(path: templatePath, events: next) {
+        StdOut.print(render)
       } else {
-        print(render!)
+        StdErr.print("Failed to render template at `\(templatePath)`")
       }
     }
   }
