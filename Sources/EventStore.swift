@@ -87,7 +87,7 @@ struct EventStore {
     let eventStore = grantAccess()
 
     // I have no idea why this works but it seems I need to reset
-    // and then refresh the eventStore, otherwise I sometimes get no ids back
+    // and then refresh the EventStore, otherwise I sometimes get no ids back
     // or just partial results
     eventStore.reset()
     eventStore.refreshSourcesIfNecessary()
