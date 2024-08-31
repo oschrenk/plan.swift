@@ -1,7 +1,7 @@
 import Foundation
 
 class Service {
-  private static let services: [String: String] = [
+  private static let servicePatterns: [String: String] = [
     "meet": #"https://meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"#,
   ]
 
@@ -37,7 +37,7 @@ class Service {
   static func fromNotes(notes: String) -> [String: String] {
     var matches: [String: String] = [:]
 
-    for (name, pattern) in services {
+    for (name, pattern) in servicePatterns {
       let match = findMatch(in: notes, using: pattern)
       if match != nil {
         matches[name] = match
