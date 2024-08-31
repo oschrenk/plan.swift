@@ -35,16 +35,9 @@ class Service {
   }
 
   static func fromNotes(notes: String) -> [String: String] {
-    var matches: [String: String] = [:]
-
-    for (name, pattern) in servicePatterns {
-      let match = findMatch(in: notes, using: pattern)
-      if match != nil {
-        matches[name] = match
-      }
+    servicePatterns.compactMapValues { pattern in
+      findMatch(in: notes, using: pattern)
     }
-
-    return matches
   }
 
   // generate the url to show the event in the Calendar.app
