@@ -1,0 +1,14 @@
+[
+  {
+    "id" : "C4683283-CAFE-4B60-BABE-52EDF6004FF1",
+    "type" : "caldav",
+    "label" : "Main",
+    "color" : "#E74925"
+  },
+  {
+    "id" : "C4683283-CAFE-A0CF-BABE-6C9FCACC6DA8",
+    "label" : "Private",
+    "type" : "caldav",
+    "color" : "#FFCC00"
+  }
+]
