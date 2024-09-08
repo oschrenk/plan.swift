@@ -1,5 +1,4 @@
 import ArgumentParser
-import EventKit
 import Foundation
 
 /// `plan today`
@@ -28,7 +27,13 @@ struct Today: ParsableCommand {
       ignoreTags: todayOpts.ignoreTags
     )
 
-    let events = EventStore().today(
+    let today = FCalendar.current.startOfDay(for: Date())
+    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
+    let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
+
+    let events = EventStore().fetch(
+      start: start,
+      end: end,
       selectCalendars: todayOpts.selectCalendars,
       filterBefore: filterBefore,
       filterAfter: filterAfter

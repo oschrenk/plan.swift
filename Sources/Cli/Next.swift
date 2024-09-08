@@ -1,6 +1,7 @@
 import ArgumentParser
-import EventKit
 import Foundation
+
+typealias FCalendar = Foundation.Calendar
 
 /// `plan next`
 ///
@@ -35,8 +36,13 @@ struct Next: ParsableCommand {
 
     Log.write("next: About to call eventstore")
 
-    let events = EventStore().next(
-      within: within,
+    let today = Date()
+    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
+    let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
+
+    let events = EventStore().fetch(
+      start: start,
+      end: end,
       selectCalendars: nextOpts.selectCalendars,
       filterBefore: filterBefore,
       filterAfter: filterAfter

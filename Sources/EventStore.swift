@@ -1,7 +1,4 @@
 import EventKit
-import struct Foundation.Calendar
-
-typealias FCalendar = Foundation.Calendar
 
 struct EventStore {
   let eventStore = EKEventStore()
@@ -23,24 +20,6 @@ struct EventStore {
     return eventStore
   }
 
-  func today(
-    selectCalendars: [String]?,
-    filterBefore: (EKEvent) -> Bool,
-    filterAfter: (Event) -> Bool
-  ) -> [Event] {
-    let today = FCalendar.current.startOfDay(for: Date())
-    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
-    let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
-
-    return fetch(
-      start: start,
-      end: end,
-      selectCalendars: selectCalendars,
-      filterBefore: filterBefore,
-      filterAfter: filterAfter
-    )
-  }
-
   private func fetchCalendars() -> [EKCalendar] {
     let eventStore = grantAccess()
 
@@ -58,26 +37,7 @@ struct EventStore {
     }
   }
 
-  func next(
-    within: Int,
-    selectCalendars: [String]?,
-    filterBefore: (EKEvent) -> Bool,
-    filterAfter: (Event) -> Bool
-  ) -> [Event] {
-    let today = Date()
-    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
-    let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
-
-    return Array(fetch(
-      start: start,
-      end: end,
-      selectCalendars: selectCalendars,
-      filterBefore: filterBefore,
-      filterAfter: filterAfter
-    ))
-  }
-
-  private func fetch(
+  func fetch(
     start: Date,
     end: Date,
     selectCalendars: [String]?,
