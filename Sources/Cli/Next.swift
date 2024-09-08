@@ -28,8 +28,8 @@ struct Next: ParsableCommand {
       selectCalendarTypes: nextOpts.selectCalendarTypes,
       ignoreCalendarTypes: nextOpts.ignoreCalendarTypes
     )
-    let filterAfter = FiltersAfter.build(
-      ignoreAllDayEvents: nextOpts.ignoreAllDayEvents,
+    let eventFilter = EventFilter.build(
+      ignoreAllDay: nextOpts.ignoreAllDayEvents,
       ignorePatternTitle: nextOpts.ignorePatternTitle,
       ignoreTags: nextOpts.ignoreTags
     )
@@ -45,7 +45,7 @@ struct Next: ParsableCommand {
       end: end,
       selectCalendars: nextOpts.selectCalendars,
       filterBefore: filterBefore,
-      filterAfter: filterAfter
+      eventFilter: eventFilter
     ).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
     Log.write("next: Called eventstore")

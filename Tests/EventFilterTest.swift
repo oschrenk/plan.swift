@@ -1,7 +1,7 @@
 @testable import plan
 import XCTest
 
-final class FiltersAfterTests: XCTestCase {
+final class EventFilterTests: XCTestCase {
   private func genEvent(
     title: String = "unknown",
     tags: [String] = [],
@@ -33,7 +33,7 @@ final class FiltersAfterTests: XCTestCase {
   func testAlwaysAccept() {
     let event = genEvent()
     let expected = true
-    let actual = FiltersAfter.accept(event)
+    let actual = EventFilter.accept(event)
 
     XCTAssertEqual(actual, expected, "The event was not accepted")
   }
@@ -41,7 +41,7 @@ final class FiltersAfterTests: XCTestCase {
   func testIgnoreTagsNoTags() {
     let event = genEvent(tags: ["timeblock"])
     let expected = true
-    let actual = FiltersAfter.ignoreTags(tags: [])(event)
+    let actual = EventFilter.ignoreTags(tags: [])(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely accepted")
   }
@@ -49,7 +49,7 @@ final class FiltersAfterTests: XCTestCase {
   func testIgnoreTagsMatchingTags() {
     let event = genEvent(tags: ["timeblock"])
     let expected = false
-    let actual = FiltersAfter.ignoreTags(tags: ["timeblock"])(event)
+    let actual = EventFilter.ignoreTags(tags: ["timeblock"])(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely accepted")
   }
@@ -57,7 +57,7 @@ final class FiltersAfterTests: XCTestCase {
   func testIgnoreTagsNotMatchingTags() {
     let event = genEvent(tags: ["foo"])
     let expected = true
-    let actual = FiltersAfter.ignoreTags(tags: ["timeblock"])(event)
+    let actual = EventFilter.ignoreTags(tags: ["timeblock"])(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely ignored")
   }
@@ -65,7 +65,7 @@ final class FiltersAfterTests: XCTestCase {
   func testIgnoreAnAllDayEvent() {
     let event = genEvent(allDay: true)
     let expected = false
-    let actual = FiltersAfter.ignoreAllDayEvents(event: event)
+    let actual = EventFilter.ignoreAllDay(event: event)
 
     XCTAssertEqual(actual, expected, "The event was falsely accepted")
   }
@@ -73,7 +73,7 @@ final class FiltersAfterTests: XCTestCase {
   func testAcceptAnNonAllDayEvent() {
     let event = genEvent(allDay: false)
     let expected = true
-    let actual = FiltersAfter.ignoreAllDayEvents(event: event)
+    let actual = EventFilter.ignoreAllDay(event: event)
 
     XCTAssertEqual(actual, expected, "The event was falsely ignored")
   }
@@ -81,7 +81,7 @@ final class FiltersAfterTests: XCTestCase {
   func testIgnoringEventMatchingTitle() {
     let event = genEvent(title: "foo matching")
     let expected = false
-    let actual = FiltersAfter.ignorePatternTitle(pattern: "foo")(event)
+    let actual = EventFilter.ignorePatternTitle(pattern: "foo")(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely accepted")
   }
@@ -89,7 +89,7 @@ final class FiltersAfterTests: XCTestCase {
   func testAcceptingEventNotMatchingTitle() {
     let event = genEvent(title: "foo matching")
     let expected = true
-    let actual = FiltersAfter.ignorePatternTitle(pattern: "bar")(event)
+    let actual = EventFilter.ignorePatternTitle(pattern: "bar")(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely ignored")
   }

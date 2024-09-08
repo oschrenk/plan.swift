@@ -1,9 +1,9 @@
-class FiltersAfter {
+class EventFilter {
   static func accept(_: Event) -> Bool {
     true
   }
 
-  static func ignoreAllDayEvents(event: Event) -> Bool {
+  static func ignoreAllDay(event: Event) -> Bool {
     !event.schedule.allDay
   }
 
@@ -36,34 +36,34 @@ class FiltersAfter {
   }
 
   static func build(
-    ignoreAllDayEvents: Bool,
+    ignoreAllDay: Bool,
     ignorePatternTitle: String,
     ignoreTags: [String]
   ) -> ((Event) -> Bool) {
-    var filtersAfter: [(Event) -> Bool] = []
+    var filters: [(Event) -> Bool] = []
 
-    if ignoreAllDayEvents {
-      let iade: (Event) -> Bool = FiltersAfter.ignoreAllDayEvents
-      filtersAfter.append(iade)
-      Log.write("added filter after: ignoreAllDayEvents")
+    if ignoreAllDay {
+      let iad: (Event) -> Bool = EventFilter.ignoreAllDay
+      filters.append(iad)
+      Log.write("added event filter: ignoreAllDay")
     }
 
     if !ignorePatternTitle.isEmpty {
-      let ipt: (Event) -> Bool = FiltersAfter.ignorePatternTitle(pattern: ignorePatternTitle)
-      filtersAfter.append(ipt)
+      let ipt: (Event) -> Bool = EventFilter.ignorePatternTitle(pattern: ignorePatternTitle)
+      filters.append(ipt)
       Log.write("added filter after: ignorePatternTitle(\(ignorePatternTitle))")
     }
 
     if !ignoreTags.isEmpty {
-      let rtf: (Event) -> Bool = FiltersAfter.ignoreTags(tags: ignoreTags)
-      filtersAfter.append(rtf)
+      let rtf: (Event) -> Bool = EventFilter.ignoreTags(tags: ignoreTags)
+      filters.append(rtf)
       Log.write("added filter after: ignoreTags(\(ignoreTags))")
     }
 
-    let filterAfter = filtersAfter.isEmpty ?
-      FiltersAfter.accept :
-      FiltersAfter.combined(filters: filtersAfter)
+    let final = filters.isEmpty ?
+      EventFilter.accept :
+      EventFilter.combined(filters: filters)
 
-    return filterAfter
+    return final
   }
 }

@@ -42,7 +42,7 @@ struct EventStore {
     end: Date,
     selectCalendars: [String]?,
     filterBefore: (EKEvent) -> Bool,
-    filterAfter: (Event) -> Bool
+    eventFilter: (Event) -> Bool
   ) -> [Event] {
     let eventStore = grantAccess()
 
@@ -83,7 +83,7 @@ struct EventStore {
         event.asEvent()
       }
       .filter { event in
-        filterAfter(event)
+        eventFilter(event)
       }
   }
 
