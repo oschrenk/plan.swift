@@ -1,6 +1,6 @@
 import EventKit
 
-class FiltersBefore {
+class CalendarFilter {
   static func accept(_: EKEvent) -> Bool {
     true
   }
@@ -80,35 +80,35 @@ class FiltersBefore {
     selectCalendarTypes: [EKCalendarType] = [],
     ignoreCalendarTypes: [EKCalendarType] = []
   ) -> ((EKEvent) -> Bool) {
-    var filtersBefore: [(EKEvent) -> Bool] = []
+    var filters: [(EKEvent) -> Bool] = []
 
     if !selectCalendars.isEmpty {
-      let scf: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: selectCalendars)
-      filtersBefore.append(scf)
+      let scf: (EKEvent) -> Bool = CalendarFilter.selectCalendars(calendars: selectCalendars)
+      filters.append(scf)
       Log.write("added filter before: selectCalendars(\(selectCalendars))")
     }
 
     if !ignoreCalendars.isEmpty {
-      let icf: (EKEvent) -> Bool = FiltersBefore.ignoreCalendars(calendars: ignoreCalendars)
-      filtersBefore.append(icf)
+      let icf: (EKEvent) -> Bool = CalendarFilter.ignoreCalendars(calendars: ignoreCalendars)
+      filters.append(icf)
       Log.write("added filter before: ignoreCalendars(\(ignoreCalendars))")
     }
 
     if !selectCalendarTypes.isEmpty {
-      let sctf: (EKEvent) -> Bool = FiltersBefore.selectCalendarTypes(types: selectCalendarTypes)
-      filtersBefore.append(sctf)
+      let sctf: (EKEvent) -> Bool = CalendarFilter.selectCalendarTypes(types: selectCalendarTypes)
+      filters.append(sctf)
       Log.write("added filter before: selectCalendarTypes(\(selectCalendarTypes))")
     }
 
     if !ignoreCalendarTypes.isEmpty {
-      let ictf: (EKEvent) -> Bool = FiltersBefore.ignoreCalendarTypes(types: ignoreCalendarTypes)
-      filtersBefore.append(ictf)
+      let ictf: (EKEvent) -> Bool = CalendarFilter.ignoreCalendarTypes(types: ignoreCalendarTypes)
+      filters.append(ictf)
       Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 
-    let filterBefore = filtersBefore.isEmpty ?
-      FiltersBefore.accept :
-      FiltersBefore.combined(filters: filtersBefore)
+    let filterBefore = filters.isEmpty ?
+      CalendarFilter.accept :
+      CalendarFilter.combined(filters: filters)
 
     return filterBefore
   }

@@ -15,7 +15,7 @@ struct Today: ParsableCommand {
   mutating func run() {
     Log.setDebug(todayOpts.debug)
 
-    let filterBefore = FiltersBefore.build(
+    let calendarFilter = CalendarFilter.build(
       selectCalendars: todayOpts.selectCalendars,
       ignoreCalendars: todayOpts.ignoreCalendars,
       selectCalendarTypes: todayOpts.selectCalendarTypes,
@@ -35,7 +35,7 @@ struct Today: ParsableCommand {
       start: start,
       end: end,
       selectCalendars: todayOpts.selectCalendars,
-      filterBefore: filterBefore,
+      calendarFilter: calendarFilter,
       eventFilter: eventFilter
     )
 

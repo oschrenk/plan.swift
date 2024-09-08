@@ -41,7 +41,7 @@ struct EventStore {
     start: Date,
     end: Date,
     selectCalendars: [String]?,
-    filterBefore: (EKEvent) -> Bool,
+    calendarFilter: (EKEvent) -> Bool,
     eventFilter: (Event) -> Bool
   ) -> [Event] {
     let eventStore = grantAccess()
@@ -77,7 +77,7 @@ struct EventStore {
 
     return eventStore.events(matching: predicate)
       .filter { event in
-        filterBefore(event)
+        calendarFilter(event)
       }
       .map { event in
         event.asEvent()
