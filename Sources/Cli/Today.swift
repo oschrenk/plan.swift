@@ -10,54 +10,37 @@ struct Today: ParsableCommand {
     abstract: "List today's events"
   )
 
-  @Option(help: ArgumentHelp(
-    "Template path <p>.",
-    valueName: "p"
-  )) var templatePath: String = ""
-
-  @Option(help: ArgumentHelp(
-    "Ignore events which notes contain the tag <t> " +
-      " eg. 'tag:timeblock'. A comma separated list of tags.",
-    valueName: "t"
-  )) var ignoreTags: [String] = []
-
-  @Flag(help: ArgumentHelp(
-    "Print debug statements"
-  )) var debug: Bool = false
-
-  @Option(help: ArgumentHelp(
-    "Select calendars <v>. A comma separated list of calendar UUIDs",
-    valueName: "v"
-  )) var selectCalendars: [String] = []
-
-  @Option(help: ArgumentHelp(
-    "Ignore calendars <v>. A comma separated list of calendar UUIDs",
-    valueName: "v"
-  )) var ignoreCalendars: [String] = []
+  @OptionGroup
+  var todayOpts: SharedOptions
 
   mutating func run() {
-    Log.setDebug(debug)
+    Log.setDebug(todayOpts.debug)
 
     let filterBefore = FiltersBefore.build(
-      ignoreAllDayEvents: false,
-      ignorePatternTitle: "",
-      ignoreCalendars: ignoreCalendars
+      ignoreAllDayEvents: todayOpts.ignoreAllDayEvents,
+      ignorePatternTitle: todayOpts.ignorePatternTitle,
+      selectCalendars: todayOpts.selectCalendars,
+      ignoreCalendars: todayOpts.ignoreCalendars,
+      selectCalendarTypes: todayOpts.selectCalendarTypes,
+      ignoreCalendarTypes: todayOpts.ignoreCalendarTypes
     )
-    let filterAfter = FiltersAfter.build(ignoreTags: ignoreTags)
+    let filterAfter = FiltersAfter.build(
+      ignoreTags: todayOpts.ignoreTags
+    )
 
     let events = EventStore().today(
-      selectCalendars: selectCalendars,
+      selectCalendars: todayOpts.selectCalendars,
       filterBefore: filterBefore,
       filterAfter: filterAfter
     )
 
-    if templatePath.isEmpty {
+    if todayOpts.templatePath.isEmpty {
       events.printAsJson()
     } else {
-      if let render = Template.render(path: templatePath, events: events) {
+      if let render = Template.render(path: todayOpts.templatePath, events: events) {
         print(render)
       } else {
-        StdErr.print("Failed to render template at `\(templatePath)`")
+        StdErr.print("Failed to render template at `\(todayOpts.templatePath)`")
       }
     }
   }
