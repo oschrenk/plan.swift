@@ -99,7 +99,7 @@ extension EKEvent {
       id: calendarItemIdentifier,
       calendar: calendar?.asCal() ?? Calendar.Unknown,
       title: Title(text: title ?? "Unknown"),
-      schedule: Schedule(now: Date(), startDate: startDate, endDate: endDate),
+      schedule: Schedule(now: Date(), startDate: startDate, endDate: endDate, allDay: isAllDay),
       location: location ?? "",
       services: listServices(),
       tags: notes?.findTags() ?? []

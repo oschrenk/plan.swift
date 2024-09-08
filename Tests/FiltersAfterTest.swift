@@ -9,7 +9,8 @@ final class FiltersAfterTests: XCTestCase {
     let schedule = Schedule(
       now: Date(),
       startDate: Date(),
-      endDate: Date()
+      endDate: Date(),
+      allDay: false
     )
     let location = ""
     let services: [String: String] = [:]

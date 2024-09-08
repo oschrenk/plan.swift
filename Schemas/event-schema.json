@@ -79,11 +79,16 @@
             "at",
             "in"
           ]
-        }
+        },
+        "all_day": {
+          "type": "boolean"
+        },
       },
       "required": [
         "start",
-        "end"
+        "end",
+        "all_day"
+
       ]
     },
     "services": {
