@@ -1,74 +1,76 @@
 import EventKit
 
 class CalendarFilter {
-  static func accept(_: EKEvent) -> Bool {
+  static func accept(_: PlanCalendar) -> Bool {
     true
   }
 
-  static func selectCalendars(calendars: [String]) -> ((EKEvent) -> Bool) {
-    { event in
+  static func select(uuids: [String]) -> ((PlanCalendar?) -> Bool) {
+    { calendar in
       // if no selection, allow everything
-      if calendars.isEmpty {
+      if uuids.isEmpty {
         return true
       }
       // if event has no valid calendar, don't show
-      if event.calendar == nil {
+      if calendar == nil {
         return false
       }
 
-      return calendars.contains(event.calendar.calendarIdentifier.uppercased())
+      return uuids.contains(calendar!.id.uppercased())
     }
   }
 
-  static func ignoreCalendars(calendars: [String]) -> ((EKEvent) -> Bool) {
-    { event in
+  static func ignore(uuids: [String]) -> ((PlanCalendar?) -> Bool) {
+    { calendar in
       // if no selection, allow everything
-      if calendars.isEmpty {
-        return true
-      }
-
-      // if event has no valid calendar, don't show
-      if event.calendar == nil {
-        return false
-      }
-
-      return !calendars.contains(event.calendar.calendarIdentifier.uppercased())
-    }
-  }
-
-  static func selectCalendarTypes(types: [EKCalendarType]) -> ((EKEvent) -> Bool) {
-    { event in
-      // if no selection, allow everything
-      if types.isEmpty {
+      if uuids.isEmpty {
         return true
       }
 
       // if event has no valid calendar, don't show
-      if event.calendar == nil {
+      if calendar == nil {
         return false
       }
 
-      return types.contains(event.calendar.type)
+      return !uuids.contains(calendar!.id.uppercased())
     }
   }
 
-  static func ignoreCalendarTypes(types: [EKCalendarType]) -> ((EKEvent) -> Bool) {
-    { event in
+  static func selectTypes(types: [EKCalendarType]) -> ((PlanCalendar?) -> Bool) {
+    { calendar in
       // if no selection, allow everything
       if types.isEmpty {
         return true
       }
 
       // if event has no valid calendar, don't show
-      if event.calendar == nil {
+      if calendar == nil {
         return false
       }
 
-      return !types.contains(event.calendar.type)
+      let type: String = calendar!.type.description
+      return types.map { $0.description }.contains(type)
     }
   }
 
-  static func combined(filters: [(EKEvent) -> Bool]) -> ((EKEvent) -> Bool) {
+  static func ignoreTypes(types: [EKCalendarType]) -> ((PlanCalendar?) -> Bool) {
+    { calendar in
+      // if no selection, allow everything
+      if types.isEmpty {
+        return true
+      }
+
+      // if no valid calendar, don't show
+      if calendar == nil {
+        return false
+      }
+
+      let type: String = calendar!.type.description
+      return !types.map { $0.description }.contains(type)
+    }
+  }
+
+  static func combined(filters: [(PlanCalendar) -> Bool]) -> ((PlanCalendar) -> Bool) {
     { event in
       filters.allSatisfy { $0(event) }
     }
@@ -79,30 +81,30 @@ class CalendarFilter {
     ignoreCalendars: [String] = [],
     selectCalendarTypes: [EKCalendarType] = [],
     ignoreCalendarTypes: [EKCalendarType] = []
-  ) -> ((EKEvent) -> Bool) {
-    var filters: [(EKEvent) -> Bool] = []
+  ) -> ((PlanCalendar) -> Bool) {
+    var filters: [(PlanCalendar) -> Bool] = []
 
     if !selectCalendars.isEmpty {
-      let scf: (EKEvent) -> Bool = CalendarFilter.selectCalendars(calendars: selectCalendars)
+      let scf: (PlanCalendar) -> Bool = CalendarFilter.select(uuids: selectCalendars)
       filters.append(scf)
       Log.write("added filter before: selectCalendars(\(selectCalendars))")
     }
 
     if !ignoreCalendars.isEmpty {
-      let icf: (EKEvent) -> Bool = CalendarFilter.ignoreCalendars(calendars: ignoreCalendars)
+      let icf: (PlanCalendar) -> Bool = CalendarFilter.ignore(uuids: ignoreCalendars)
       filters.append(icf)
       Log.write("added filter before: ignoreCalendars(\(ignoreCalendars))")
     }
 
     if !selectCalendarTypes.isEmpty {
-      let sctf: (EKEvent) -> Bool = CalendarFilter.selectCalendarTypes(types: selectCalendarTypes)
-      filters.append(sctf)
+      let sct: (PlanCalendar) -> Bool = CalendarFilter.selectTypes(types: selectCalendarTypes)
+      filters.append(sct)
       Log.write("added filter before: selectCalendarTypes(\(selectCalendarTypes))")
     }
 
     if !ignoreCalendarTypes.isEmpty {
-      let ictf: (EKEvent) -> Bool = CalendarFilter.ignoreCalendarTypes(types: ignoreCalendarTypes)
-      filters.append(ictf)
+      let ict: (PlanCalendar) -> Bool = CalendarFilter.ignoreTypes(types: ignoreCalendarTypes)
+      filters.append(ict)
       Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 

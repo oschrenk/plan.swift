@@ -31,7 +31,7 @@ struct EventStore {
     return eventStore.calendars(for: EKEntityType.event)
   }
 
-  func calendars() -> [Calendar] {
+  func calendars() -> [PlanCalendar] {
     return fetchCalendars().map { calendar in
       calendar.asCal()
     }
@@ -40,8 +40,7 @@ struct EventStore {
   func fetch(
     start: Date,
     end: Date,
-    selectCalendars: [String]?,
-    calendarFilter: (EKEvent) -> Bool,
+    calendarFilter: (PlanCalendar) -> Bool,
     eventFilter: (Event) -> Bool
   ) -> [Event] {
     let eventStore = grantAccess()
@@ -52,22 +51,10 @@ struct EventStore {
     eventStore.reset()
     eventStore.refreshSourcesIfNecessary()
 
-    var calendars: [EKCalendar]?
-    if selectCalendars != nil, selectCalendars!.count > 0 {
-      calendars = fetchCalendars().filter { cal in
-        selectCalendars!.contains(cal.calendarIdentifier)
-      }
-    } else {
-      calendars = nil
-    }
-
-    // unfortunately the eventstore API is limited
-    // calling it with an empty Array of calendars is the same
-    // as calling it with nil, although it is semantically different
-    // so we return an empty array ourselves and short circuit the logic
-    if calendars == nil, selectCalendars != nil, selectCalendars!.count > 0 {
-      return Array()
-    }
+    let calendars = CalendarSelector.build(
+      calendars: fetchCalendars(),
+      filter: calendarFilter
+    )
 
     let predicate = eventStore.predicateForEvents(
       withStart: start,
@@ -76,9 +63,6 @@ struct EventStore {
     )
 
     return eventStore.events(matching: predicate)
-      .filter { event in
-        calendarFilter(event)
-      }
       .map { event in
         event.asEvent()
       }

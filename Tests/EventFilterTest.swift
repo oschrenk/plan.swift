@@ -8,7 +8,7 @@ final class EventFilterTests: XCTestCase {
     allDay: Bool = false
   ) -> Event {
     let id = UUID().uuidString
-    let cal = Calendar.Unknown
+    let cal = PlanCalendar.Unknown
     let title = Title(text: title)
     let schedule = Schedule(
       now: Date(),

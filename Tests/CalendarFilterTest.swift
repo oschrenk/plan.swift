@@ -4,103 +4,99 @@ import EventKit
 import XCTest
 
 final class CalendarFilterTests: XCTestCase {
-  private var eventStore: EKEventStore = .init()
+  private func genCalendar(type: EKCalendarType = EKCalendarType.calDAV) -> PlanCalendar {
+    let id = "5E28ECB5-A07D-4FC8-82E4-5F37C38C786F"
+    let label = "Test"
+    let color = "#FFB3E4"
 
-  func genEKEvent(calendar: EKCalendar? = nil) -> EKEvent {
-    let event = EKEvent(eventStore: eventStore)
-    event.calendar = calendar
-    return event
-  }
-
-  override func setUp() {
-    super.setUp()
-    eventStore = EKEventStore()
-  }
-
-  override func tearDown() {
-    eventStore.reset()
-    super.tearDown()
+    return PlanCalendar(
+      id: id,
+      type: type.description,
+      label: label,
+      color: color
+    )
   }
 
   func testAlwaysAccept() {
-    let event = genEKEvent()
+    let calendar = genCalendar()
     let expected = true
-    let actual = CalendarFilter.accept(event)
+    let actual = CalendarFilter.accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was not accepted")
+    XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
 
   func testSelectCalendarsMatching() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let calendar = genCalendar()
     let expected = true
-    let actual = CalendarFilter.selectCalendars(
-      calendars: [event.calendar.calendarIdentifier])(event)
+    let actual = CalendarFilter.select(uuids: [calendar.id])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was not accepted")
+    XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
 
   func testSelectCalendarsEmptyArray() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let calendar = genCalendar()
     let expected = true
-    let actual = CalendarFilter.selectCalendars(calendars: [])(event)
+    let actual = CalendarFilter.select(uuids: [])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was not accepted")
+    XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
 
   func testIgnoreCalendarsMatching() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let calendar = genCalendar()
     let expected = false
-    let actual = CalendarFilter.ignoreCalendars(
-      calendars: [event.calendar.calendarIdentifier])(event)
+    let actual = CalendarFilter.ignore(uuids: [calendar.id])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was accepted")
+    XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
 
   func testIgnoreCalendarsEmptyArray() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let calendar = genCalendar()
     let expected = true
-    let actual = CalendarFilter.ignoreCalendars(calendars: [])(event)
+    let actual = CalendarFilter.ignore(uuids: [])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was not accepted")
+    XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
 
   func testIgnoreCalendarTypesMatching() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let type = EKCalendarType.birthday
+    let calendar = genCalendar(type: type)
     let expected = false
-    let actual = CalendarFilter.ignoreCalendarTypes(types: [event.calendar.type])(event)
+    let actual = CalendarFilter.ignoreTypes(types: [type])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was accepted")
+    XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
 
   func testIgnoreCalendarTypesEmptyArray() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let calendar = genCalendar()
     let expected = true
-    let actual = CalendarFilter.ignoreCalendarTypes(types: [])(event)
+    let actual = CalendarFilter.ignoreTypes(types: [])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was rejected")
+    XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
 
   func testSelectCalendarTypesMatching() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let type = EKCalendarType.birthday
+    let calendar = genCalendar(type: type)
     let expected = true
-    let actual = CalendarFilter.selectCalendarTypes(types: [event.calendar.type])(event)
+    let actual = CalendarFilter.selectTypes(types: [type])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was rejected")
+    XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
 
   func testSelectCalendarTypesNotMatching() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let type = EKCalendarType.calDAV
+    let calendar = genCalendar(type: type)
     let expected = false
-    let actual = CalendarFilter.selectCalendarTypes(types: [EKCalendarType.birthday])(event)
+    let actual = CalendarFilter.selectTypes(types: [EKCalendarType.birthday])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was accepted")
+    XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
 
   func testSelectCalendarTypesEmptyArray() {
-    let event = genEKEvent(calendar: eventStore.defaultCalendarForNewEvents)
+    let calendar = genCalendar()
     let expected = true
-    let actual = CalendarFilter.selectCalendarTypes(types: [])(event)
+    let actual = CalendarFilter.selectTypes(types: [])(calendar)
 
-    XCTAssertEqual(actual, expected, "The event was rejected")
+    XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
 }

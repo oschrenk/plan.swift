@@ -28,7 +28,7 @@ struct Event: Codable {
   // for now we pick `calendarItemIdentifier`,
   // as the app is mostly interested in interacting with the Calendar.app
   let id: String
-  let calendar: Calendar
+  let calendar: PlanCalendar
   let title: Title
   let schedule: Schedule
   let location: String
@@ -97,7 +97,7 @@ extension EKEvent {
 
     return Event(
       id: calendarItemIdentifier,
-      calendar: calendar?.asCal() ?? Calendar.Unknown,
+      calendar: calendar?.asCal() ?? PlanCalendar.Unknown,
       title: Title(text: title ?? "Unknown"),
       schedule: Schedule(now: Date(), startDate: startDate, endDate: endDate, allDay: isAllDay),
       location: location ?? "",

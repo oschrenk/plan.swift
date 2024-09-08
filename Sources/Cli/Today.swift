@@ -34,7 +34,6 @@ struct Today: ParsableCommand {
     let events = EventStore().fetch(
       start: start,
       end: end,
-      selectCalendars: todayOpts.selectCalendars,
       calendarFilter: calendarFilter,
       eventFilter: eventFilter
     )

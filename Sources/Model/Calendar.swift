@@ -1,12 +1,17 @@
 import EventKit
 
-struct Calendar: Codable {
+struct PlanCalendar: Codable {
   let id: String
+  let type: String
   let label: String
   let color: String
-  let type: String
 
-  static let Unknown = Calendar(id: "unknown", label: "No Label", color: "#FFFFFF", type: "unknown")
+  static let Unknown = PlanCalendar(
+    id: "unknown",
+    type: "unknown",
+    label: "No Label",
+    color: "#FFFFFF"
+  )
 }
 
 extension CGColor {
@@ -46,22 +51,22 @@ extension EKCalendarType: CustomStringConvertible {
 }
 
 extension EKCalendar {
-  func asCal() -> Calendar {
+  func asCal() -> PlanCalendar {
     let id = calendarIdentifier
+    let type = type.description
     let label = title
     let color = cgColor.asHexString()
-    let type = type.description
 
-    return Calendar(
+    return PlanCalendar(
       id: id,
+      type: type,
       label: label,
-      color: color,
-      type: type
+      color: color
     )
   }
 }
 
-extension [Calendar] {
+extension [PlanCalendar] {
   func printAsJson() {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
