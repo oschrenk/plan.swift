@@ -2,7 +2,10 @@
 import XCTest
 
 final class FiltersAfterTests: XCTestCase {
-  private func genEvent(tags: [String] = []) -> Event {
+  private func genEvent(
+    tags: [String] = [],
+    allDay: Bool = false
+  ) -> Event {
     let id = UUID().uuidString
     let cal = Calendar.Unknown
     let title = Title(text: "unknown")
@@ -10,7 +13,7 @@ final class FiltersAfterTests: XCTestCase {
       now: Date(),
       startDate: Date(),
       endDate: Date(),
-      allDay: false
+      allDay: allDay
     )
     let location = ""
     let services: [String: String] = [:]
@@ -54,6 +57,22 @@ final class FiltersAfterTests: XCTestCase {
     let event = genEvent(tags: ["foo"])
     let expected = true
     let actual = FiltersAfter.ignoreTags(tags: ["timeblock"])(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+  }
+
+  func testIgnoreAnAllDayEvent() {
+    let event = genEvent(allDay: true)
+    let expected = false
+    let actual = FiltersAfter.ignoreAllDayEvents(event: event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+  }
+
+  func testAcceptAnNonAllDayEvent() {
+    let event = genEvent(allDay: false)
+    let expected = true
+    let actual = FiltersAfter.ignoreAllDayEvents(event: event)
 
     XCTAssertEqual(actual, expected, "The event was falsely ignored")
   }

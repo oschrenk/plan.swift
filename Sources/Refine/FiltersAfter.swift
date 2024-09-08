@@ -15,19 +15,34 @@ class FiltersAfter {
     }
   }
 
+  static func ignoreAllDayEvents(event: Event) -> Bool {
+    !event.schedule.allDay
+  }
+
   static func combined(filters: [(Event) -> Bool]) -> ((Event) -> Bool) {
     { event in
       filters.first!(event)
     }
   }
 
-  static func build(ignoreTags: [String]) -> ((Event) -> Bool) {
+  static func build(
+    ignoreAllDayEvents: Bool,
+    ignoreTags: [String]
+  ) -> ((Event) -> Bool) {
     var filtersAfter: [(Event) -> Bool] = []
+
     if !ignoreTags.isEmpty {
       let rtf: (Event) -> Bool = FiltersAfter.ignoreTags(tags: ignoreTags)
       filtersAfter.append(rtf)
       Log.write("added filter after: ignoreTags(\(ignoreTags))")
     }
+
+    if ignoreAllDayEvents {
+      let iade: (Event) -> Bool = FiltersAfter.ignoreAllDayEvents
+      filtersAfter.append(iade)
+      Log.write("added filter after: ignoreAllDayEvents")
+    }
+
     let filterAfter = filtersAfter.isEmpty ?
       FiltersAfter.accept :
       FiltersAfter.combined(filters: filtersAfter)
