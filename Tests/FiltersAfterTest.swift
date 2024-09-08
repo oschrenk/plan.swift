@@ -3,12 +3,13 @@ import XCTest
 
 final class FiltersAfterTests: XCTestCase {
   private func genEvent(
+    title: String = "unknown",
     tags: [String] = [],
     allDay: Bool = false
   ) -> Event {
     let id = UUID().uuidString
     let cal = Calendar.Unknown
-    let title = Title(text: "unknown")
+    let title = Title(text: title)
     let schedule = Schedule(
       now: Date(),
       startDate: Date(),
@@ -73,6 +74,22 @@ final class FiltersAfterTests: XCTestCase {
     let event = genEvent(allDay: false)
     let expected = true
     let actual = FiltersAfter.ignoreAllDayEvents(event: event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+  }
+
+  func testIgnoringEventMatchingTitle() {
+    let event = genEvent(title: "foo matching")
+    let expected = false
+    let actual = FiltersAfter.ignorePatternTitle(pattern: "foo")(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+  }
+
+  func testAcceptingEventNotMatchingTitle() {
+    let event = genEvent(title: "foo matching")
+    let expected = true
+    let actual = FiltersAfter.ignorePatternTitle(pattern: "bar")(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely ignored")
   }

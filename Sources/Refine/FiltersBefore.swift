@@ -68,16 +68,6 @@ class FiltersBefore {
     }
   }
 
-  static func ignorePatternTitle(pattern: String) -> ((EKEvent) -> Bool) {
-    { event in
-      if event.title.range(of: pattern, options: .regularExpression) != nil {
-        false
-      } else {
-        true
-      }
-    }
-  }
-
   static func combined(filters: [(EKEvent) -> Bool]) -> ((EKEvent) -> Bool) {
     { event in
       filters.allSatisfy { $0(event) }
@@ -85,19 +75,12 @@ class FiltersBefore {
   }
 
   static func build(
-    ignorePatternTitle: String,
     selectCalendars: [String] = [],
     ignoreCalendars: [String] = [],
     selectCalendarTypes: [EKCalendarType] = [],
     ignoreCalendarTypes: [EKCalendarType] = []
   ) -> ((EKEvent) -> Bool) {
     var filtersBefore: [(EKEvent) -> Bool] = []
-
-    if !ignorePatternTitle.isEmpty {
-      let ipt: (EKEvent) -> Bool = FiltersBefore.ignorePatternTitle(pattern: ignorePatternTitle)
-      filtersBefore.append(ipt)
-      Log.write("added filter before: ignorePatternTitle(\(ignorePatternTitle))")
-    }
 
     if !selectCalendars.isEmpty {
       let scf: (EKEvent) -> Bool = FiltersBefore.selectCalendars(calendars: selectCalendars)

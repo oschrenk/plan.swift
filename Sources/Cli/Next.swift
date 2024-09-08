@@ -23,7 +23,6 @@ struct Next: ParsableCommand {
     Log.setDebug(nextOpts.debug)
 
     let filterBefore = FiltersBefore.build(
-      ignorePatternTitle: nextOpts.ignorePatternTitle,
       selectCalendars: nextOpts.selectCalendars,
       ignoreCalendars: nextOpts.ignoreCalendars,
       selectCalendarTypes: nextOpts.selectCalendarTypes,
@@ -31,6 +30,7 @@ struct Next: ParsableCommand {
     )
     let filterAfter = FiltersAfter.build(
       ignoreAllDayEvents: nextOpts.ignoreAllDayEvents,
+      ignorePatternTitle: nextOpts.ignorePatternTitle,
       ignoreTags: nextOpts.ignoreTags
     )
 

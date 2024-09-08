@@ -16,7 +16,6 @@ struct Today: ParsableCommand {
     Log.setDebug(todayOpts.debug)
 
     let filterBefore = FiltersBefore.build(
-      ignorePatternTitle: todayOpts.ignorePatternTitle,
       selectCalendars: todayOpts.selectCalendars,
       ignoreCalendars: todayOpts.ignoreCalendars,
       selectCalendarTypes: todayOpts.selectCalendarTypes,
@@ -24,6 +23,7 @@ struct Today: ParsableCommand {
     )
     let filterAfter = FiltersAfter.build(
       ignoreAllDayEvents: todayOpts.ignoreAllDayEvents,
+      ignorePatternTitle: todayOpts.ignorePatternTitle,
       ignoreTags: todayOpts.ignoreTags
     )
 
