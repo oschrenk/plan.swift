@@ -37,11 +37,22 @@ struct EventStore {
     }
   }
 
+  /// Returns a list of events
+  ///
+  /// - Parameters:
+  ///     - start: Minimum start date of event
+  ///     - end: Maximum start date of event
+  ///     - calendarFilter: A filter to select certain calendars
+  ///     - eventFilter: A filter to select certain events
+  ///     - eventSelector: Manipulate array of events after fetching and filtering; e.g. for sorting
+  ///
+  /// - Returns: a list of events
   func fetch(
     start: Date,
     end: Date,
     calendarFilter: (PlanCalendar) -> Bool,
-    eventFilter: (Event) -> Bool
+    eventFilter: (Event) -> Bool,
+    eventSelector: ([EKEvent]) -> [EKEvent]
   ) -> [Event] {
     let eventStore = grantAccess()
 
@@ -62,7 +73,7 @@ struct EventStore {
       calendars: calendars
     )
 
-    return eventStore.events(matching: predicate)
+    return eventSelector(eventStore.events(matching: predicate))
       .map { event in
         event.asEvent()
       }

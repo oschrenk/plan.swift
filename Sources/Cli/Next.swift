@@ -41,22 +41,22 @@ struct Next: ParsableCommand {
     let today = Date()
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
+    let eventSelector = EventSelector.prefix(count: 1)
 
     let events = EventStore().fetch(
       start: start,
       end: end,
       calendarFilter: calendarFilter,
-      eventFilter: eventFilter
+      eventFilter: eventFilter,
+      eventSelector: eventSelector
     ).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
     Log.write("next: Called eventstore")
 
-    let next = Array(events.prefix(1))
-
     if nextOpts.templatePath.isEmpty {
-      next.printAsJson()
+      events.printAsJson()
     } else {
-      if let render = Template.render(path: nextOpts.templatePath, events: next) {
+      if let render = Template.render(path: nextOpts.templatePath, events: events) {
         StdOut.print(render)
       } else {
         StdErr.print("Failed to render template at `\(nextOpts.templatePath)`")

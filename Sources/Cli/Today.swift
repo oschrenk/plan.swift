@@ -32,12 +32,14 @@ struct Today: ParsableCommand {
     let today = FCalendar.current.startOfDay(for: Date())
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
+    let eventSelector = EventSelector.all()
 
     let events = EventStore().fetch(
       start: start,
       end: end,
       calendarFilter: calendarFilter,
-      eventFilter: eventFilter
+      eventFilter: eventFilter,
+      eventSelector: eventSelector
     )
 
     if todayOpts.templatePath.isEmpty {
