@@ -33,7 +33,7 @@ struct Event: Codable {
   let schedule: Schedule
   let location: String
   let meeting: Meeting
-  let services: [String: String]
+  let services: [Service: String]
   let tags: [String]
 
   enum CodingKeys: String, CodingKey {
@@ -81,7 +81,7 @@ extension String {
 
 extension EKEvent {
   /// Convenience method to build services URLs from EKEvent
-  func listServices() -> [String: String] {
+  func listServices() -> [Service: String] {
     Service.fromEvent(
       notes: notes ?? "",
       calendarItemIdentifier: calendarItemIdentifier,

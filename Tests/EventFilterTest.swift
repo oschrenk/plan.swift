@@ -19,7 +19,7 @@ final class EventFilterTests: XCTestCase {
     )
     let location = ""
     let meeting = Meeting(organizer: "", attendees: attendees)
-    let services: [String: String] = [:]
+    let services: [Service: String] = [:]
 
     return Event(
       id: id,

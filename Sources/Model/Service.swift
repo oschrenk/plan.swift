@@ -1,8 +1,11 @@
+import ArgumentParser
 import Foundation
 
-class Service {
-  private static let servicePatterns: [String: String] = [
-    "meet": #"https://meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"#,
+enum Service: String, Codable, ExpressibleByArgument {
+  case ical, meet
+
+  private static let servicePatterns: [Service: String] = [
+    Service.meet: #"https://meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"#,
   ]
 
   private static func findMatch(in text: String, using pattern: String) -> String? {
@@ -23,9 +26,9 @@ class Service {
     isAllDay: Bool,
     hasRecurrenceRules: Bool,
     startDate: Date?
-  ) -> [String: String] {
+  ) -> [Service: String] {
     var matches = fromNotes(notes: notes)
-    matches["ical"] = buildIcalURL(
+    matches[Service.ical] = buildIcalURL(
       calendarItemIdentifier: calendarItemIdentifier,
       isAllDay: isAllDay,
       hasRecurrenceRules: hasRecurrenceRules,
@@ -34,7 +37,7 @@ class Service {
     return matches
   }
 
-  static func fromNotes(notes: String) -> [String: String] {
+  static func fromNotes(notes: String) -> [Service: String] {
     servicePatterns.compactMapValues { pattern in
       findMatch(in: notes, using: pattern)
     }
