@@ -57,6 +57,18 @@ struct SharedOptions: ParsableArguments {
     valueName: "p"
   )) var templatePath: String = ""
 
+  @Option(help: ArgumentHelp(
+    "Sort field <f>." +
+      "Available: [start]",
+    valueName: "f"
+  )) var sortField: Field = .start
+
+  @Option(help: ArgumentHelp(
+    "Sort direction <d>." +
+      "Available: [asc|desc]",
+    valueName: "d"
+  )) var sortDirection: Direction = .asc
+
   @Flag(help: ArgumentHelp(
     "Print debug statements"
   ))
