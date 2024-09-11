@@ -72,11 +72,13 @@ extension [PlanCalendar] {
     encoder.dateEncodingStrategy = .iso8601
     encoder.outputFormatting = .prettyPrinted
     do {
-      let json = try String(
-        decoding: encoder.encode(self),
-        as: UTF8.self
-      )
-      StdOut.print(json)
+      let data = try encoder.encode(self)
+      if let json = String(
+        data: data,
+        encoding: .utf8
+      ) {
+        StdOut.print(json)
+      }
     } catch {
       StdErr.print("fail")
     }

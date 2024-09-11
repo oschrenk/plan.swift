@@ -114,11 +114,13 @@ extension [Event] {
     encoder.dateEncodingStrategy = .iso8601
     encoder.outputFormatting = [.withoutEscapingSlashes, .prettyPrinted]
     do {
-      let json = try String(
-        decoding: encoder.encode(self),
-        as: UTF8.self
-      )
-      StdOut.print(json)
+      let data = try encoder.encode(self)
+      if let json = String(
+        data: data,
+        encoding: .utf8
+      ) {
+        StdOut.print(json)
+      }
     } catch {
       StdErr.print("Failed to print events as JSON")
     }
