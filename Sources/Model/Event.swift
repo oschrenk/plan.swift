@@ -110,8 +110,10 @@ extension EKEvent {
 extension [Event] {
   /// Prints the array of Events as JSON
   func printAsJson() {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
     let encoder = JSONEncoder()
-    encoder.dateEncodingStrategy = .iso8601
+    encoder.dateEncodingStrategy = .formatted(dateFormatter)
     encoder.outputFormatting = [.withoutEscapingSlashes, .prettyPrinted]
     do {
       let data = try encoder.encode(self)
