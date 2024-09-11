@@ -68,10 +68,8 @@ extension EKCalendar {
 
 extension [PlanCalendar] {
   func printAsJson() {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
     let encoder = JSONEncoder()
-    encoder.dateEncodingStrategy = .formatted(dateFormatter)
+    encoder.dateEncodingStrategy = .iso8601
     encoder.outputFormatting = .prettyPrinted
     do {
       let json = try String(
