@@ -50,8 +50,9 @@ For now we pick `calendarItemIdentifier` as the leading identifier as the app is
 
 ## Appendix
 
-- [EKEventStore](https://developer.apple.com/documentation/eventkit/ekeventstore)
 - [EKCalendarItem](https://developer.apple.com/documentation/eventkit/ekcalendaritem)
-- [EKEvent](https://developer.apple.com/documentation/eventkit/ekevent) inherits from `EKCalendarItem`
-- [EKCalendar](https://developer.apple.com/documentation/eventkit/ekcalendar)
 - [EKCalendarType](https://developer.apple.com/documentation/eventkit/ekcalendartype)
+- [EKCalendar](https://developer.apple.com/documentation/eventkit/ekcalendar)
+- [EKEventStore](https://developer.apple.com/documentation/eventkit/ekeventstore)
+- [EKEvent](https://developer.apple.com/documentation/eventkit/ekevent) inherits from `EKCalendarItem`
+- [EKParticipant](https://developer.apple.com/documentation/eventkit/ekparticipant)
