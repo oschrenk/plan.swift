@@ -10,29 +10,29 @@ struct Today: ParsableCommand {
   )
 
   @OptionGroup
-  var todayOpts: SharedOptions
+  var opts: SharedOptions
 
   mutating func run() {
-    Log.setDebug(todayOpts.debug)
-
-    let calendarFilter = CalendarFilter.build(
-      selectCalendars: todayOpts.selectCalendars,
-      ignoreCalendars: todayOpts.ignoreCalendars,
-      selectCalendarTypes: todayOpts.selectCalendarTypes,
-      ignoreCalendarTypes: todayOpts.ignoreCalendarTypes
-    )
-    let eventFilter = EventFilter.build(
-      ignoreAllDay: todayOpts.ignoreAllDayEvents,
-      ignorePatternTitle: todayOpts.ignorePatternTitle,
-      ignoreTags: todayOpts.ignoreTags,
-      minNumAttendees: todayOpts.minNumAttendees,
-      maxNumAttendees: todayOpts.maxNumAttendees
-    )
-
     let today = FCalendar.current.startOfDay(for: Date())
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
     let eventSelector = EventSelector.all()
+
+    Log.setDebug(opts.debug)
+
+    let calendarFilter = CalendarFilter.build(
+      selectCalendars: opts.selectCalendars,
+      ignoreCalendars: opts.ignoreCalendars,
+      selectCalendarTypes: opts.selectCalendarTypes,
+      ignoreCalendarTypes: opts.ignoreCalendarTypes
+    )
+    let eventFilter = EventFilter.build(
+      ignoreAllDay: opts.ignoreAllDayEvents,
+      ignorePatternTitle: opts.ignorePatternTitle,
+      ignoreTags: opts.ignoreTags,
+      minNumAttendees: opts.minNumAttendees,
+      maxNumAttendees: opts.maxNumAttendees
+    )
 
     let events = EventStore().fetch(
       start: start,
@@ -42,13 +42,13 @@ struct Today: ParsableCommand {
       eventSelector: eventSelector
     )
 
-    if todayOpts.templatePath.isEmpty {
+    if opts.templatePath.isEmpty {
       events.printAsJson()
     } else {
-      if let render = Template.render(path: todayOpts.templatePath, events: events) {
+      if let render = Template.render(path: opts.templatePath, events: events) {
         print(render)
       } else {
-        StdErr.print("Failed to render template at `\(todayOpts.templatePath)`")
+        StdErr.print("Failed to render template at `\(opts.templatePath)`")
       }
     }
   }

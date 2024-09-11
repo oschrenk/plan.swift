@@ -12,7 +12,7 @@ struct Next: ParsableCommand {
   )
 
   @OptionGroup
-  var nextOpts: SharedOptions
+  var opts: SharedOptions
 
   @Option(help: ArgumentHelp(
     "Fetch events within <m> minutes",
@@ -20,28 +20,26 @@ struct Next: ParsableCommand {
   )) var within: Int = 60
 
   mutating func run() {
-    Log.setDebug(nextOpts.debug)
-
-    let calendarFilter = CalendarFilter.build(
-      selectCalendars: nextOpts.selectCalendars,
-      ignoreCalendars: nextOpts.ignoreCalendars,
-      selectCalendarTypes: nextOpts.selectCalendarTypes,
-      ignoreCalendarTypes: nextOpts.ignoreCalendarTypes
-    )
-    let eventFilter = EventFilter.build(
-      ignoreAllDay: nextOpts.ignoreAllDayEvents,
-      ignorePatternTitle: nextOpts.ignorePatternTitle,
-      ignoreTags: nextOpts.ignoreTags,
-      minNumAttendees: nextOpts.minNumAttendees,
-      maxNumAttendees: nextOpts.maxNumAttendees
-    )
-
-    Log.write("next: About to call eventstore")
-
     let today = Date()
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
     let eventSelector = EventSelector.prefix(count: 1)
+
+    Log.setDebug(opts.debug)
+
+    let calendarFilter = CalendarFilter.build(
+      selectCalendars: opts.selectCalendars,
+      ignoreCalendars: opts.ignoreCalendars,
+      selectCalendarTypes: opts.selectCalendarTypes,
+      ignoreCalendarTypes: opts.ignoreCalendarTypes
+    )
+    let eventFilter = EventFilter.build(
+      ignoreAllDay: opts.ignoreAllDayEvents,
+      ignorePatternTitle: opts.ignorePatternTitle,
+      ignoreTags: opts.ignoreTags,
+      minNumAttendees: opts.minNumAttendees,
+      maxNumAttendees: opts.maxNumAttendees
+    )
 
     let events = EventStore().fetch(
       start: start,
@@ -51,15 +49,13 @@ struct Next: ParsableCommand {
       eventSelector: eventSelector
     ).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
-    Log.write("next: Called eventstore")
-
-    if nextOpts.templatePath.isEmpty {
+    if opts.templatePath.isEmpty {
       events.printAsJson()
     } else {
-      if let render = Template.render(path: nextOpts.templatePath, events: events) {
+      if let render = Template.render(path: opts.templatePath, events: events) {
         StdOut.print(render)
       } else {
-        StdErr.print("Failed to render template at `\(nextOpts.templatePath)`")
+        StdErr.print("Failed to render template at `\(opts.templatePath)`")
       }
     }
   }
