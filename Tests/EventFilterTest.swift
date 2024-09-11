@@ -17,6 +17,7 @@ final class EventFilterTests: XCTestCase {
       allDay: allDay
     )
     let location = ""
+    let meeting = Meeting(organizer: "", attendees: [])
     let services: [String: String] = [:]
 
     return Event(
@@ -25,6 +26,7 @@ final class EventFilterTests: XCTestCase {
       title: title,
       schedule: schedule,
       location: location,
+      meeting: meeting,
       services: services,
       tags: tags
     )
