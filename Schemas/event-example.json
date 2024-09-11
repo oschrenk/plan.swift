@@ -2,9 +2,9 @@
     "id": "UUID:UUID",
     "calendar": {
       "id": "UUID",
-      "color": "#E195DA",
+      "type": "caldav",
       "label": "Some calendar",
-      "type": "caldav"
+      "color": "#E195DA"
     },
     "title": {
       "full": "🏆 Release plan",
