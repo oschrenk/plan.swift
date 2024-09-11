@@ -22,6 +22,11 @@
       },
       "all_day": false
     },
+    "location": "",
+    "meeting" : {
+      "attendees" : [],
+      "organizer" : ""
+    },
     "services": [
       { "ical": "ical://ekevent/93109B45-776C-43AA-A6E9-A04606EF9F1C?method=show&options=more" }
     ],
