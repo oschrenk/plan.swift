@@ -17,6 +17,18 @@ class EventFilter {
     }
   }
 
+  static func minNumAttendees(number: Int) -> ((Event) -> Bool) {
+    { event in
+      event.meeting.attendees.count >= number
+    }
+  }
+
+  static func maxNumAttendees(number: Int) -> ((Event) -> Bool) {
+    { event in
+      event.meeting.attendees.count <= number
+    }
+  }
+
   static func ignoreTags(tags: [String]) -> ((Event) -> Bool) {
     { event in
       let intersection = Set(tags).intersection(Set(event.tags))
@@ -38,7 +50,9 @@ class EventFilter {
   static func build(
     ignoreAllDay: Bool,
     ignorePatternTitle: String,
-    ignoreTags: [String]
+    ignoreTags: [String],
+    minNumAttendees: Int?,
+    maxNumAttendees: Int?
   ) -> ((Event) -> Bool) {
     var filters: [(Event) -> Bool] = []
 
@@ -58,6 +72,18 @@ class EventFilter {
       let rtf: (Event) -> Bool = EventFilter.ignoreTags(tags: ignoreTags)
       filters.append(rtf)
       Log.write("added filter after: ignoreTags(\(ignoreTags))")
+    }
+
+    if minNumAttendees ?? -1 >= 0 {
+      let mina: (Event) -> Bool = EventFilter.minNumAttendees(number: minNumAttendees!)
+      filters.append(mina)
+      Log.write("added filter after: minNumAttendees(\(minNumAttendees!))")
+    }
+
+    if maxNumAttendees ?? -1 >= 0 {
+      let maxa: (Event) -> Bool = EventFilter.maxNumAttendees(number: maxNumAttendees!)
+      filters.append(maxa)
+      Log.write("added filter after: maxNumAttendees(\(maxNumAttendees!))")
     }
 
     let final = filters.isEmpty ?

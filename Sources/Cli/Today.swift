@@ -24,7 +24,9 @@ struct Today: ParsableCommand {
     let eventFilter = EventFilter.build(
       ignoreAllDay: todayOpts.ignoreAllDayEvents,
       ignorePatternTitle: todayOpts.ignorePatternTitle,
-      ignoreTags: todayOpts.ignoreTags
+      ignoreTags: todayOpts.ignoreTags,
+      minNumAttendees: todayOpts.minNumAttendees,
+      maxNumAttendees: todayOpts.maxNumAttendees
     )
 
     let today = FCalendar.current.startOfDay(for: Date())

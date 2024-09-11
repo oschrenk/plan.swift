@@ -43,6 +43,16 @@ struct SharedOptions: ParsableArguments {
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
+    "Minimum (inclusive) number <n> of attendees.",
+    valueName: "n"
+  )) var minNumAttendees: Int?
+
+  @Option(help: ArgumentHelp(
+    "Maximum (inclusive) number <n> of attendees.",
+    valueName: "n"
+  )) var maxNumAttendees: Int?
+
+  @Option(help: ArgumentHelp(
     "Template path <p>.",
     valueName: "p"
   )) var templatePath: String = ""

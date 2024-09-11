@@ -5,7 +5,8 @@ final class EventFilterTests: XCTestCase {
   private func genEvent(
     title: String = "unknown",
     tags: [String] = [],
-    allDay: Bool = false
+    allDay: Bool = false,
+    attendees: [String] = []
   ) -> Event {
     let id = UUID().uuidString
     let cal = PlanCalendar.Unknown
@@ -17,7 +18,7 @@ final class EventFilterTests: XCTestCase {
       allDay: allDay
     )
     let location = ""
-    let meeting = Meeting(organizer: "", attendees: [])
+    let meeting = Meeting(organizer: "", attendees: attendees)
     let services: [String: String] = [:]
 
     return Event(
@@ -94,5 +95,37 @@ final class EventFilterTests: XCTestCase {
     let actual = EventFilter.ignorePatternTitle(pattern: "bar")(event)
 
     XCTAssertEqual(actual, expected, "The event was falsely ignored")
+  }
+
+  func testAcceptingEventWithAtLeastTwoAttendees() {
+    let event = genEvent(attendees: ["personA", "personB"])
+    let expected = true
+    let actual = EventFilter.minNumAttendees(number: 2)(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+  }
+
+  func testAcceptingEventWithTooFewAttendees() {
+    let event = genEvent(attendees: ["personA", "personB"])
+    let expected = false
+    let actual = EventFilter.minNumAttendees(number: 3)(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+  }
+
+  func testAcceptingEventWithFewAttendees() {
+    let event = genEvent(attendees: ["personA", "personB"])
+    let expected = true
+    let actual = EventFilter.maxNumAttendees(number: 3)(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+  }
+
+  func testAcceptingEventWithTooManyAttendees() {
+    let event = genEvent(attendees: ["personA", "personB", "personC"])
+    let expected = false
+    let actual = EventFilter.maxNumAttendees(number: 2)(event)
+
+    XCTAssertEqual(actual, expected, "The event was falsely accepted")
   }
 }

@@ -31,7 +31,9 @@ struct Next: ParsableCommand {
     let eventFilter = EventFilter.build(
       ignoreAllDay: nextOpts.ignoreAllDayEvents,
       ignorePatternTitle: nextOpts.ignorePatternTitle,
-      ignoreTags: nextOpts.ignoreTags
+      ignoreTags: nextOpts.ignoreTags,
+      minNumAttendees: nextOpts.minNumAttendees,
+      maxNumAttendees: nextOpts.maxNumAttendees
     )
 
     Log.write("next: About to call eventstore")
