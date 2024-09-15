@@ -1,7 +1,7 @@
 import EventKit
 import Foundation
 
-struct Event: Codable {
+struct Event: Codable, KeyPathAccessible {
   // An EKEvent has three different identifiers
   // 1. calendarItemIdentifier (via EKCalendarItem)
   // 2. calendarItemExternalIdentifier (via EKCalendarItem)
@@ -45,6 +45,10 @@ struct Event: Codable {
     case meeting
     case services
     case tags
+  }
+
+  static func codingKey(for key: String) -> CodingKey? {
+    return CodingKeys(stringValue: key)
   }
 }
 

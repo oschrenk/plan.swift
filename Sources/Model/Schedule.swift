@@ -1,6 +1,6 @@
 import Foundation
 
-struct Schedule: Codable {
+struct Schedule: Codable, KeyPathAccessible {
   let start: Temporal
   let end: Temporal
   let allDay: Bool
@@ -21,5 +21,9 @@ struct Schedule: Codable {
     case start
     case end
     case allDay = "all_day"
+  }
+
+  static func codingKey(for key: String) -> CodingKey? {
+    return CodingKeys(stringValue: key)
   }
 }

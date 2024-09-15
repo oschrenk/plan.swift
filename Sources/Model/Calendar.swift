@@ -1,6 +1,6 @@
 import EventKit
 
-struct PlanCalendar: Codable {
+struct PlanCalendar: Codable, KeyPathAccessible {
   let id: String
   let type: String
   let label: String
@@ -12,6 +12,10 @@ struct PlanCalendar: Codable {
     label: "No Label",
     color: "#FFFFFF"
   )
+
+  static func codingKey(for key: String) -> CodingKey? {
+    return CodingKeys(stringValue: key)
+  }
 }
 
 extension CGColor {
