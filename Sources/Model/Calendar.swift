@@ -1,6 +1,6 @@
 import EventKit
 
-struct PlanCalendar: Codable, KeyPathAccessible {
+struct PlanCalendar: Codable, ReverseCodable {
   let id: String
   let type: String
   let label: String
@@ -13,8 +13,20 @@ struct PlanCalendar: Codable, KeyPathAccessible {
     color: "#FFFFFF"
   )
 
-  static func codingKey(for key: String) -> CodingKey? {
-    return CodingKeys(stringValue: key)
+  enum CodingKeys: String, CodingKey, CaseIterable {
+    case id
+    case type
+    case label
+    case color
+  }
+
+  static func reverseCodingKeys() -> [String: String] {
+    return [
+      CodingKeys.id.rawValue: "id",
+      CodingKeys.type.rawValue: "type",
+      CodingKeys.label.rawValue: "label",
+      CodingKeys.color.rawValue: "color",
+    ]
   }
 }
 

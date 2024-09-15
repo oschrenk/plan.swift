@@ -1,6 +1,6 @@
 import Foundation
 
-struct Temporal: Codable, KeyPathAccessible {
+struct Temporal: Codable, ReverseCodable {
   let at: Date
   let inMinutes: Int
 
@@ -9,7 +9,10 @@ struct Temporal: Codable, KeyPathAccessible {
     case inMinutes = "in"
   }
 
-  static func codingKey(for key: String) -> CodingKey? {
-    return CodingKeys(stringValue: key)
+  static func reverseCodingKeys() -> [String: String] {
+    return [
+      CodingKeys.at.rawValue: "at",
+      CodingKeys.inMinutes.rawValue: "inMinutes",
+    ]
   }
 }

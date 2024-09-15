@@ -1,17 +1,20 @@
 import EventKit
 import Foundation
 
-struct Meeting: Codable, KeyPathAccessible {
+struct Meeting: Codable, ReverseCodable {
   let organizer: String
   let attendees: [String]
 
-  enum CodingKeys: String, CodingKey {
+  enum CodingKeys: String, CodingKey, CaseIterable {
     case organizer
     case attendees
   }
 
-  static func codingKey(for key: String) -> CodingKey? {
-    return CodingKeys(stringValue: key)
+  static func reverseCodingKeys() -> [String: String] {
+    return [
+      CodingKeys.organizer.rawValue: "organizer",
+      CodingKeys.attendees.rawValue: "attendees",
+    ]
   }
 }
 

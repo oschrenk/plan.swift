@@ -1,7 +1,7 @@
 @testable import plan
 import XCTest
 
-final class SortingTests: XCTestCase {
+final class ObjectTests: XCTestCase {
   private func genEvent(
     title: String = "unknown",
     tags: [String] = [],
@@ -33,19 +33,29 @@ final class SortingTests: XCTestCase {
     )
   }
 
-  func testValidSortingPath() {
-    let event = genEvent(title: "test")
-    let expected = Sorting.valueForKeyPath(event, "title.full") as? String ?? "FAIL"
-    let output = "test"
-
-    XCTAssertEqual(output, expected, "The fields were not the same")
-  }
-
   func testKeyPathOnKeywords() {
     let event = genEvent(title: "test")
-    let expected = Sorting.valueForKeyPath(event, "schedule.start.in") as? Int ?? -1
-    let output = 0
+    do {
+      let expected = try Object.valueForKeyPath(event, "schedule.start.in") as? Int ?? -1
+      let output = 0
 
-    XCTAssertEqual(output, expected, "The fields were not the same")
+      XCTAssertEqual(output, expected, "The fields were not the same")
+    } catch {
+      XCTFail("Expected no error, but got \(error)")
+    }
+  }
+
+  func testNotComparable() {
+    let event = genEvent(title: "test")
+    do {
+      XCTAssertThrowsError(try Object.valueForKeyPath(event, "schedule.start")) { error in
+        XCTAssertTrue(
+          error is Object.PathError,
+          "Unexpected error type: \(type(of: error))"
+        )
+
+        XCTAssertEqual(error as? Object.PathError, .notComparable)
+      }
+    }
   }
 }
