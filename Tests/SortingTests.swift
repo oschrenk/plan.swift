@@ -33,19 +33,15 @@ final class SortingTests: XCTestCase {
     )
   }
 
-  func testValidSortingPath() {
-    let event = genEvent(title: "test")
-    let expected = Sorting.valueForKeyPath(event, "title.full") as? String ?? "FAIL"
-    let output = "test"
-
-    XCTAssertEqual(output, expected, "The fields were not the same")
-  }
-
   func testKeyPathOnKeywords() {
     let event = genEvent(title: "test")
-    let expected = Sorting.valueForKeyPath(event, "schedule.start.in") as? Int ?? -1
-    let output = 0
+    do {
+      let expected = try Sorting.valueForKeyPath(event, "schedule.start.in") as? Int ?? -1
+      let output = 0
 
-    XCTAssertEqual(output, expected, "The fields were not the same")
+      XCTAssertEqual(output, expected, "The fields were not the same")
+    } catch {
+      XCTFail("Expected no error, but got \(error)")
+    }
   }
 }

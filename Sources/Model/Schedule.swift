@@ -1,6 +1,6 @@
 import Foundation
 
-struct Schedule: Codable, KeyPathAccessible {
+struct Schedule: Codable, ReverseCodable {
   let start: Temporal
   let end: Temporal
   let allDay: Bool
@@ -17,13 +17,17 @@ struct Schedule: Codable, KeyPathAccessible {
     allDay = isAllDay
   }
 
-  enum CodingKeys: String, CodingKey {
+  enum CodingKeys: String, CodingKey, CaseIterable {
     case start
     case end
     case allDay = "all_day"
   }
 
-  static func codingKey(for key: String) -> CodingKey? {
-    return CodingKeys(stringValue: key)
+  static func reverseCodingKeys() -> [String: String] {
+    return [
+      CodingKeys.start.rawValue: "start",
+      CodingKeys.end.rawValue: "end",
+      CodingKeys.allDay.rawValue: "allDay",
+    ]
   }
 }

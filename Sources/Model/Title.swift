@@ -1,4 +1,4 @@
-struct Title: Codable {
+struct Title: Codable, ReverseCodable {
   let full: String
   let label: String
   let icon: String
@@ -8,6 +8,20 @@ struct Title: Codable {
     let legend = full.asLegend()
     label = legend.description
     icon = legend.icon
+  }
+
+  enum CodingKeys: String, CodingKey, CaseIterable {
+    case full
+    case label
+    case icon
+  }
+
+  static func reverseCodingKeys() -> [String: String] {
+    return [
+      CodingKeys.full.rawValue: "full",
+      CodingKeys.label.rawValue: "label",
+      CodingKeys.icon.rawValue: "icon",
+    ]
   }
 }
 

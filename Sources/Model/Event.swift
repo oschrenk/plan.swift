@@ -1,7 +1,7 @@
 import EventKit
 import Foundation
 
-struct Event: Codable, KeyPathAccessible {
+struct Event: Codable, ReverseCodable {
   // An EKEvent has three different identifiers
   // 1. calendarItemIdentifier (via EKCalendarItem)
   // 2. calendarItemExternalIdentifier (via EKCalendarItem)
@@ -36,7 +36,7 @@ struct Event: Codable, KeyPathAccessible {
   let services: [Service: String]
   let tags: [String]
 
-  enum CodingKeys: String, CodingKey {
+  enum CodingKeys: String, CodingKey, CaseIterable {
     case id
     case calendar
     case title
@@ -47,8 +47,17 @@ struct Event: Codable, KeyPathAccessible {
     case tags
   }
 
-  static func codingKey(for key: String) -> CodingKey? {
-    return CodingKeys(stringValue: key)
+  static func reverseCodingKeys() -> [String: String] {
+    return [
+      CodingKeys.id.rawValue: "id",
+      CodingKeys.calendar.rawValue: "calendar",
+      CodingKeys.title.rawValue: "title",
+      CodingKeys.schedule.rawValue: "schedule",
+      CodingKeys.location.rawValue: "location",
+      CodingKeys.meeting.rawValue: "meeting",
+      CodingKeys.services.rawValue: "services",
+      CodingKeys.tags.rawValue: "tags",
+    ]
   }
 }
 
