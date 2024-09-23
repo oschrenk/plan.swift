@@ -31,7 +31,7 @@ extension CGColor {
   }
 }
 
-extension EKCalendarType: CustomStringConvertible {
+extension EventKit.EKCalendarType: Swift.CustomStringConvertible {
   public var description: String {
     switch self {
     case .local:

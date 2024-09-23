@@ -1,13 +1,13 @@
 import ArgumentParser
 import EventKit
 
-extension Array: ExpressibleByArgument where Element == String {
+extension Swift.Array: ArgumentParser.ExpressibleByArgument where Element == String {
   public init?(argument: String) {
     self = argument.split(separator: ",").map { String($0) }
   }
 }
 
-extension EKCalendarType: ExpressibleByArgument {
+extension EventKit.EKCalendarType: ArgumentParser.ExpressibleByArgument {
   public init?(argument: String) {
     switch argument.lowercased() {
     case "local":
