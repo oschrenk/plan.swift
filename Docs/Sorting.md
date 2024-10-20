@@ -30,6 +30,3 @@ Most fields of the JSON can be used for sorting
 
 You can't sort on fields that have multiple values, such as `attendees`, `services`, or `tags`
 
-## Tiebreakers
-
-By adding multiple sorting fields (separated by comma), you can have tiebreakers
