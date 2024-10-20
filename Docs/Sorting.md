@@ -2,7 +2,7 @@
 
 You can control sorting of the output by using:
 ```
-plan today --sort schedule.start.in,calendar.label
+plan today --sort-field schedule.start.in
 ```
 
 The default sorting depends on the use case
@@ -29,4 +29,6 @@ Most fields of the JSON can be used for sorting
 - `meeting.organizer`
 
 You can't sort on fields that have multiple values, such as `attendees`, `services`, or `tags`
+
+The help text also doesn't show the support for `id` based fields, since they don't make sense to sort on, even if it is possible
 
