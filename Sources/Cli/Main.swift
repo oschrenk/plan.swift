@@ -6,7 +6,7 @@ enum Main {
     start: Date,
     end: Date,
     opts: SharedOptions,
-    eventSelector: ([EKEvent]) -> [EKEvent]
+    eventSelector: ([Event]) -> [Event]
   ) {
     Log.setDebug(opts.debug)
 
@@ -26,13 +26,12 @@ enum Main {
       maxNumAttendees: opts.maxNumAttendees
     )
 
-    let events = EventStore().fetch(
+    let events = eventSelector(EventStore().fetch(
       start: start,
       end: end,
       calendarFilter: calendarFilter,
-      eventFilter: eventFilter,
-      eventSelector: eventSelector
-    ).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
+      eventFilter: eventFilter
+    )).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
 
     if opts.templatePath.isEmpty {
       events.printAsJson()
