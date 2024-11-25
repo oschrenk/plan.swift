@@ -113,7 +113,7 @@ extension [PlanCalendar] {
       cal1.label < cal2.label
     })
     for calendar in sorted {
-      StdOut.print("\(calendar.id) \(calendar.label)")
+      StdOut.print("\(calendar.id) \(calendar.label) \(calendar.type) \(calendar.source)")
     }
   }
 }
