@@ -56,3 +56,4 @@ For now we pick `calendarItemIdentifier` as the leading identifier as the app is
 - [EKEventStore](https://developer.apple.com/documentation/eventkit/ekeventstore)
 - [EKEvent](https://developer.apple.com/documentation/eventkit/ekevent) inherits from `EKCalendarItem`
 - [EKParticipant](https://developer.apple.com/documentation/eventkit/ekparticipant)
+- [EKSource](https://developer.apple.com/documentation/eventkit/eksource)

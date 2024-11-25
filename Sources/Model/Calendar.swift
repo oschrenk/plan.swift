@@ -3,12 +3,14 @@ import EventKit
 struct PlanCalendar: Codable, ReverseCodable {
   let id: String
   let type: String
+  let source: String
   let label: String
   let color: String
 
   static let Unknown = PlanCalendar(
     id: "unknown",
     type: "unknown",
+    source: "unknown",
     label: "No Label",
     color: "#FFFFFF"
   )
@@ -16,6 +18,7 @@ struct PlanCalendar: Codable, ReverseCodable {
   enum CodingKeys: String, CodingKey, CaseIterable {
     case id
     case type
+    case source
     case label
     case color
   }
@@ -24,6 +27,7 @@ struct PlanCalendar: Codable, ReverseCodable {
     return [
       CodingKeys.id.rawValue: "id",
       CodingKeys.type.rawValue: "type",
+      CodingKeys.source.rawValue: "source",
       CodingKeys.label.rawValue: "label",
       CodingKeys.color.rawValue: "color",
     ]
@@ -70,12 +74,14 @@ extension EKCalendar {
   func asCal() -> PlanCalendar {
     let id = calendarIdentifier
     let type = type.description
+    let source = source.title
     let label = title
     let color = cgColor.asHexString()
 
     return PlanCalendar(
       id: id,
       type: type,
+      source: source,
       label: label,
       color: color
     )

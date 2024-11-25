@@ -8,6 +8,7 @@
   {
     "id" : "C4683283-CAFE-A0CF-BABE-6C9FCACC6DA8",
     "label" : "Private",
+    "source": "Personal",
     "type" : "caldav",
     "color" : "#FFCC00"
   }

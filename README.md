@@ -28,7 +28,8 @@ Example output in JSON
       "id": "C5AE5024-78BD-4965-BB0D-0E43E1024368",
       "color": "#E195DA",
       "label": "Some calendar",
-      "type": "caldav"
+      "type": "caldav",
+      "source": ""
     },
     "title": {
       "full": "🏆 Release plan",

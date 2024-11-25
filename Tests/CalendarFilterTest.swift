@@ -7,11 +7,13 @@ final class CalendarFilterTests: XCTestCase {
   private func genCalendar(type: EKCalendarType = EKCalendarType.calDAV) -> PlanCalendar {
     let id = "5E28ECB5-A07D-4FC8-82E4-5F37C38C786F"
     let label = "Test"
+    let source = "Test"
     let color = "#FFB3E4"
 
     return PlanCalendar(
       id: id,
       type: type.description,
+      source: source,
       label: label,
       color: color
     )

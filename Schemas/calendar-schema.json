@@ -11,6 +11,9 @@
       "color": {
         "type": "string"
       },
+      "source": {
+        "type": "string"
+      },
       "type": {
         "type": "string"
       },
@@ -21,6 +24,7 @@
     "required": [
       "label",
       "color",
+      "source",
       "type",
       "id"
     ]
