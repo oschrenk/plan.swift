@@ -31,6 +31,16 @@ struct SharedOptions: ParsableArguments {
   )) var ignoreCalendars: [String] = []
 
   @Option(help: ArgumentHelp(
+    "Select calendar sources <s>. A comma separated list of calendar sources",
+    valueName: "s"
+  )) var selectCalendarSources: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Ignore calendar sources <s>. A comma separated list of calendar sources",
+    valueName: "s"
+  )) var ignoreCalendarSources: [String] = []
+
+  @Option(help: ArgumentHelp(
     "Select calendar types <v>. A comma separated list of calendar types. " +
       "Available: [local|caldav|exchange|subscription|birthday]",
     valueName: "v"

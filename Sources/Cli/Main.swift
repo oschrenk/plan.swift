@@ -13,6 +13,8 @@ enum Main {
     let calendarFilter = CalendarFilter.build(
       selectCalendars: opts.selectCalendars,
       ignoreCalendars: opts.ignoreCalendars,
+      selectCalendarSources: opts.selectCalendarSources,
+      ignoreCalendarSources: opts.ignoreCalendarSources,
       selectCalendarTypes: opts.selectCalendarTypes,
       ignoreCalendarTypes: opts.ignoreCalendarTypes
     )

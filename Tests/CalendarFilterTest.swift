@@ -4,10 +4,12 @@ import EventKit
 import XCTest
 
 final class CalendarFilterTests: XCTestCase {
-  private func genCalendar(type: EKCalendarType = EKCalendarType.calDAV) -> PlanCalendar {
+  private func genCalendar(
+    type: EKCalendarType = EKCalendarType.calDAV,
+    source: String = "Test"
+  ) -> PlanCalendar {
     let id = "5E28ECB5-A07D-4FC8-82E4-5F37C38C786F"
     let label = "Test"
-    let source = "Test"
     let color = "#FFB3E4"
 
     return PlanCalendar(
@@ -57,6 +59,49 @@ final class CalendarFilterTests: XCTestCase {
     let actual = CalendarFilter.ignore(uuids: [])(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was not accepted")
+  }
+
+  func testIgnoreCalendarSourcesMatching() {
+    let source = "Personal"
+    let calendar = genCalendar(source: source)
+    let expected = false
+    let actual = CalendarFilter.ignoreSources(sources: [source])(calendar)
+
+    XCTAssertEqual(actual, expected, "The calendar was accepted")
+  }
+
+  func testIgnoreCalendarSourcesEmptyArray() {
+    let calendar = genCalendar()
+    let expected = true
+    let actual = CalendarFilter.ignoreSources(sources: [])(calendar)
+
+    XCTAssertEqual(actual, expected, "The calendar was rejected")
+  }
+
+  func testSelectCalendarSourcesMatching() {
+    let source = "Personal"
+    let calendar = genCalendar(source: source)
+    let expected = true
+    let actual = CalendarFilter.selectSources(sources: [source])(calendar)
+
+    XCTAssertEqual(actual, expected, "The calendar was rejected")
+  }
+
+  func testSelectCalendarSourcesNotMatching() {
+    let source = "Personal"
+    let calendar = genCalendar(source: source)
+    let expected = false
+    let actual = CalendarFilter.selectSources(sources: ["not-existing"])(calendar)
+
+    XCTAssertEqual(actual, expected, "The calendar was accepted")
+  }
+
+  func testSelectCalendarSourcesEmptyArray() {
+    let calendar = genCalendar()
+    let expected = true
+    let actual = CalendarFilter.selectSources(sources: [])(calendar)
+
+    XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
 
   func testIgnoreCalendarTypesMatching() {

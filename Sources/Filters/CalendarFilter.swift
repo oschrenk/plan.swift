@@ -36,6 +36,37 @@ class CalendarFilter {
     }
   }
 
+  static func selectSources(sources: [String]) -> ((PlanCalendar?) -> Bool) {
+    { calendar in
+      // if no selection, allow everything
+      if sources.isEmpty {
+        return true
+      }
+      // if event has no valid calendar, don't show
+      if calendar == nil {
+        return false
+      }
+
+      return sources.contains(calendar!.source)
+    }
+  }
+
+  static func ignoreSources(sources: [String]) -> ((PlanCalendar?) -> Bool) {
+    { calendar in
+      // if no selection, allow everything
+      if sources.isEmpty {
+        return true
+      }
+
+      // if event has no valid calendar, don't show
+      if calendar == nil {
+        return false
+      }
+
+      return !sources.contains(calendar!.source)
+    }
+  }
+
   static func selectTypes(types: [EKCalendarType]) -> ((PlanCalendar?) -> Bool) {
     { calendar in
       // if no selection, allow everything
@@ -79,6 +110,8 @@ class CalendarFilter {
   static func build(
     selectCalendars: [String] = [],
     ignoreCalendars: [String] = [],
+    selectCalendarSources: [String] = [],
+    ignoreCalendarSources: [String] = [],
     selectCalendarTypes: [EKCalendarType] = [],
     ignoreCalendarTypes: [EKCalendarType] = []
   ) -> ((PlanCalendar) -> Bool) {
@@ -94,6 +127,18 @@ class CalendarFilter {
       let icf: (PlanCalendar) -> Bool = CalendarFilter.ignore(uuids: ignoreCalendars)
       filters.append(icf)
       Log.write("added filter before: ignoreCalendars(\(ignoreCalendars))")
+    }
+
+    if !selectCalendarSources.isEmpty {
+      let f: (PlanCalendar) -> Bool = CalendarFilter.selectSources(sources: selectCalendarSources)
+      filters.append(f)
+      Log.write("added filter before: selectSources(\(selectCalendarSources))")
+    }
+
+    if !ignoreCalendarSources.isEmpty {
+      let f: (PlanCalendar) -> Bool = CalendarFilter.ignoreSources(sources: ignoreCalendarSources)
+      filters.append(f)
+      Log.write("added filter before: ignoreSources(\(ignoreCalendarSources))")
     }
 
     if !selectCalendarTypes.isEmpty {
