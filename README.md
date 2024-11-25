@@ -1,6 +1,6 @@
 # README
 
-A macOS tool to fetch (the next) calendar events as json
+A macOS terminal tool to fetch calendar events from `Calendar.app`
 
 ## Features
 
