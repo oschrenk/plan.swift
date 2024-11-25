@@ -17,5 +17,6 @@ identifier_name:
     - to
     - at
     - in
+    - f
 trailing_comma:
   mandatory_comma: true
