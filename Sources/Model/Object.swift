@@ -5,6 +5,7 @@ enum Object {
     case notFound
   }
 
+  @discardableResult
   static func valueForKeyPath(_ object: Any, _ keyPath: String) throws -> Any? {
     let keys = keyPath.split(separator: ".").map { String($0) }
 

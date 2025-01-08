@@ -69,9 +69,9 @@ struct SharedOptions: ParsableArguments {
 
   @Option(help: ArgumentHelp(
     "Sort parameter(s) <s>." +
-      "Available: [start]",
+      "Available: []",
     valueName: "s"
-  )) var sortParameters: [Field] = [.start]
+  )) var sortParameters: [Order] = []
 
   @Flag(help: ArgumentHelp(
     "Print debug statements"
