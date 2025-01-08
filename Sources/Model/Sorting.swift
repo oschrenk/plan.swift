@@ -1,7 +1,7 @@
 import ArgumentParser
 import Foundation
 
-class Sorting {
+class Order {
   let field: Field
   let direction: Direction
 
@@ -18,19 +18,19 @@ class Sorting {
     return events
   }
 
-  static func parse(s: String) -> Sorting? {
+  static func parse(s: String) -> Order? {
     let ss: [String] = s.split(separator: ":").map { String($0) }
     switch ss.count {
     // found a string candidate for field only
     case 1:
       return parseField(ss[0]).map {
-        Sorting(field: $0, direction: Direction.asc)
+        Order(field: $0, direction: Direction.asc)
       }
     // found a string candidates for field and direction
     case 2:
       switch (parseField(ss[0]), Direction(rawValue: ss[1])) {
       case let (.some(f), .some(d)):
-        return Sorting(field: f, direction: d)
+        return Order(field: f, direction: d)
       default:
         return nil
       }
