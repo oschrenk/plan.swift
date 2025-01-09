@@ -31,10 +31,15 @@ struct EventStore {
     return eventStore.calendars(for: EKEntityType.event)
   }
 
-  func calendars() -> [PlanCalendar] {
-    return fetchCalendars().map { calendar in
-      calendar.asCal()
-    }
+  /// Returns a list of calendars
+  ///
+  /// - Parameters:
+  ///     - filter: A filter to select certain calendars
+  func calendars(filter: (PlanCalendar) -> Bool) -> [PlanCalendar] {
+    return CalendarSelector.build(
+      calendars: fetchCalendars(),
+      filter: filter
+    ).map { $0.asCal() }
   }
 
   /// Returns a list of events
