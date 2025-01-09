@@ -6,10 +6,10 @@ final class Order: ArgumentParser.ExpressibleByArgument {
   let direction: Direction
 
   public init?(argument: String) {
-    let o = Order.parse(s: argument.lowercased())
-    if o != nil {
-      field = o!.field
-      direction = o!.direction
+    let obj = Order.parse(s: argument.lowercased())
+    if obj != nil {
+      field = obj!.field
+      direction = obj!.direction
     } else {
       return nil
     }
@@ -21,18 +21,18 @@ final class Order: ArgumentParser.ExpressibleByArgument {
   }
 
   static func parse(s: String) -> Order? {
-    let ss: [String] = s.split(separator: ":").map { String($0) }
-    switch ss.count {
+    let rawOrder: [String] = s.split(separator: ":").map { String($0) }
+    switch rawOrder.count {
     // found a string candidate for field only
     case 1:
-      return parseField(s: ss[0]).map {
+      return parseField(s: rawOrder[0]).map {
         Order(field: $0, direction: Direction.asc)
       }
     // found a string candidates for field and direction
     case 2:
-      switch (parseField(s: ss[0]), Direction(rawValue: ss[1])) {
-      case let (.some(f), .some(d)):
-        return Order(field: f, direction: d)
+      switch (parseField(s: rawOrder[0]), Direction(rawValue: rawOrder[1])) {
+      case let (.some(field), .some(direction)):
+        return Order(field: field, direction: direction)
       default:
         return nil
       }
