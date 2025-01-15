@@ -97,7 +97,7 @@ For more details, consult [Docs/Sketchybar](./Docs/Sketchybar.md).
 
 ### Obsidian
 
-You can use it with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Templating](Docs/Templating.md).
+You can use it with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Obsidian](Docs/Obsidian.md) and [Docs/Templating](Docs/Templating.md).
 
 ## Templating
 
