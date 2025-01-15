@@ -1,5 +1,5 @@
 {
-  "originHash" : "763ad94442f921497be993b53d72ecf330356d3a94cfbecac863f17b0d2b4a63",
+  "originHash" : "19c5596989049c471242622e4bbd562902eb66482df501b0f7892bbf6a30b248",
   "pins" : [
     {
       "identity" : "pathkit",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-parsing",
       "state" : {
-        "revision" : "a0e7d73f462c1c38c59dc40a3969ac40cea42950",
-        "version" : "0.13.0"
+        "revision" : "fda02264a411776236c8efc035571915b238a815",
+        "version" : "0.14.0"
       }
     },
     {
