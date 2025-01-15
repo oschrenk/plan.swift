@@ -60,22 +60,38 @@ struct Event: Codable, ReverseCodable {
     ]
   }
 
-  static let Empty =
-    Event(
-      id: UUID().uuidString,
-      calendar: PlanCalendar.Unknown,
-      title: Title(text: "empty"),
-      schedule: Schedule(
-        now: Date(),
-        startDate: Date(),
-        endDate: Date(),
-        allDay: false
-      ),
-      location: "",
-      meeting: Meeting(organizer: "", attendees: []),
-      services: [:],
-      tags: []
+  static func generate(
+    title: String = "unknown",
+    tags: [String] = [],
+    allDay: Bool = false,
+    attendees: [String] = []
+  ) -> Event {
+    let id = UUID().uuidString
+    let cal = PlanCalendar.Unknown
+    let title = Title(text: title)
+    let schedule = Schedule(
+      now: Date(),
+      startDate: Date(),
+      endDate: Date(),
+      allDay: allDay
     )
+    let location = ""
+    let meeting = Meeting(organizer: "", attendees: attendees)
+    let services: [Service: String] = [:]
+
+    return Event(
+      id: id,
+      calendar: cal,
+      title: title,
+      schedule: schedule,
+      location: location,
+      meeting: meeting,
+      services: services,
+      tags: tags
+    )
+  }
+
+  static let Empty: Event = generate()
 }
 
 /// Extension to String for finding tags in the text

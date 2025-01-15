@@ -2,39 +2,8 @@
 import XCTest
 
 final class EventFilterTests: XCTestCase {
-  private func genEvent(
-    title: String = "unknown",
-    tags: [String] = [],
-    allDay: Bool = false,
-    attendees: [String] = []
-  ) -> Event {
-    let id = UUID().uuidString
-    let cal = PlanCalendar.Unknown
-    let title = Title(text: title)
-    let schedule = Schedule(
-      now: Date(),
-      startDate: Date(),
-      endDate: Date(),
-      allDay: allDay
-    )
-    let location = ""
-    let meeting = Meeting(organizer: "", attendees: attendees)
-    let services: [Service: String] = [:]
-
-    return Event(
-      id: id,
-      calendar: cal,
-      title: title,
-      schedule: schedule,
-      location: location,
-      meeting: meeting,
-      services: services,
-      tags: tags
-    )
-  }
-
   func testAlwaysAccept() {
-    let event = genEvent()
+    let event = Event.generate()
     let expected = true
     let actual = EventFilter.accept(event)
 
@@ -42,7 +11,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testIgnoreTagsNoTags() {
-    let event = genEvent(tags: ["timeblock"])
+    let event = Event.generate(tags: ["timeblock"])
     let expected = true
     let actual = EventFilter.ignoreTags(tags: [])(event)
 
@@ -50,7 +19,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testIgnoreTagsMatchingTags() {
-    let event = genEvent(tags: ["timeblock"])
+    let event = Event.generate(tags: ["timeblock"])
     let expected = false
     let actual = EventFilter.ignoreTags(tags: ["timeblock"])(event)
 
@@ -58,7 +27,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testIgnoreTagsNotMatchingTags() {
-    let event = genEvent(tags: ["foo"])
+    let event = Event.generate(tags: ["foo"])
     let expected = true
     let actual = EventFilter.ignoreTags(tags: ["timeblock"])(event)
 
@@ -66,7 +35,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testIgnoreAnAllDayEvent() {
-    let event = genEvent(allDay: true)
+    let event = Event.generate(allDay: true)
     let expected = false
     let actual = EventFilter.ignoreAllDay(event: event)
 
@@ -74,7 +43,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testAcceptAnNonAllDayEvent() {
-    let event = genEvent(allDay: false)
+    let event = Event.generate(allDay: false)
     let expected = true
     let actual = EventFilter.ignoreAllDay(event: event)
 
@@ -82,7 +51,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testIgnoringEventMatchingTitle() {
-    let event = genEvent(title: "foo matching")
+    let event = Event.generate(title: "foo matching")
     let expected = false
     let actual = EventFilter.ignorePatternTitle(pattern: "foo")(event)
 
@@ -90,7 +59,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testAcceptingEventNotMatchingTitle() {
-    let event = genEvent(title: "foo matching")
+    let event = Event.generate(title: "foo matching")
     let expected = true
     let actual = EventFilter.ignorePatternTitle(pattern: "bar")(event)
 
@@ -98,7 +67,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testAcceptingEventWithAtLeastTwoAttendees() {
-    let event = genEvent(attendees: ["personA", "personB"])
+    let event = Event.generate(attendees: ["personA", "personB"])
     let expected = true
     let actual = EventFilter.minNumAttendees(number: 2)(event)
 
@@ -106,7 +75,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testAcceptingEventWithTooFewAttendees() {
-    let event = genEvent(attendees: ["personA", "personB"])
+    let event = Event.generate(attendees: ["personA", "personB"])
     let expected = false
     let actual = EventFilter.minNumAttendees(number: 3)(event)
 
@@ -114,7 +83,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testAcceptingEventWithFewAttendees() {
-    let event = genEvent(attendees: ["personA", "personB"])
+    let event = Event.generate(attendees: ["personA", "personB"])
     let expected = true
     let actual = EventFilter.maxNumAttendees(number: 3)(event)
 
@@ -122,7 +91,7 @@ final class EventFilterTests: XCTestCase {
   }
 
   func testAcceptingEventWithTooManyAttendees() {
-    let event = genEvent(attendees: ["personA", "personB", "personC"])
+    let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = false
     let actual = EventFilter.maxNumAttendees(number: 2)(event)
 
