@@ -68,8 +68,11 @@ struct SharedOptions: ParsableArguments {
   )) var templatePath: String = ""
 
   @Option(help: ArgumentHelp(
-    "Sort parameter(s) <s>." +
-      "Available: []",
+    "Sort order(s) <s>. " +
+      "A comma separated list of fields and optional direction " +
+      "`field[:asc|desc]`. " +
+      "Available fields: [" +
+      Sorting.AllowedFields.joined(separator: ", ") + "]",
     valueName: "s"
   )) var sortParameters: [Order] = []
 
