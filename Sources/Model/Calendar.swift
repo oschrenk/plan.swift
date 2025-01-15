@@ -1,12 +1,18 @@
 import EventKit
 
 struct PlanCalendar: Codable, ReverseCodable {
+  /// id of the calendar
   let id: String
+  /// type of the calendar
   let type: String
+  /// source of the calendar
   let source: String
+  /// label of the calendar
   let label: String
+  /// color of the calendar
   let color: String
 
+  /// Generate a new PlanCalendar
   static func generate(
     type: EKCalendarType = EKCalendarType.calDAV,
     label: String = "Test",
