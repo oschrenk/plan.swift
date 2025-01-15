@@ -74,7 +74,7 @@ struct SharedOptions: ParsableArguments {
       "Available fields: [" +
       Sorting.AllowedFields.joined(separator: ", ") + "]",
     valueName: "s"
-  )) var sortParameters: [Order] = []
+  )) var sortBy: [Order] = []
 
   @Flag(help: ArgumentHelp(
     "Print debug statements"
