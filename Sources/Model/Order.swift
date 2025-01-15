@@ -41,26 +41,9 @@ final class Order: ArgumentParser.ExpressibleByArgument {
     }
   }
 
-  private static let event =
-    Event(
-      id: UUID().uuidString,
-      calendar: PlanCalendar.Unknown,
-      title: Title(text: "empty"),
-      schedule: Schedule(
-        now: Date(),
-        startDate: Date(),
-        endDate: Date(),
-        allDay: false
-      ),
-      location: "",
-      meeting: Meeting(organizer: "", attendees: []),
-      services: [:],
-      tags: []
-    )
-
   private static func parseField(s: String) -> String? {
     do {
-      try Object.valueForKeyPath(event, s)
+      try Object.valueForKeyPath(Event.Empty, s)
       return s
     } catch {
       return nil

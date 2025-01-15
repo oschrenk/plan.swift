@@ -59,6 +59,23 @@ struct Event: Codable, ReverseCodable {
       CodingKeys.tags.rawValue: "tags",
     ]
   }
+
+  static let Empty =
+    Event(
+      id: UUID().uuidString,
+      calendar: PlanCalendar.Unknown,
+      title: Title(text: "empty"),
+      schedule: Schedule(
+        now: Date(),
+        startDate: Date(),
+        endDate: Date(),
+        allDay: false
+      ),
+      location: "",
+      meeting: Meeting(organizer: "", attendees: []),
+      services: [:],
+      tags: []
+    )
 }
 
 /// Extension to String for finding tags in the text
