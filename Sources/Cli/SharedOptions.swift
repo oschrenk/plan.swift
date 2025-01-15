@@ -16,7 +16,7 @@ struct SharedOptions: ParsableArguments {
 
   @Option(help: ArgumentHelp(
     "Ignore events which notes contain the tag <t> " +
-      "eg. 'tag:timeblock'. A comma separated list of tags.",
+      "eg. 'tag:timeblock'. A comma separated list of tags",
     valueName: "t"
   )) var ignoreTags: [String] = []
 
@@ -53,17 +53,17 @@ struct SharedOptions: ParsableArguments {
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
-    "Minimum (inclusive) number <n> of attendees.",
+    "Minimum (inclusive) number <n> of attendees",
     valueName: "n"
   )) var minNumAttendees: Int?
 
   @Option(help: ArgumentHelp(
-    "Maximum (inclusive) number <n> of attendees.",
+    "Maximum (inclusive) number <n> of attendees",
     valueName: "n"
   )) var maxNumAttendees: Int?
 
   @Option(help: ArgumentHelp(
-    "Template path <p>.",
+    "Template path <p>",
     valueName: "p"
   )) var templatePath: String = ""
 
