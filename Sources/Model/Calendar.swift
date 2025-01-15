@@ -7,6 +7,23 @@ struct PlanCalendar: Codable, ReverseCodable {
   let label: String
   let color: String
 
+  static func generate(
+    type: EKCalendarType = EKCalendarType.calDAV,
+    label: String = "Test",
+    source: String = "Test",
+    color: String = "#FFB3E4"
+  ) -> PlanCalendar {
+    let id = UUID().uuidString
+
+    return PlanCalendar(
+      id: id,
+      type: type.description,
+      source: source,
+      label: label,
+      color: color
+    )
+  }
+
   static let Unknown = PlanCalendar(
     id: "unknown",
     type: "unknown",
