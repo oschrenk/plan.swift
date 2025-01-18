@@ -19,5 +19,12 @@ identifier_name:
     - in
     - f
     - s
+type_name:
+  excluded:
+    - T
+nesting:
+  type_level:
+    warning: 2
+    error: 2
 trailing_comma:
   mandatory_comma: true
