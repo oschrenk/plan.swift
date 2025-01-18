@@ -7,7 +7,7 @@ final class CalendarFilterTests: XCTestCase {
   func testAlwaysAccept() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.accept(calendar)
+    let actual = CalendarFilter.Accept().accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
@@ -15,7 +15,7 @@ final class CalendarFilterTests: XCTestCase {
   func testSelectCalendarsMatching() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.select(uuids: [calendar.id])(calendar)
+    let actual = CalendarFilter.Select(uuids: [calendar.id]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
@@ -23,7 +23,7 @@ final class CalendarFilterTests: XCTestCase {
   func testSelectCalendarsEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.select(uuids: [])(calendar)
+    let actual = CalendarFilter.Select(uuids: []).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
@@ -31,7 +31,7 @@ final class CalendarFilterTests: XCTestCase {
   func testIgnoreCalendarsMatching() {
     let calendar = PlanCalendar.generate()
     let expected = false
-    let actual = CalendarFilter.ignore(uuids: [calendar.id])(calendar)
+    let actual = CalendarFilter.Ignore(uuids: [calendar.id]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
@@ -39,7 +39,7 @@ final class CalendarFilterTests: XCTestCase {
   func testIgnoreCalendarsEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.ignore(uuids: [])(calendar)
+    let actual = CalendarFilter.Ignore(uuids: []).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was not accepted")
   }
@@ -48,7 +48,7 @@ final class CalendarFilterTests: XCTestCase {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
     let expected = false
-    let actual = CalendarFilter.ignoreSources(sources: [source])(calendar)
+    let actual = CalendarFilter.IgnoreSources(sources: [source]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
@@ -56,7 +56,7 @@ final class CalendarFilterTests: XCTestCase {
   func testIgnoreCalendarSourcesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.ignoreSources(sources: [])(calendar)
+    let actual = CalendarFilter.IgnoreSources(sources: []).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
@@ -65,7 +65,7 @@ final class CalendarFilterTests: XCTestCase {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
     let expected = true
-    let actual = CalendarFilter.selectSources(sources: [source])(calendar)
+    let actual = CalendarFilter.SelectSources(sources: [source]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
@@ -74,7 +74,7 @@ final class CalendarFilterTests: XCTestCase {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
     let expected = false
-    let actual = CalendarFilter.selectSources(sources: ["not-existing"])(calendar)
+    let actual = CalendarFilter.SelectSources(sources: ["not-existing"]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
@@ -82,7 +82,7 @@ final class CalendarFilterTests: XCTestCase {
   func testSelectCalendarSourcesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.selectSources(sources: [])(calendar)
+    let actual = CalendarFilter.SelectSources(sources: []).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
@@ -91,7 +91,7 @@ final class CalendarFilterTests: XCTestCase {
     let type = EKCalendarType.birthday
     let calendar = PlanCalendar.generate(type: type)
     let expected = false
-    let actual = CalendarFilter.ignoreTypes(types: [type])(calendar)
+    let actual = CalendarFilter.IgnoreTypes(types: [type]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
@@ -99,7 +99,7 @@ final class CalendarFilterTests: XCTestCase {
   func testIgnoreCalendarTypesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.ignoreTypes(types: [])(calendar)
+    let actual = CalendarFilter.IgnoreTypes(types: []).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
@@ -108,7 +108,7 @@ final class CalendarFilterTests: XCTestCase {
     let type = EKCalendarType.birthday
     let calendar = PlanCalendar.generate(type: type)
     let expected = true
-    let actual = CalendarFilter.selectTypes(types: [type])(calendar)
+    let actual = CalendarFilter.SelectTypes(types: [type]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was rejected")
   }
@@ -117,7 +117,7 @@ final class CalendarFilterTests: XCTestCase {
     let type = EKCalendarType.calDAV
     let calendar = PlanCalendar.generate(type: type)
     let expected = false
-    let actual = CalendarFilter.selectTypes(types: [EKCalendarType.birthday])(calendar)
+    let actual = CalendarFilter.SelectTypes(types: [EKCalendarType.birthday]).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was accepted")
   }
@@ -125,7 +125,7 @@ final class CalendarFilterTests: XCTestCase {
   func testSelectCalendarTypesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.selectTypes(types: [])(calendar)
+    let actual = CalendarFilter.SelectTypes(types: []).accept(calendar)
 
     XCTAssertEqual(actual, expected, "The calendar was rejected")
   }

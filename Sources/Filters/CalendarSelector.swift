@@ -1,9 +1,9 @@
 import EventKit
 
 class CalendarSelector {
-  static func build(calendars: [EKCalendar], filter: (PlanCalendar) -> Bool) -> [EKCalendar] {
+  static func build(calendars: [EKCalendar], filter: CalendarFilterI) -> [EKCalendar] {
     calendars.filter { calendar in
-      filter(calendar.asCal())
+      filter.accept(calendar.asCal())
     }
   }
 }

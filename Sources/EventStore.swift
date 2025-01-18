@@ -35,7 +35,7 @@ struct EventStore {
   ///
   /// - Parameters:
   ///     - filter: A filter to select certain calendars
-  func calendars(filter: (PlanCalendar) -> Bool) -> [PlanCalendar] {
+  func calendars(filter: CalendarFilterI) -> [PlanCalendar] {
     return CalendarSelector.build(
       calendars: fetchCalendars(),
       filter: filter
@@ -54,7 +54,7 @@ struct EventStore {
   func fetch(
     start: Date,
     end: Date,
-    calendarFilter: (PlanCalendar) -> Bool,
+    calendarFilter: CalendarFilterI,
     eventFilter: EventFilterI
   ) -> [Event] {
     let eventStore = grantAccess()
