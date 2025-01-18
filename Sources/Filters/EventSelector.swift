@@ -1,14 +1,26 @@
+/// protocol EventSelector
+protocol EventSelectorI {
+  func select(events: [Event]) -> [Event]
+}
+
 /// Select events based on various criteria
-class EventSelector {
-  static func all() -> (([Event]) -> [Event]) {
-    { events in
-      events
+enum EventSelector {
+  class All: EventSelectorI {
+    typealias T = Event
+    func select(events: [Event]) -> [Event] {
+      return events
     }
   }
 
-  static func prefix(count: Int) -> (([Event]) -> [Event]) {
-    { events in
-      Array(events.prefix(count))
+  class Prefix: EventSelectorI {
+    let count: Int
+
+    init(count: Int) {
+      self.count = count
+    }
+
+    func select(events: [Event]) -> [Event] {
+      return Array(events.prefix(count))
     }
   }
 }

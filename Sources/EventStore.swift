@@ -55,7 +55,7 @@ struct EventStore {
     start: Date,
     end: Date,
     calendarFilter: (PlanCalendar) -> Bool,
-    eventFilter: (Event) -> Bool
+    eventFilter: EventFilterI
   ) -> [Event] {
     let eventStore = grantAccess()
 
@@ -81,7 +81,7 @@ struct EventStore {
         event.asEvent()
       }
       .filter { event in
-        eventFilter(event)
+        eventFilter.accept(event)
       }
   }
 

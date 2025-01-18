@@ -6,7 +6,7 @@ enum Main {
     start: Date,
     end: Date,
     opts: SharedOptions,
-    eventSelector: ([Event]) -> [Event]
+    eventSelector: EventSelectorI
   ) {
     Log.setDebug(opts.debug)
 
@@ -26,7 +26,7 @@ enum Main {
       maxNumAttendees: opts.maxNumAttendees
     )
 
-    let events = eventSelector(EventStore().fetch(
+    let events = eventSelector.select(events: EventStore().fetch(
       start: start,
       end: end,
       calendarFilter: calendarFilter,
