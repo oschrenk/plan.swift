@@ -1,3 +1,4 @@
+/// Filter events based on various criteria
 class EventFilter {
   static func accept(_: Event) -> Bool {
     true

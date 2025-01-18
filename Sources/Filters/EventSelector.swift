@@ -1,3 +1,4 @@
+/// Select events based on various criteria
 class EventSelector {
   static func all() -> (([Event]) -> [Event]) {
     { events in
