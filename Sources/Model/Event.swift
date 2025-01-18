@@ -65,6 +65,7 @@ struct Event: Codable, ReverseCodable {
     ]
   }
 
+  /// Generate an Event
   static func generate(
     title: String = "unknown",
     tags: [String] = [],
@@ -96,6 +97,7 @@ struct Event: Codable, ReverseCodable {
     )
   }
 
+  /// An empty/unknown default event
   static let Empty: Event = generate()
 }
 
