@@ -1,3 +1,4 @@
+import Foundation
 @testable import plan
 import Testing
 
@@ -10,9 +11,9 @@ import Testing
     #expect(throws: Never.self) {
       let order = Order.parse(s: "title.full")!
       let comparator = EventComparator(order: order)
-      let output = events.sorted(using: comparator)[0].title.full
+      let output = events.sorted(using: comparator)
 
-      #expect(output == eventA.title.full)
+      #expect(output == [eventA, eventB])
     }
   }
 
@@ -24,9 +25,9 @@ import Testing
     #expect(throws: Never.self) {
       let order = Order.parse(s: "title.full:desc")!
       let comparator = EventComparator(order: order)
-      let output = events.sorted(using: comparator)[0].title.full
+      let output = events.sorted(using: comparator)
 
-      #expect(output == eventB.title.full)
+      #expect(output == [eventB, eventA])
     }
   }
 }
