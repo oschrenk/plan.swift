@@ -1,7 +1,7 @@
 import ArgumentParser
 import Foundation
 
-final class Order: ArgumentParser.ExpressibleByArgument {
+final class Order: ArgumentParser.ExpressibleByArgument, Hashable {
   let field: String
   let direction: Direction
 
@@ -18,6 +18,15 @@ final class Order: ArgumentParser.ExpressibleByArgument {
   init(field: String, direction: Direction) {
     self.field = field
     self.direction = direction
+  }
+
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(field)
+    hasher.combine(direction)
+  }
+
+  static func == (lhs: Order, rhs: Order) -> Bool {
+    return lhs.field == rhs.field && lhs.direction == rhs.direction
   }
 
   static func parse(s: String) -> Order? {
@@ -53,4 +62,69 @@ final class Order: ArgumentParser.ExpressibleByArgument {
 
 enum Direction: String, ExpressibleByArgument {
   case asc, desc
+}
+
+class OrderComparator: SortComparator {
+  let field: String
+  var order: SortOrder
+
+  init(order: Order) {
+    field = order.field
+    if order.direction == Direction.asc {
+      self.order = SortOrder.forward
+    } else {
+      self.order = SortOrder.reverse
+    }
+  }
+
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(field)
+    hasher.combine(order)
+  }
+
+  static func == (lhs: OrderComparator, rhs: OrderComparator) -> Bool {
+    return lhs.field == rhs.field
+  }
+
+  func compare(_ lhs: Event, _ rhs: Event) -> ComparisonResult {
+    let maybeLeftV = try? Object.valueForKeyPath(lhs, field)
+    let maybeRightV = try? Object.valueForKeyPath(rhs, field)
+
+    switch (maybeLeftV, maybeRightV) {
+    case let (.some(leftV), .some(rightV)):
+      if let leftValue = leftV as? Int, let rightValue = rightV as? Int {
+        if leftValue < rightValue {
+          return .orderedAscending
+        } else if leftValue > rightValue {
+          return .orderedDescending
+        } else {
+          return .orderedSame
+        }
+      } else if let leftValue = leftV as? String, let rightValue = rightV as? String {
+        if leftValue < rightValue {
+          return .orderedAscending
+        } else if leftValue > rightValue {
+          return .orderedDescending
+        } else {
+          return .orderedSame
+        }
+      } else if let leftValue = leftV as? Date, let rightValue = rightV as? Date {
+        if leftValue < rightValue {
+          return .orderedAscending
+        } else if leftValue > rightValue {
+          return .orderedDescending
+        } else {
+          return .orderedSame
+        }
+      } else {
+        // not future proof
+        // we might silently sort on new non-existing types
+        return .orderedSame
+      }
+    default:
+      // not future proof
+      // we might silently sort on new non-existing types
+      return .orderedSame
+    }
+  }
 }
