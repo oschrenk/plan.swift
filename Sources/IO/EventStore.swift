@@ -1,7 +1,7 @@
 import EventKit
 
 struct EventStore {
-  let eventStore = EKEventStore()
+  private let eventStore = EKEventStore()
 
   private func grantAccess() -> EKEventStore {
     if #available(macOS 14, *) {
