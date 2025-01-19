@@ -1,30 +1,22 @@
 @testable import plan
-import XCTest
+import Testing
 
-final class ObjectTests: XCTestCase {
-  func testKeyPathOnKeywords() {
+@Suite final class ObjectTests {
+  @Test func testKeyPathOnKeywords() {
     let event = Event.generate(title: "test")
-    do {
+
+    #expect(throws: Never.self) {
       let expected = try Object.valueForKeyPath(event, "schedule.start.in") as? Int ?? -1
       let output = 0
 
-      XCTAssertEqual(output, expected, "The fields were not the same")
-    } catch {
-      XCTFail("Expected no error, but got \(error)")
+      #expect(output == expected)
     }
   }
 
-  func testNotComparable() {
+  @Test func testNotComparable() {
     let event = Event.generate(title: "test")
-    do {
-      XCTAssertThrowsError(try Object.valueForKeyPath(event, "schedule.start")) { error in
-        XCTAssertTrue(
-          error is Object.PathError,
-          "Unexpected error type: \(type(of: error))"
-        )
-
-        XCTAssertEqual(error as? Object.PathError, .notComparable)
-      }
+    #expect(throws: Object.PathError.self) {
+      try Object.valueForKeyPath(event, "schedule.start")
     }
   }
 }

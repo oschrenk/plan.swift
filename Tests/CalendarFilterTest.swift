@@ -1,132 +1,132 @@
 import EventKit
+import Testing
 
 @testable import plan
-import XCTest
 
-final class CalendarFilterTests: XCTestCase {
-  func testAlwaysAccept() {
+@Suite final class CalendarFilterTests {
+  @Test func testAlwaysAccept() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.Accept().accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was not accepted")
+    #expect(actual == expected, "The calendar was not accepted")
   }
 
-  func testSelectCalendarsMatching() {
+  @Test func testSelectCalendarsMatching() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.Select(uuids: [calendar.id]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was not accepted")
+    #expect(actual == expected, "The calendar was not accepted")
   }
 
-  func testSelectCalendarsEmptyArray() {
+  @Test func testSelectCalendarsEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.Select(uuids: []).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was not accepted")
+    #expect(actual == expected, "The calendar was not accepted")
   }
 
-  func testIgnoreCalendarsMatching() {
+  @Test func testIgnoreCalendarsMatching() {
     let calendar = PlanCalendar.generate()
     let expected = false
     let actual = CalendarFilter.Ignore(uuids: [calendar.id]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was accepted")
+    #expect(actual == expected, "The calendar was accepted")
   }
 
-  func testIgnoreCalendarsEmptyArray() {
+  @Test func testIgnoreCalendarsEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.Ignore(uuids: []).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was not accepted")
+    #expect(actual == expected, "The calendar was not accepted")
   }
 
-  func testIgnoreCalendarSourcesMatching() {
+  @Test func testIgnoreCalendarSourcesMatching() {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
     let expected = false
     let actual = CalendarFilter.IgnoreSources(sources: [source]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was accepted")
+    #expect(actual == expected, "The calendar was accepted")
   }
 
-  func testIgnoreCalendarSourcesEmptyArray() {
+  @Test func testIgnoreCalendarSourcesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.IgnoreSources(sources: []).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was rejected")
+    #expect(actual == expected, "The calendar was rejected")
   }
 
-  func testSelectCalendarSourcesMatching() {
+  @Test func testSelectCalendarSourcesMatching() {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
     let expected = true
     let actual = CalendarFilter.SelectSources(sources: [source]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was rejected")
+    #expect(actual == expected, "The calendar was rejected")
   }
 
-  func testSelectCalendarSourcesNotMatching() {
+  @Test func testSelectCalendarSourcesNotMatching() {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
     let expected = false
     let actual = CalendarFilter.SelectSources(sources: ["not-existing"]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was accepted")
+    #expect(actual == expected, "The calendar was accepted")
   }
 
-  func testSelectCalendarSourcesEmptyArray() {
+  @Test func testSelectCalendarSourcesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.SelectSources(sources: []).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was rejected")
+    #expect(actual == expected, "The calendar was rejected")
   }
 
-  func testIgnoreCalendarTypesMatching() {
+  @Test func testIgnoreCalendarTypesMatching() {
     let type = EKCalendarType.birthday
     let calendar = PlanCalendar.generate(type: type)
     let expected = false
     let actual = CalendarFilter.IgnoreTypes(types: [type]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was accepted")
+    #expect(actual == expected, "The calendar was accepted")
   }
 
-  func testIgnoreCalendarTypesEmptyArray() {
+  @Test func testIgnoreCalendarTypesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.IgnoreTypes(types: []).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was rejected")
+    #expect(actual == expected, "The calendar was rejected")
   }
 
-  func testSelectCalendarTypesMatching() {
+  @Test func testSelectCalendarTypesMatching() {
     let type = EKCalendarType.birthday
     let calendar = PlanCalendar.generate(type: type)
     let expected = true
     let actual = CalendarFilter.SelectTypes(types: [type]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was rejected")
+    #expect(actual == expected, "The calendar was rejected")
   }
 
-  func testSelectCalendarTypesNotMatching() {
+  @Test func testSelectCalendarTypesNotMatching() {
     let type = EKCalendarType.calDAV
     let calendar = PlanCalendar.generate(type: type)
     let expected = false
     let actual = CalendarFilter.SelectTypes(types: [EKCalendarType.birthday]).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was accepted")
+    #expect(actual == expected, "The calendar was accepted")
   }
 
-  func testSelectCalendarTypesEmptyArray() {
+  @Test func testSelectCalendarTypesEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
     let actual = CalendarFilter.SelectTypes(types: []).accept(calendar)
 
-    XCTAssertEqual(actual, expected, "The calendar was rejected")
+    #expect(actual == expected, "The calendar was rejected")
   }
 }

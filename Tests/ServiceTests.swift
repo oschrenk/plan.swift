@@ -1,20 +1,20 @@
 @testable import plan
-import XCTest
+import Testing
 
-final class ServiceTests: XCTestCase {
-  func testEmptyNotes() {
+@Suite final class ServiceTests {
+  @Test func testEmptyNotes() {
     let input = ""
     let expected = Service.fromNotes(notes: input)
     let output: [Service: String] = [:]
 
-    XCTAssertEqual(output, expected, "The notes were not empty")
+    #expect(output == expected)
   }
 
-  func testMeetNotes() {
+  @Test func testMeetNotes() {
     let input = "https://meet.google.com/ped-jqsa-fkv"
     let expected = Service.fromNotes(notes: input)
     let output: [Service: String] = [Service.meet: input]
 
-    XCTAssertEqual(output, expected, "The notes did not match")
+    #expect(output == expected)
   }
 }

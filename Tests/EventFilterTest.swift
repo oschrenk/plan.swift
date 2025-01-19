@@ -1,104 +1,104 @@
 @testable import plan
-import XCTest
+import Testing
 
-final class EventFilterTests: XCTestCase {
-  func testAlwaysAccept() {
+@Suite final class EventFilterTests {
+  @Test func testAlwaysAccept() {
     let event = Event.generate()
     let expected = true
     let actual = EventFilter.Accept().accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was not accepted")
+    #expect(actual == expected)
   }
 
-  func testIgnoreTagsNoTags() {
+  @Test func testIgnoreTagsNoTags() {
     let event = Event.generate(tags: ["timeblock"])
     let expected = true
     let actual = EventFilter.IgnoreTags(tags: []).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 
-  func testIgnoreTagsMatchingTags() {
+  @Test func testIgnoreTagsMatchingTags() {
     let event = Event.generate(tags: ["timeblock"])
     let expected = false
     let actual = EventFilter.IgnoreTags(tags: ["timeblock"]).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 
-  func testIgnoreTagsNotMatchingTags() {
+  @Test func testIgnoreTagsNotMatchingTags() {
     let event = Event.generate(tags: ["foo"])
     let expected = true
     let actual = EventFilter.IgnoreTags(tags: ["timeblock"]).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+    #expect(actual == expected)
   }
 
-  func testIgnoreAnAllDayEvent() {
+  @Test func testIgnoreAnAllDayEvent() {
     let event = Event.generate(allDay: true)
     let expected = false
     let actual = EventFilter.IgnoreAllDay().accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 
-  func testAcceptAnNonAllDayEvent() {
+  @Test func testAcceptAnNonAllDayEvent() {
     let event = Event.generate(allDay: false)
     let expected = true
     let actual = EventFilter.IgnoreAllDay().accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+    #expect(actual == expected)
   }
 
-  func testIgnoringEventMatchingTitle() {
+  @Test func testIgnoringEventMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = false
     let actual = EventFilter.IgnorePatternTitle(pattern: "foo").accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 
-  func testAcceptingEventNotMatchingTitle() {
+  @Test func testAcceptingEventNotMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = true
     let actual = EventFilter.IgnorePatternTitle(pattern: "bar").accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+    #expect(actual == expected)
   }
 
-  func testAcceptingEventWithAtLeastTwoAttendees() {
+  @Test func testAcceptingEventWithAtLeastTwoAttendees() {
     let event = Event.generate(attendees: ["personA", "personB"])
     let expected = true
     let actual = EventFilter.MinNumAttendees(count: 2).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+    #expect(actual == expected)
   }
 
-  func testAcceptingEventWithTooFewAttendees() {
+  @Test func testAcceptingEventWithTooFewAttendees() {
     let event = Event.generate(attendees: ["personA", "personB"])
     let expected = false
     let actual = EventFilter.MinNumAttendees(count: 3).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 
-  func testAcceptingEventWithFewAttendees() {
+  @Test func testAcceptingEventWithFewAttendees() {
     let event = Event.generate(attendees: ["personA", "personB"])
     let expected = true
     let actual = EventFilter.MaxNumAttendees(count: 3).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+    #expect(actual == expected)
   }
 
-  func testAcceptingEventWithTooManyAttendees() {
+  @Test func testAcceptingEventWithTooManyAttendees() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = false
     let actual = EventFilter.MaxNumAttendees(count: 2).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 
-  func testAcceptCombinedFilter() {
+  @Test func testAcceptCombinedFilter() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = true
     let min = EventFilter.MinNumAttendees(count: 2)
@@ -106,10 +106,10 @@ final class EventFilterTests: XCTestCase {
 
     let actual = EventFilter.Combined(filters: [min, max]).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely ignored")
+    #expect(actual == expected)
   }
 
-  func testRejectCombinedFilter() {
+  @Test func testRejectCombinedFilter() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = false
     let min = EventFilter.MinNumAttendees(count: 4)
@@ -117,6 +117,6 @@ final class EventFilterTests: XCTestCase {
 
     let actual = EventFilter.Combined(filters: [min, max]).accept(event)
 
-    XCTAssertEqual(actual, expected, "The event was falsely accepted")
+    #expect(actual == expected)
   }
 }

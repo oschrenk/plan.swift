@@ -1,8 +1,9 @@
+import Foundation
 @testable import plan
-import XCTest
+import Testing
 
-final class ParserTests: XCTestCase {
-  func testParseWithLeadingDash() {
+@Suite final class ParserTests {
+  @Test func testParseWithLeadingDash() {
     let input = "- 10:00 - 12:00 🥗 Lunch"
     let expected = AddEvent(
       title: "🥗 Lunch",
@@ -12,10 +13,10 @@ final class ParserTests: XCTestCase {
     )
     let output = Parser.parse(text: input)!
 
-    XCTAssertEqual(output.title, expected.title, "The title was not correct")
+    #expect(output.title == expected.title)
   }
 
-  func testParseWithoutLeadingDash() {
+  @Test func testParseWithoutLeadingDash() {
     let input = "10:00 - 12:00 🥗 Lunch"
     let expected = AddEvent(
       title: "🥗 Lunch",
@@ -25,10 +26,10 @@ final class ParserTests: XCTestCase {
     )
     let output = Parser.parse(text: input)!
 
-    XCTAssertEqual(output.title, expected.title, "The title was not correct")
+    #expect(output.title == expected.title)
   }
 
-  func testParseTag() {
+  @Test func testParseTag() {
     let input = "10:00 - 12:00 🥗 Lunch #calendar/foo"
     let expected = AddEvent(
       title: "🥗 Lunch",
@@ -38,7 +39,7 @@ final class ParserTests: XCTestCase {
     )
     let output = Parser.parse(text: input)!
 
-    XCTAssertEqual(output.title, expected.title, "The title was not correct")
-    XCTAssertEqual(output.tag, expected.tag, "The title was not correct")
+    #expect(output.title == expected.title)
+    #expect(output.tag == expected.tag)
   }
 }
