@@ -23,4 +23,28 @@ enum EventSelector {
       return Array(events.prefix(count))
     }
   }
+
+  class Sorted: EventSelectorI {
+    let sorting: Sorting
+
+    init(sorting: Sorting) {
+      self.sorting = sorting
+    }
+
+    func select(events: [Event]) -> [Event] {
+      return events.sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
+    }
+  }
+
+  class Combined: EventSelectorI {
+    let selectors: [EventSelectorI]
+
+    init(selectors: [EventSelectorI]) {
+      self.selectors = selectors
+    }
+
+    func select(events: [Event]) -> [Event] {
+      return selectors.reduce(events) { $1.select(events: $0) }
+    }
+  }
 }
