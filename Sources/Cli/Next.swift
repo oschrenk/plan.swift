@@ -25,6 +25,6 @@ struct Next: ParsableCommand {
     let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
     let eventSelector = EventSelector.Prefix(count: 1)
 
-    Main.run(start: start, end: end, opts: opts, eventSelector: eventSelector)
+    Main.run(start: start, end: end, opts: opts, postSortingEventSelector: eventSelector)
   }
 }

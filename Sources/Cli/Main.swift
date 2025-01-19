@@ -6,7 +6,7 @@ enum Main {
     start: Date,
     end: Date,
     opts: SharedOptions,
-    eventSelector: EventSelectorI
+    postSortingEventSelector: EventSelectorI
   ) {
     Log.setDebug(opts.debug)
 
@@ -28,13 +28,18 @@ enum Main {
 
     let service = EventService(repo: EventRepo())
 
-    let events = eventSelector.select(events: service.fetch(
+    let unsortedEvents = service.fetch(
       start: start,
       end: end,
       calendarFilter: calendarFilter,
       eventFilter: eventFilter
-    )).sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
+    )
 
+    let selectors = EventSelector.Combined(selectors:
+      [EventSelector.Sorted(sorting: Sorting()), postSortingEventSelector]
+    )
+
+    let events = selectors.select(events: unsortedEvents)
     if opts.templatePath.isEmpty {
       events.printAsJson()
     } else {
