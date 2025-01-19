@@ -23,8 +23,15 @@ struct Next: ParsableCommand {
     let today = Date()
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
-    let eventSelector = EventSelector.Prefix(count: 1)
 
-    Main.run(start: start, end: end, opts: opts, postSortingEventSelector: eventSelector)
+    let eventSelector = EventSelector.Combined(selectors: [
+      // first sort
+      EventSelector.Sorted(sorting: Sorting()),
+      // then choose only the first
+      EventSelector.Prefix(count: 1),
+    ]
+    )
+
+    Main.run(start: start, end: end, opts: opts, eventSelector: eventSelector)
   }
 }

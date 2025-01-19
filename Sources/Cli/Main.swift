@@ -6,7 +6,7 @@ enum Main {
     start: Date,
     end: Date,
     opts: SharedOptions,
-    postSortingEventSelector: EventSelectorI
+    eventSelector: EventSelectorI
   ) {
     Log.setDebug(opts.debug)
 
@@ -35,11 +35,7 @@ enum Main {
       eventFilter: eventFilter
     )
 
-    let selectors = EventSelector.Combined(selectors:
-      [EventSelector.Sorted(sorting: Sorting()), postSortingEventSelector]
-    )
-
-    let events = selectors.select(events: unsortedEvents)
+    let events = eventSelector.select(events: unsortedEvents)
     if opts.templatePath.isEmpty {
       events.printAsJson()
     } else {
