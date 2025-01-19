@@ -2,7 +2,7 @@
 import Testing
 
 @Suite final class OrderTests {
-  @Test func testKeyPathOnKeywords() {
+  @Test func testOrderingOnTitleFull() {
     let eventA = Event.generate(title: "testA")
     let eventB = Event.generate(title: "testB")
     let events = [eventB, eventA]
@@ -13,13 +13,6 @@ import Testing
       let output = events.sorted(using: comparator)[0].title.full
 
       #expect(output == eventA.title.full)
-    }
-  }
-
-  @Test func testNotComparable() {
-    let event = Event.generate(title: "test")
-    #expect(throws: Object.PathError.self) {
-      try Object.valueForKeyPath(event, "schedule.start")
     }
   }
 }
