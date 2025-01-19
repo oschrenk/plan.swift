@@ -1,6 +1,6 @@
 import Foundation
 
-class OrderComparator: SortComparator {
+class EventComparator: SortComparator {
   let field: String
   var order: SortOrder
 
@@ -18,7 +18,7 @@ class OrderComparator: SortComparator {
     hasher.combine(order)
   }
 
-  static func == (lhs: OrderComparator, rhs: OrderComparator) -> Bool {
+  static func == (lhs: EventComparator, rhs: EventComparator) -> Bool {
     return lhs.field == rhs.field
   }
 

@@ -9,7 +9,7 @@ import Testing
 
     #expect(throws: Never.self) {
       let order = Order.parse(s: "title.full")!
-      let comparator = OrderComparator(order: order)
+      let comparator = EventComparator(order: order)
       let output = events.sorted(using: comparator)[0].title.full
 
       #expect(output == eventA.title.full)
@@ -23,7 +23,7 @@ import Testing
 
     #expect(throws: Never.self) {
       let order = Order.parse(s: "title.full:desc")!
-      let comparator = OrderComparator(order: order)
+      let comparator = EventComparator(order: order)
       let output = events.sorted(using: comparator)[0].title.full
 
       #expect(output == eventB.title.full)
