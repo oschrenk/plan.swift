@@ -16,9 +16,12 @@ struct Today: ParsableCommand {
     let today = FCalendar.current.startOfDay(for: Date())
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
+
+    let orders = opts.sortBy.isEmpty ? [Order.Default] : opts.sortBy
+
     let eventSelector = EventSelector.Combined(selectors: [
       // first sort
-      EventSelector.Sorted(sorting: Sorting()),
+      EventSelector.Sorted(order: orders[0]),
       // then choose all
       EventSelector.All(),
     ]

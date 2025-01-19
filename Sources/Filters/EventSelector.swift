@@ -25,14 +25,14 @@ enum EventSelector {
   }
 
   class Sorted: EventSelectorI {
-    let sorting: Sorting
+    let order: Order
 
-    init(sorting: Sorting) {
-      self.sorting = sorting
+    init(order: Order) {
+      self.order = order
     }
 
     func select(events: [Event]) -> [Event] {
-      return events.sorted { $0.schedule.end.inMinutes > $1.schedule.end.inMinutes }
+      return events.sorted(using: EventComparator(order: order))
     }
   }
 
