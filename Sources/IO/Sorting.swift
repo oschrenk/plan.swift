@@ -1,19 +1,19 @@
 class Sorting {
   static let AllowedFields = [
-    "id",
-    "calendar.id",
-    "calendar.type",
-    "calendar.label",
-    "calendar.color",
-    "title.full",
-    "title.description",
-    "title.icon",
-    "schedule.start.at",
-    "schedule.start.in",
-    "schedule.end.at",
-    "schedule.end.in",
-    "schedule.all_day",
-    "location",
-    "meeting.organizer",
+    "id", // string
+    "calendar.id", // String
+    "calendar.type", // String
+    "calendar.label", // String
+    "calendar.color", // String
+    "title.full", // String
+    "title.description", // String
+    "title.icon", // String
+    "schedule.start.at", // Date
+    "schedule.start.in", // Int
+    "schedule.end.at", // Date
+    "schedule.end.in", // Int
+    "schedule.all_day", // Bool
+    "location", // String
+    "meeting.organizer", // String
   ]
 }
