@@ -12,10 +12,8 @@ At the moment these service are supported
 
 These are probably the most used services
 
-- Discord
 - Facetime
 - GoToMeeting
-- Microsoft Teams
 - Phone
 
 ## Resources
