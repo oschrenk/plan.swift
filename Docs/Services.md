@@ -6,6 +6,7 @@ At the moment these service are supported
 
 - `ical`. Custom URL scheme to open events in the `Calendar.app`
 - `meet`. [Google Meet](https://meet.google.com)
+- `zoom`. [Zoom](https://www.zoom.com/)
 
 ## TODO
 
@@ -16,7 +17,6 @@ These are probably the most used services
 - GoToMeeting
 - Microsoft Teams
 - Phone
-- Zoom
 
 ## Resources
 

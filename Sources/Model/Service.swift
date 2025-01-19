@@ -2,10 +2,11 @@ import ArgumentParser
 import Foundation
 
 enum Service: String, Codable, ExpressibleByArgument {
-  case ical, meet
+  case ical, meet, zoom
 
   private static let servicePatterns: [Service: String] = [
-    Service.meet: #"https://meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"#,
+    Service.meet: #"https:\/\/meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"#,
+    Service.zoom: #"https://(?:[a-zA-Z0-9-.]+)?zoom\.(?:us|com|com\.cn|de)\/(?:my|[a-z]{1,2}|webinar)\/[-a-zA-Z0-9()@:%_\+.~#?&=\/]*"#,
   ]
 
   private static func findMatch(in text: String, using pattern: String) -> String? {

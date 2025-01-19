@@ -12,8 +12,16 @@ import Testing
 
   @Test func testMeetNotes() {
     let input = "https://meet.google.com/ped-jqsa-fkv"
-    let expected = Service.fromNotes(notes: input)
-    let output: [Service: String] = [Service.meet: input]
+    let output = Service.fromNotes(notes: input)
+    let expected: [Service: String] = [Service.meet: input]
+
+    #expect(output == expected)
+  }
+
+  @Test func testZoomNotes() {
+    let input = "https://us02web.zoom.us/j/89669654995"
+    let output = Service.fromNotes(notes: input)
+    let expected: [Service: String] = [Service.zoom: input]
 
     #expect(output == expected)
   }
