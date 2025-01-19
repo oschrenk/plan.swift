@@ -64,7 +64,8 @@ struct Calendars: ParsableCommand {
       ignoreCalendarTypes: ignoreCalendarTypes
     )
 
-    let calendars = EventStore().calendars(filter: calendarFilter)
+    let service = EventService(repo: EventRepo())
+    let calendars = service.calendars(filter: calendarFilter)
 
     switch format {
     case .json:

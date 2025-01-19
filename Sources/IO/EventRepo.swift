@@ -1,13 +1,13 @@
 import EventKit
 
-struct EventStore {
+final class EventRepo {
   private let eventStore = EKEventStore()
 
   private func grantAccess() -> EKEventStore {
     if #available(macOS 14, *) {
       self.eventStore.requestFullAccessToEvents { granted, maybeError in
         if granted {
-          eventStore.reset()
+          self.eventStore.reset()
         } else {
           if let error = maybeError {
             print(error.localizedDescription)
@@ -20,7 +20,7 @@ struct EventStore {
     return eventStore
   }
 
-  private func fetchCalendars() -> [EKCalendar] {
+  private func fetchEkCalendars(filter: CalendarFilterI) -> [EKCalendar] {
     let eventStore = grantAccess()
 
     // I have no idea why this works but it seems I need to reset
@@ -28,34 +28,30 @@ struct EventStore {
     eventStore.reset()
     eventStore.refreshSourcesIfNecessary()
 
-    return eventStore.calendars(for: EKEntityType.event)
+    return eventStore.calendars(for: EKEntityType.event).filter { calendar in
+      filter.accept(calendar.asCal())
+    }
   }
 
-  /// Returns a list of calendars
-  ///
-  /// - Parameters:
-  ///     - filter: A filter to select certain calendars
-  func calendars(filter: CalendarFilterI) -> [PlanCalendar] {
-    return CalendarSelector.build(
-      calendars: fetchCalendars(),
-      filter: filter
-    ).map { $0.asCal() }
+  func fetchCalendars(filter: CalendarFilterI) -> [PlanCalendar] {
+    return fetchEkCalendars(filter: filter).map { $0.asCal() }
   }
 
   /// Returns a list of events
+  ///
+  /// The underlying EKEventStore allows building a filer based on
+  /// start-date, end-date, and list of calendars.
   ///
   /// - Parameters:
   ///     - start: Minimum start date of event
   ///     - end: Maximum start date of event
   ///     - calendarFilter: A filter to select certain calendars
-  ///     - eventFilter: A filter to select certain events
   ///
   /// - Returns: a list of events
-  func fetch(
-    start: Date,
-    end: Date,
-    calendarFilter: CalendarFilterI,
-    eventFilter: EventFilterI
+  func fetchEvents(
+    _ start: Date,
+    _ end: Date,
+    _ calendarFilter: CalendarFilterI
   ) -> [Event] {
     let eventStore = grantAccess()
 
@@ -65,10 +61,7 @@ struct EventStore {
     eventStore.reset()
     eventStore.refreshSourcesIfNecessary()
 
-    let calendars = CalendarSelector.build(
-      calendars: fetchCalendars(),
-      filter: calendarFilter
-    )
+    let calendars = fetchEkCalendars(filter: calendarFilter)
 
     let predicate = eventStore.predicateForEvents(
       withStart: start,
@@ -80,19 +73,20 @@ struct EventStore {
       .map { event in
         event.asEvent()
       }
-      .filter { event in
-        eventFilter.accept(event)
-      }
   }
 
-  func add(addEvent: AddEvent) {
-    let event = addEvent.asEKEvent(
+  /// Add a new Event
+  ///
+  /// - Parameters:
+  ///     - event: New event
+  func addEvent(event: AddEvent) {
+    let addEvent = event.asEKEvent(
       eventStore: eventStore,
       calendar: eventStore.defaultCalendarForNewEvents
     )
 
     do {
-      try eventStore.save(event, span: .thisEvent)
+      try eventStore.save(addEvent, span: .thisEvent)
     } catch let error as NSError {
       StdErr.print("failed to save event with error : \(error)")
     }

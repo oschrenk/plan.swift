@@ -27,7 +27,7 @@ struct Add: ParsableCommand {
       lines.append(text)
     }
     if let addEvent = Parser.parse(text: lines[0]) {
-      EventStore().add(addEvent: addEvent)
+      EventService(repo: EventRepo()).addEvent(event: addEvent)
     } else {
       StdErr.print("error parsing")
     }

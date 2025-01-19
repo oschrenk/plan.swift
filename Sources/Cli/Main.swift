@@ -26,7 +26,9 @@ enum Main {
       maxNumAttendees: opts.maxNumAttendees
     )
 
-    let events = eventSelector.select(events: EventStore().fetch(
+    let service = EventService(repo: EventRepo())
+
+    let events = eventSelector.select(events: service.fetch(
       start: start,
       end: end,
       calendarFilter: calendarFilter,
