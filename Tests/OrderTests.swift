@@ -15,4 +15,18 @@ import Testing
       #expect(output == eventA.title.full)
     }
   }
+
+  @Test func testReverseOrderingOnTitleFull() {
+    let eventA = Event.generate(title: "testA")
+    let eventB = Event.generate(title: "testB")
+    let events = [eventB, eventA]
+
+    #expect(throws: Never.self) {
+      let order = Order.parse(s: "title.full:desc")!
+      let comparator = OrderComparator(order: order)
+      let output = events.sorted(using: comparator)[0].title.full
+
+      #expect(output == eventB.title.full)
+    }
+  }
 }
