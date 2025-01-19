@@ -31,7 +31,7 @@ import Foundation
 ///
 /// for now we pick `calendarItemIdentifier`,
 /// as the app is mostly interested in interacting with the Calendar.app
-struct Event: Codable, ReverseCodable {
+struct Event: Codable, ReverseCodable, Equatable {
   let id: String
   let calendar: PlanCalendar
   let title: Title
@@ -52,6 +52,18 @@ struct Event: Codable, ReverseCodable {
     case tags
   }
 
+  static func == (lhs: Event, rhs: Event) -> Bool {
+    return
+      lhs.id == rhs.id &&
+      lhs.calendar == rhs.calendar &&
+      lhs.title == rhs.title &&
+      lhs.schedule == rhs.schedule &&
+      lhs.location == rhs.location &&
+      lhs.meeting == rhs.meeting &&
+      lhs.services == rhs.services &&
+      lhs.tags == rhs.tags
+  }
+
   static func reverseCodingKeys() -> [String: String] {
     return [
       CodingKeys.id.rawValue: "id",
@@ -67,18 +79,21 @@ struct Event: Codable, ReverseCodable {
 
   /// Generate an Event
   static func generate(
+    id: String = UUID().uuidString,
     title: String = "unknown",
     tags: [String] = [],
     allDay: Bool = false,
-    attendees: [String] = []
+    attendees: [String] = [],
+    now: Date = Date(),
+    startDate: Date = Date(),
+    endDate: Date = Date()
   ) -> Event {
-    let id = UUID().uuidString
     let cal = PlanCalendar.Unknown
     let title = Title(text: title)
     let schedule = Schedule(
-      now: Date(),
-      startDate: Date(),
-      endDate: Date(),
+      now: now,
+      startDate: startDate,
+      endDate: endDate,
       allDay: allDay
     )
     let location = ""

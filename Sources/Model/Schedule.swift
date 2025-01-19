@@ -1,6 +1,6 @@
 import Foundation
 
-struct Schedule: Codable, ReverseCodable {
+struct Schedule: Codable, ReverseCodable, Equatable {
   let start: Temporal
   let end: Temporal
   let allDay: Bool
@@ -15,6 +15,13 @@ struct Schedule: Codable, ReverseCodable {
       inMinutes: Int((endDate.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     )
     allDay = isAllDay
+  }
+
+  static func == (lhs: Schedule, rhs: Schedule) -> Bool {
+    return
+      lhs.start == rhs.start &&
+      lhs.end == rhs.end &&
+      lhs.allDay == rhs.allDay
   }
 
   enum CodingKeys: String, CodingKey, CaseIterable {

@@ -1,4 +1,4 @@
-struct Title: Codable, ReverseCodable {
+struct Title: Codable, ReverseCodable, Equatable {
   let full: String
   let label: String
   let icon: String
@@ -22,6 +22,11 @@ struct Title: Codable, ReverseCodable {
       CodingKeys.label.rawValue: "label",
       CodingKeys.icon.rawValue: "icon",
     ]
+  }
+
+  static func == (lhs: Title, rhs: Title) -> Bool {
+    return
+      lhs.full == rhs.full
   }
 }
 

@@ -1,6 +1,6 @@
 import EventKit
 
-struct PlanCalendar: Codable, ReverseCodable {
+struct PlanCalendar: Codable, ReverseCodable, Equatable {
   /// id of the calendar
   let id: String
   /// type of the calendar
@@ -11,6 +11,15 @@ struct PlanCalendar: Codable, ReverseCodable {
   let label: String
   /// color of the calendar
   let color: String
+
+  static func == (lhs: PlanCalendar, rhs: PlanCalendar) -> Bool {
+    return
+      lhs.id == rhs.id &&
+      lhs.type == rhs.type &&
+      lhs.source == rhs.source &&
+      lhs.label == rhs.label &&
+      lhs.color == rhs.color
+  }
 
   /// Generate a new PlanCalendar
   static func generate(

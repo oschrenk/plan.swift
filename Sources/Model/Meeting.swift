@@ -1,7 +1,7 @@
 import EventKit
 import Foundation
 
-struct Meeting: Codable, ReverseCodable {
+struct Meeting: Codable, ReverseCodable, Equatable {
   let organizer: String
   let attendees: [String]
 
@@ -15,6 +15,12 @@ struct Meeting: Codable, ReverseCodable {
       CodingKeys.organizer.rawValue: "organizer",
       CodingKeys.attendees.rawValue: "attendees",
     ]
+  }
+
+  static func == (lhs: Meeting, rhs: Meeting) -> Bool {
+    return
+      lhs.organizer == rhs.organizer &&
+      lhs.attendees == rhs.attendees
   }
 }
 
