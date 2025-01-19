@@ -28,7 +28,7 @@ struct Next: ParsableCommand {
 
     let eventSelector = EventSelector.Combined(selectors: [
       // first sort
-      EventSelector.Sorted(order: orders[0]),
+      EventSelector.Sorted(orders: orders),
       // then choose only the first
       EventSelector.Prefix(count: 1),
     ]

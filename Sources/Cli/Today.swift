@@ -21,7 +21,7 @@ struct Today: ParsableCommand {
 
     let eventSelector = EventSelector.Combined(selectors: [
       // first sort
-      EventSelector.Sorted(order: orders[0]),
+      EventSelector.Sorted(orders: orders),
       // then choose all
       EventSelector.All(),
     ]
