@@ -6,7 +6,7 @@ enum Object {
   }
 
   @discardableResult
-  static func valueForKeyPath(_ object: Any, _ keyPath: String) throws -> Any? {
+  static func valueForKeyPath(_ object: Any, _ keyPath: String) throws -> (any Comparable)? {
     let keys = keyPath.split(separator: ".").map { String($0) }
 
     var currentObject: Any = object
