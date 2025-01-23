@@ -6,6 +6,7 @@ enum Service: String, Codable, ExpressibleByArgument {
 
   private static let servicePatterns: [Service: String] = [
     Service.meet: #"https:\/\/meet\.google\.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"#,
+    // swiftlint:disable:next line_length
     Service.zoom: #"https://(?:[a-zA-Z0-9-.]+)?zoom\.(?:us|com|com\.cn|de)\/(?:my|[a-z]{1,2}|webinar)\/[-a-zA-Z0-9()@:%_\+.~#?&=\/]*"#,
     Service.teams: #"https:\/\/teams\.microsoft\.com\/l\/meetup-join\/[a-zA-Z0-9_%\/=\-\+\.?]+"#,
   ]
