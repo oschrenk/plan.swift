@@ -7,10 +7,9 @@ plan today --sort-by schedule.start.in:desc
 plan today --sort-by schedule.start.in:asc,calendar.id
 ```
 
-The default sorting depends on the use case
+The default sorting is:
 
-- *today* `schedule.start.at`
-- *next* `schedule.start.in`
+`schedule.start.in:asc`
 
 Most fields of the JSON can be used for sorting
 

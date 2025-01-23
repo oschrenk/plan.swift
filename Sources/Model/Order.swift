@@ -25,7 +25,7 @@ final class Order: ArgumentParser.ExpressibleByArgument, Hashable {
     hasher.combine(direction)
   }
 
-  static let Default: Order = .parse(s: "schedule.end.in:desc")!
+  static let Default: Order = .parse(s: "schedule.start.in:asc")!
 
   static func == (lhs: Order, rhs: Order) -> Bool {
     return lhs.field == rhs.field && lhs.direction == rhs.direction
