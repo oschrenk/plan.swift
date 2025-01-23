@@ -2,9 +2,9 @@
 
 You can control sorting of the output by using:
 ```
-plan today --sort schedule.start.in
-plan today --sort schedule.start.in:desc
-plan today --sort schedule.start.in:asc,calendar.id
+plan today --sort-by schedule.start.in
+plan today --sort-by schedule.start.in:desc
+plan today --sort-by schedule.start.in:asc,calendar.id
 ```
 
 The default sorting depends on the use case
