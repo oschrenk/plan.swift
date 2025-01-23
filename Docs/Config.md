@@ -7,13 +7,13 @@
   "iconize": [
     {
       "field": "title.label",
-      "regex": "Movement Yoga"
+      "regex": "Movement Yoga",
       "icon": "🪷"
     }
   ],
-  "watch": {
+  "watcher": {
     "hook": {
-      "path": "/opt/homebrew/bin/sketchybar"
+      "path": "/opt/homebrew/bin/sketchybar",
       "args": ["--trigger", "calendar_changed"]
     }
   }

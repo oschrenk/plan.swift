@@ -13,6 +13,7 @@ struct Plan: ParsableCommand {
       Add.self,
       Calendars.self,
       Next.self,
+      ShowConfig.self,
       Today.self,
       Usage.self,
       Watch.self,
