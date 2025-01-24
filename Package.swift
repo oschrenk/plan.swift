@@ -12,6 +12,7 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.0"),
     .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.0"),
     .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.15.1"),
+    .package(url: "https://github.com/bigMOTOR/swift-lens", from: "1.1.0"),
   ],
   targets: [
     .executableTarget(
@@ -20,6 +21,7 @@ let package = Package(
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
         .product(name: "Parsing", package: "swift-parsing"),
         .product(name: "Stencil", package: "Stencil"),
+        .product(name: "swift-lens", package: "swift-lens"),
       ],
       path: "Sources"
     ),

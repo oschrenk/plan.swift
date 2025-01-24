@@ -1,3 +1,5 @@
+import swift_lens
+
 struct Title: Codable, ReverseCodable, Equatable {
   let full: String
   let label: String
@@ -8,6 +10,12 @@ struct Title: Codable, ReverseCodable, Equatable {
     let legend = full.asLegend()
     label = legend.description
     icon = legend.icon
+  }
+
+  init(full: String, label: String, icon: String) {
+    self.full = full
+    self.label = label
+    self.icon = icon
   }
 
   enum CodingKeys: String, CodingKey, CaseIterable {
@@ -70,4 +78,15 @@ extension String {
 
     return Legend(description: self, icon: "")
   }
+}
+
+extension Title {
+  static let iconLens = Lens<Title, String>(
+    get: { title in title.icon },
+    set: { icon, title in Title(
+      full: title.full,
+      label: title.label,
+      icon: icon
+    ) }
+  )
 }

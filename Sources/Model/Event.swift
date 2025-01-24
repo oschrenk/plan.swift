@@ -1,5 +1,6 @@
 import EventKit
 import Foundation
+import swift_lens
 
 /// An Event describes an event
 ///
@@ -206,4 +207,20 @@ extension [Event] {
       StdErr.print("Failed to print events as JSON")
     }
   }
+}
+
+extension Event {
+  static let titleLens = Lens<Event, Title>(
+    get: { event in event.title },
+    set: { title, event in Event(
+      id: event.id,
+      calendar: event.calendar,
+      title: title,
+      schedule: event.schedule,
+      location: event.location,
+      meeting: event.meeting,
+      services: event.services,
+      tags: event.tags
+    ) }
+  )
 }

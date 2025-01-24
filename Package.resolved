@@ -1,5 +1,5 @@
 {
-  "originHash" : "c103ac5d0ac91424506ecbde53c7b829df9721eb309240f4b53901bbd1954ce9",
+  "originHash" : "65cbf3ec2147ac8c29504c1ea778bc4e38d030af4153b3753f72f71dd5c6e82f",
   "pins" : [
     {
       "identity" : "pathkit",
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "71344dd930fde41e8f3adafe260adcbb2fc2a3dc",
         "version" : "1.5.4"
+      }
+    },
+    {
+      "identity" : "swift-lens",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bigMOTOR/swift-lens.git",
+      "state" : {
+        "revision" : "f7b5794bc1cc72749187f6916a1844b4fca549d6",
+        "version" : "1.1.0"
       }
     },
     {
