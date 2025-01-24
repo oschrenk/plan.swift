@@ -83,7 +83,6 @@ Example commands (use `plan --help` for full usage)
 - `plan calendars` List available calendars
 - `plan next` Returns the current or next event within the next hour
 - `plan today` Returns all events for today
-- `plan watch` Trigger Sketchybar event on calendar changes. See [Docs/Sketchybar](./Docs/Sketchybar.md) for more.
 
 ## Use cases
 
@@ -93,7 +92,6 @@ But with the default output being JSON, and the templating engine, you can easil
 ### Sketchybar
 
 You can use it with [Sketchybar](https://felixkratz.github.io/SketchyBar/) to show the next event.
-For more details, consult [Docs/Sketchybar](./Docs/Sketchybar.md).
 
 ### Obsidian
 
