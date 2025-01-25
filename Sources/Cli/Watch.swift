@@ -11,7 +11,9 @@ struct Watch: ParsableCommand {
 
   mutating func run() {
     let repo = EventRepo()
-    let hooks = Loader.readConfig()?.hooks ?? []
+    let config = Loader.readConfig()
+    StdOut.print("\(String(describing: config))")
+    let hooks = config?.hooks ?? []
     repo.registerForEventStoreChanges(hooks: hooks)
     dispatchMain()
   }
