@@ -16,6 +16,7 @@ struct Plan: ParsableCommand {
       ShowConfig.self,
       Today.self,
       Usage.self,
+      Watch.self,
     ],
     defaultSubcommand: Usage.self
   )

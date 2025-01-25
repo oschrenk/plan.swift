@@ -92,4 +92,26 @@ final class EventRepo {
     }
     StdOut.print("Saved Event")
   }
+
+  /// Register for EKEventStoreChangedNotification
+  func registerForEventStoreChanges() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(eventStoreChanged(_:)),
+      name: .EKEventStoreChanged,
+      object: eventStore
+    )
+  }
+
+  @objc private func eventStoreChanged(_: Notification) {
+    print("Event store has changed!")
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(
+      self,
+      name: .EKEventStoreChanged,
+      object: eventStore
+    )
+  }
 }
