@@ -28,7 +28,7 @@ brew install go-task
 0. `task install` to test release
 1. Increase version number in `VERSION` and commit
 2. `task release` to tag and push
-3. `task sha` to print hashes to stdout
+3. `task sha | cut -d ' ' -f 1 | pbcopy` to copy the build hash to the clipboard
 4. Make changes in [homebrew-made](https://github.com/oschrenk/homebrew-made) and commit and push
 5. `brew update` to update taps
 6. `brew upgrade` to upgrade formula
