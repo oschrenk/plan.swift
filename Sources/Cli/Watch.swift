@@ -10,7 +10,9 @@ struct Watch: ParsableCommand {
   )
 
   mutating func run() {
+    StdOut.print("111")
     let repo = EventRepo()
+    StdOut.print("222")
     let config = Loader.readConfig()
     StdOut.print("\(String(describing: config))")
     let hooks = config?.hooks ?? []
