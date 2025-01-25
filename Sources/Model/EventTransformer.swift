@@ -2,14 +2,18 @@ import Foundation
 import swift_lens
 
 class EventTransformer {
-  let rule: Rule
+  let rules: [Rule]
 
   init(rule: Rule) {
-    self.rule = rule
+    rules = [rule]
+  }
+
+  init(rules: [Rule]) {
+    self.rules = rules
   }
 
   func transform(event: Event) -> Event {
-    if event.title.label.range(
+    for rule in rules where event.title.label.range(
       of: rule.regex, options: .regularExpression
     ) != nil {
       return event |> (Event.titleLens * Title.iconLens) *~ rule.icon

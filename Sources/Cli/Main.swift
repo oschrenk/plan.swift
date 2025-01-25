@@ -6,7 +6,8 @@ enum Main {
     start: Date,
     end: Date,
     opts: SharedOptions,
-    eventSelector: EventSelectorI
+    selector: EventSelectorI,
+    transformer: EventTransformer
   ) {
     Log.setDebug(opts.debug)
 
@@ -35,7 +36,9 @@ enum Main {
       eventFilter: eventFilter
     )
 
-    let events = eventSelector.select(events: unsortedEvents)
+    let events = selector
+      .select(events: unsortedEvents)
+      .map { transformer.transform(event: $0) }
     if opts.templatePath.isEmpty {
       events.printAsJson()
     } else {
