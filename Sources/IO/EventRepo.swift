@@ -2,6 +2,7 @@ import EventKit
 
 final class EventRepo {
   private let eventStore = EKEventStore()
+  private var hooks: [Hook] = []
 
   private func grantAccess() -> EKEventStore {
     if #available(macOS 14, *) {
@@ -93,18 +94,20 @@ final class EventRepo {
     StdOut.print("Saved Event")
   }
 
-  /// Register for EKEventStoreChangedNotification
-  func registerForEventStoreChanges() {
+  func registerForEventStoreChanges(hooks: [Hook]) {
+    self.hooks = hooks
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(eventStoreChanged(_:)),
       name: .EKEventStoreChanged,
-      object: eventStore
+      object: nil // Listen to all EKEventStore changes
     )
   }
 
   @objc private func eventStoreChanged(_: Notification) {
-    print("Event store has changed!")
+    for hook in hooks {
+      hook.trigger()
+    }
   }
 
   deinit {
