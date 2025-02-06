@@ -4,6 +4,8 @@ final class EventRepo {
   private let eventStore = EKEventStore()
   private var hooks: [Hook] = []
 
+  let eventQueue = DispatchQueue(label: "com.oschrenk.plan")
+
   private func grantAccess() -> EKEventStore {
     if #available(macOS 14, *) {
       self.eventStore.requestFullAccessToEvents { granted, maybeError in
@@ -95,18 +97,17 @@ final class EventRepo {
   }
 
   func registerForEventStoreChanges(hooks: [Hook]) {
-    self.hooks = hooks
     NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(eventStoreChanged(_:)),
-      name: .EKEventStoreChanged,
-      object: nil // Listen to all EKEventStore changes
-    )
-  }
-
-  @objc private func eventStoreChanged(_: Notification) {
-    for hook in hooks {
-      hook.trigger()
+      forName: .EKEventStoreChanged,
+      object: nil,
+      queue: nil
+    ) { _ in
+      print("d")
+      self.eventQueue.async {
+        for hook in hooks {
+          hook.trigger()
+        }
+      }
     }
   }
 
@@ -114,7 +115,7 @@ final class EventRepo {
     NotificationCenter.default.removeObserver(
       self,
       name: .EKEventStoreChanged,
-      object: eventStore
+      object: nil
     )
   }
 }
