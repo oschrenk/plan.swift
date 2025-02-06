@@ -224,3 +224,11 @@ extension Event {
     ) }
   )
 }
+
+extension KeyedEncodingContainer {
+  mutating func encode(_ value: String, forKey key: K) throws {
+    // omit empty strings from serialization
+    guard !value.isEmpty else { return }
+    try encodeIfPresent(value, forKey: key)
+  }
+}
