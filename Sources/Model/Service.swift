@@ -1,7 +1,7 @@
 import ArgumentParser
 import Foundation
 
-enum Service: String, Codable, ExpressibleByArgument {
+enum Service: String, Codable, ExpressibleByArgument, CodingKeyRepresentable {
   case ical, meet, zoom, teams
 
   private static let servicePatterns: [Service: String] = [
