@@ -59,3 +59,4 @@ See also https://stackoverflow.com/a/43418980
 ## Similar projects
 
 - [mcal](https://github.com/0ihsan/mcal)
+- [icalBuddy](https://hasseg.org/icalBuddy/)
