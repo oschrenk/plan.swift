@@ -1,3 +1,4 @@
+import Foundation
 @testable import plan
 import Testing
 
@@ -118,6 +119,18 @@ import Testing
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = false
     let actual = EventFilter.MaxNumAttendees(count: 2).accept(event)
+
+    #expect(actual == expected)
+  }
+
+  @Test func testAcceptingEventWithMinDuration() {
+    let now = Date()
+    let start = FCalendar.current.date(byAdding: .minute, value: 0, to: now)!
+    let end = FCalendar.current.date(byAdding: .minute, value: 200, to: now)!
+
+    let event = Event.generate(startDate: start, endDate: end)
+    let expected = true
+    let actual = EventFilter.MinDuration(minutes: 199).accept(event)
 
     #expect(actual == expected)
   }

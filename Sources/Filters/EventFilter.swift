@@ -79,6 +79,18 @@ enum EventFilter {
     }
   }
 
+  class MinDuration: EventFilterI {
+    let minutes: Int
+
+    init(minutes: Int) {
+      self.minutes = minutes
+    }
+
+    func accept(_ event: Event) -> Bool {
+      return event.schedule.duration >= minutes
+    }
+  }
+
   class IgnoreTags: EventFilterI {
     let tags: [String]
 
@@ -136,7 +148,8 @@ enum EventFilter {
     ignoreTags: [String],
     selectTags: [String],
     minNumAttendees: Int?,
-    maxNumAttendees: Int?
+    maxNumAttendees: Int?,
+    minDuration: Int?
   ) -> (EventFilterI) {
     var filters: [EventFilterI] = []
 
@@ -171,7 +184,7 @@ enum EventFilter {
     }
 
     if !selectTags.isEmpty {
-      let rtf: EventFilterI = EventFilter.SelectTags(tags: selectTags)
+      let stf: EventFilterI = EventFilter.SelectTags(tags: selectTags)
       filters.append(stf)
       Log.write("added filter after: selectTags(\(selectTags))")
     }
@@ -186,6 +199,12 @@ enum EventFilter {
       let maxa: EventFilterI = EventFilter.MaxNumAttendees(count: maxNumAttendees!)
       filters.append(maxa)
       Log.write("added filter after: maxNumAttendees(\(maxNumAttendees!))")
+    }
+
+    if minDuration ?? -1 >= 0 {
+      let mind: EventFilterI = EventFilter.MinDuration(minutes: minDuration!)
+      filters.append(mind)
+      Log.write("added filter after: minDuration(\(minDuration!))")
     }
 
     let final: EventFilterI = filters.isEmpty ?
