@@ -17,6 +17,12 @@ enum EventFilter {
     }
   }
 
+  class SelectAllDay: EventFilterI {
+    func accept(_ event: Event) -> Bool {
+      return event.schedule.allDay
+    }
+  }
+
   class IgnorePatternTitle: EventFilterI {
     let pattern: String
 
@@ -106,6 +112,7 @@ enum EventFilter {
   // swiftlint:disable:next function_parameter_count
   static func build(
     ignoreAllDay: Bool,
+    selectAllDay: Bool,
     ignorePatternTitle: String,
     selectPatternTitle: String,
     ignoreTags: [String],
@@ -118,6 +125,12 @@ enum EventFilter {
       let iad: EventFilterI = EventFilter.IgnoreAllDay()
       filters.append(iad)
       Log.write("added event filter: ignoreAllDay")
+    }
+
+    if selectAllDay {
+      let sad: EventFilterI = EventFilter.SelectAllDay()
+      filters.append(sad)
+      Log.write("added event filter: selectAllDay")
     }
 
     if !ignorePatternTitle.isEmpty {

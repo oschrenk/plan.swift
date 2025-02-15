@@ -9,6 +9,11 @@ struct SharedOptions: ParsableArguments {
   ))
   var ignoreAllDayEvents: Bool = false
 
+  @Flag(help: ArgumentHelp(
+    "Select all day events"
+  ))
+  var selectAllDayEvents: Bool = false
+
   @Option(help: ArgumentHelp(
     "Ignore titles matching the given pattern <p>",
     valueName: "p"

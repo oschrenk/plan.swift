@@ -42,6 +42,14 @@ import Testing
     #expect(actual == expected)
   }
 
+  @Test func testSelectAnAllDayEvent() {
+    let event = Event.generate(allDay: true)
+    let expected = true
+    let actual = EventFilter.SelectAllDay().accept(event)
+
+    #expect(actual == expected)
+  }
+
   @Test func testAcceptAnNonAllDayEvent() {
     let event = Event.generate(allDay: false)
     let expected = true
