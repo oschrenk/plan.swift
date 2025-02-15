@@ -102,7 +102,6 @@ final class EventRepo {
       object: nil,
       queue: nil
     ) { _ in
-      print("d")
       self.eventQueue.async {
         for hook in hooks {
           hook.trigger()
