@@ -134,7 +134,7 @@ enum EventFilter {
     ignorePatternTitle: String,
     selectPatternTitle: String,
     ignoreTags: [String],
-    selectTags _: [String],
+    selectTags: [String],
     minNumAttendees: Int?,
     maxNumAttendees: Int?
   ) -> (EventFilterI) {
@@ -168,6 +168,12 @@ enum EventFilter {
       let rtf: EventFilterI = EventFilter.IgnoreTags(tags: ignoreTags)
       filters.append(rtf)
       Log.write("added filter after: ignoreTags(\(ignoreTags))")
+    }
+
+    if !selectTags.isEmpty {
+      let rtf: EventFilterI = EventFilter.SelectTags(tags: selectTags)
+      filters.append(stf)
+      Log.write("added filter after: selectTags(\(selectTags))")
     }
 
     if minNumAttendees ?? -1 >= 0 {
