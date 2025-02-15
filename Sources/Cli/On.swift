@@ -20,10 +20,9 @@ struct On: ParsableCommand {
 
   mutating func run() throws {
     let parser = DateParser(rules: EN.all + Common.all)
-    let text = "drop me next wednesday at 2:25 p.m"
     var userDate: Date
     do {
-      let result = try parser.parse(text: text, base: Date())
+      let result = try parser.parse(text: expression, base: Date())
       userDate = result.date
     } catch {
       StdErr.print("Can't parse date")
