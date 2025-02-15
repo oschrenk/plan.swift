@@ -15,6 +15,11 @@ struct SharedOptions: ParsableArguments {
   )) var ignorePatternTitle: String = ""
 
   @Option(help: ArgumentHelp(
+    "Select titles matching the given pattern <p>",
+    valueName: "p"
+  )) var selectPatternTitle: String = ""
+
+  @Option(help: ArgumentHelp(
     "Ignore events which notes contain the tag <t> " +
       "eg. 'tag:timeblock'. A comma separated list of tags",
     valueName: "t"

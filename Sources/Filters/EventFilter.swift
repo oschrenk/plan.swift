@@ -33,6 +33,22 @@ enum EventFilter {
     }
   }
 
+  class SelectPatternTitle: EventFilterI {
+    let pattern: String
+
+    init(pattern: String) {
+      self.pattern = pattern
+    }
+
+    func accept(_ event: Event) -> Bool {
+      if event.title.full.range(of: pattern, options: .regularExpression) != nil {
+        true
+      } else {
+        false
+      }
+    }
+  }
+
   class MinNumAttendees: EventFilterI {
     let count: Int
 
@@ -87,9 +103,11 @@ enum EventFilter {
     }
   }
 
+  // swiftlint:disable:next function_parameter_count
   static func build(
     ignoreAllDay: Bool,
     ignorePatternTitle: String,
+    selectPatternTitle: String,
     ignoreTags: [String],
     minNumAttendees: Int?,
     maxNumAttendees: Int?
@@ -106,6 +124,12 @@ enum EventFilter {
       let ipt: EventFilterI = EventFilter.IgnorePatternTitle(pattern: ignorePatternTitle)
       filters.append(ipt)
       Log.write("added filter after: ignorePatternTitle(\(ignorePatternTitle))")
+    }
+
+    if !selectPatternTitle.isEmpty {
+      let spt: EventFilterI = EventFilter.SelectPatternTitle(pattern: selectPatternTitle)
+      filters.append(spt)
+      Log.write("added filter after: selectPatternTitle(\(selectPatternTitle))")
     }
 
     if !ignoreTags.isEmpty {

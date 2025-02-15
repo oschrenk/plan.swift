@@ -22,6 +22,7 @@ enum Main {
     let eventFilter = EventFilter.build(
       ignoreAllDay: opts.ignoreAllDayEvents,
       ignorePatternTitle: opts.ignorePatternTitle,
+      selectPatternTitle: opts.selectPatternTitle,
       ignoreTags: opts.ignoreTags,
       minNumAttendees: opts.minNumAttendees,
       maxNumAttendees: opts.maxNumAttendees

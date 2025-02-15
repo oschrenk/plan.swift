@@ -58,6 +58,14 @@ import Testing
     #expect(actual == expected)
   }
 
+  @Test func testNotSelectingEventNotMatchingTitle() {
+    let event = Event.generate(title: "Development standup")
+    let expected = false
+    let actual = EventFilter.SelectPatternTitle(pattern: "foo").accept(event)
+
+    #expect(actual == expected)
+  }
+
   @Test func testAcceptingEventNotMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = true
