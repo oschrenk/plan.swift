@@ -28,7 +28,8 @@ enum Main {
       selectTags: opts.selectTags,
       minNumAttendees: opts.minNumAttendees,
       maxNumAttendees: opts.maxNumAttendees,
-      minDuration: opts.minDuration
+      minDuration: opts.minDuration,
+      maxDuration: opts.maxDuration
     )
 
     let service = EventService(repo: EventRepo())

@@ -135,6 +135,18 @@ import Testing
     #expect(actual == expected)
   }
 
+  @Test func testNotAcceptingEventWithMaxDuration() {
+    let now = Date()
+    let start = FCalendar.current.date(byAdding: .minute, value: 0, to: now)!
+    let end = FCalendar.current.date(byAdding: .minute, value: 200, to: now)!
+
+    let event = Event.generate(startDate: start, endDate: end)
+    let expected = false
+    let actual = EventFilter.MaxDuration(minutes: 100).accept(event)
+
+    #expect(actual == expected)
+  }
+
   @Test func testAcceptCombinedFilter() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = true

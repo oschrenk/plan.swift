@@ -91,6 +91,18 @@ enum EventFilter {
     }
   }
 
+  class MaxDuration: EventFilterI {
+    let minutes: Int
+
+    init(minutes: Int) {
+      self.minutes = minutes
+    }
+
+    func accept(_ event: Event) -> Bool {
+      return event.schedule.duration <= minutes
+    }
+  }
+
   class IgnoreTags: EventFilterI {
     let tags: [String]
 
@@ -139,7 +151,7 @@ enum EventFilter {
     }
   }
 
-  // swiftlint:disable:next function_parameter_count
+  // swiftlint:disable:next function_parameter_count function_body_length
   static func build(
     ignoreAllDay: Bool,
     selectAllDay: Bool,
@@ -149,7 +161,8 @@ enum EventFilter {
     selectTags: [String],
     minNumAttendees: Int?,
     maxNumAttendees: Int?,
-    minDuration: Int?
+    minDuration: Int?,
+    maxDuration: Int?
   ) -> (EventFilterI) {
     var filters: [EventFilterI] = []
 
@@ -205,6 +218,12 @@ enum EventFilter {
       let mind: EventFilterI = EventFilter.MinDuration(minutes: minDuration!)
       filters.append(mind)
       Log.write("added filter after: minDuration(\(minDuration!))")
+    }
+
+    if maxDuration ?? -1 >= 0 {
+      let maxd: EventFilterI = EventFilter.MaxDuration(minutes: maxDuration!)
+      filters.append(maxd)
+      Log.write("added filter after: maxDuration(\(maxDuration!))")
     }
 
     let final: EventFilterI = filters.isEmpty ?

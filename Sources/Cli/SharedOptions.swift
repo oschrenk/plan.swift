@@ -80,8 +80,13 @@ struct SharedOptions: ParsableArguments {
 
   @Option(help: ArgumentHelp(
     "Minimum (inclusive) length <m> (in minutes) of duration",
-    valueName: "n"
+    valueName: "m"
   )) var minDuration: Int?
+
+  @Option(help: ArgumentHelp(
+    "Maximum (inclusive) length <m> (in minutes) of duration",
+    valueName: "m"
+  )) var maxDuration: Int?
 
   @Option(help: ArgumentHelp(
     "Template path <p>",
