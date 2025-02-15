@@ -4,6 +4,7 @@ struct Schedule: Codable, ReverseCodable, Equatable {
   let start: Temporal
   let end: Temporal
   let allDay: Bool
+  let duration: Int
 
   init(now: Date, startDate: Date, endDate: Date, allDay isAllDay: Bool) {
     start = Temporal(
@@ -15,6 +16,7 @@ struct Schedule: Codable, ReverseCodable, Equatable {
       inMinutes: Int((endDate.timeIntervalSince1970 - now.timeIntervalSince1970) / 60)
     )
     allDay = isAllDay
+    duration = end.inMinutes - start.inMinutes
   }
 
   static func == (lhs: Schedule, rhs: Schedule) -> Bool {
@@ -28,6 +30,7 @@ struct Schedule: Codable, ReverseCodable, Equatable {
     case start
     case end
     case allDay = "all_day"
+    case duration
   }
 
   static func reverseCodingKeys() -> [String: String] {
@@ -35,6 +38,7 @@ struct Schedule: Codable, ReverseCodable, Equatable {
       CodingKeys.start.rawValue: "start",
       CodingKeys.end.rawValue: "end",
       CodingKeys.allDay.rawValue: "allDay",
+      CodingKeys.duration.rawValue: "duration",
     ]
   }
 }

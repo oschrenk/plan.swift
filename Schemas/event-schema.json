@@ -83,6 +83,9 @@
         "all_day": {
           "type": "boolean"
         },
+        "duration": {
+          "type": "integer"
+        },
       },
       "required": [
         "start",

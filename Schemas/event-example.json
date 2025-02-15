@@ -20,7 +20,8 @@
         "at": "2024-08-09T17:00:00+02:00",
         "in": 90
       },
-      "all_day": false
+      "all_day": false,
+      "duration": 60
     },
     "location": "",
     "meeting" : {
