@@ -97,6 +97,24 @@ enum EventFilter {
     }
   }
 
+  class SelectTags: EventFilterI {
+    let tags: [String]
+
+    init(tags: [String]) {
+      self.tags = tags
+    }
+
+    func accept(_ event: Event) -> Bool {
+      let intersection = Set(tags).intersection(Set(event.tags))
+      let hasMatchingTag = !intersection.isEmpty
+
+      Log.write("Event \"\(event.title.full)\" has tags: \(event.tags).")
+      Log.write("Selecting \(tags). hasMatchingTag: \(hasMatchingTag)")
+
+      return hasMatchingTag
+    }
+  }
+
   class Combined: EventFilterI {
     let filters: [EventFilterI]
 
@@ -116,6 +134,7 @@ enum EventFilter {
     ignorePatternTitle: String,
     selectPatternTitle: String,
     ignoreTags: [String],
+    selectTags _: [String],
     minNumAttendees: Int?,
     maxNumAttendees: Int?
   ) -> (EventFilterI) {

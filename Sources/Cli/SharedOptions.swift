@@ -31,6 +31,12 @@ struct SharedOptions: ParsableArguments {
   )) var ignoreTags: [String] = []
 
   @Option(help: ArgumentHelp(
+    "Select events which notes contain the tag <t> " +
+      "eg. 'tag:timeblock'. A comma separated list of tags",
+    valueName: "t"
+  )) var selectTags: [String] = []
+
+  @Option(help: ArgumentHelp(
     "Select calendars <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
   )) var selectCalendars: [String] = []

@@ -25,6 +25,7 @@ enum Main {
       ignorePatternTitle: opts.ignorePatternTitle,
       selectPatternTitle: opts.selectPatternTitle,
       ignoreTags: opts.ignoreTags,
+      selectTags: opts.selectTags,
       minNumAttendees: opts.minNumAttendees,
       maxNumAttendees: opts.maxNumAttendees
     )

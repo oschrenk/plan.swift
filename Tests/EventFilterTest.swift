@@ -34,6 +34,14 @@ import Testing
     #expect(actual == expected)
   }
 
+  @Test func testSelectTagsMatchingTags() {
+    let event = Event.generate(tags: ["timeblock"])
+    let expected = true
+    let actual = EventFilter.SelectTags(tags: ["timeblock"]).accept(event)
+
+    #expect(actual == expected)
+  }
+
   @Test func testIgnoreAnAllDayEvent() {
     let event = Event.generate(allDay: true)
     let expected = false
