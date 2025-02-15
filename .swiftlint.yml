@@ -12,12 +12,12 @@ indentation_width:
   indentation_width: 2
 identifier_name:
   excluded: # excluded via string array
-    - id
-    - to
     - at
-    - in
     - f
+    - id
+    - in
     - s
+    - to
 type_name:
   excluded:
     - T
