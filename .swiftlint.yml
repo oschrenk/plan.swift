@@ -20,6 +20,7 @@ identifier_name:
     - to
 type_name:
   excluded:
+    - On
     - T
 nesting:
   type_level:

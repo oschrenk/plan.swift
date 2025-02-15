@@ -1,5 +1,5 @@
 {
-  "originHash" : "65cbf3ec2147ac8c29504c1ea778bc4e38d030af4153b3753f72f71dd5c6e82f",
+  "originHash" : "2ebdb6c538f63c1ccea9ef2da3041d2f731a59129319ae6de7c3c7c8b5923d9c",
   "pins" : [
     {
       "identity" : "pathkit",
@@ -71,6 +71,14 @@
       "state" : {
         "revision" : "515f79b522918f83483068d99c68daeb5116342d",
         "version" : "600.0.0-prerelease-2024-08-14"
+      }
+    },
+    {
+      "identity" : "swift-when",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hectr/swift-when",
+      "state" : {
+        "revision" : "0306cc7c39ba72e54eb35512beb9140421ec81ab"
       }
     },
     {
