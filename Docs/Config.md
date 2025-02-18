@@ -2,12 +2,15 @@
 
 **Example**
 
+This config will
+- add a "🪷" icon to every calendar item matching the `Yoga` regex
+- fire an `calendar_changed` event for sketchybar if events change
 ```
 {
   "iconize": [
     {
       "field": "title.label",
-      "regex": "Movement Yoga",
+      "regex": "Yoga",
       "icon": "🪷"
     }
   ],

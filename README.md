@@ -4,13 +4,15 @@ A macOS terminal tool to fetch calendar events from `Calendar.app`
 
 ## Features
 
-- return JSON by default
-- for emoji lovers: separate leading emojis from event title, giving you the emoji, short and full title
-- ignore events based on tags e.g. `tag:example` within the event notes
-- return start and end time in relative and absolute terms
-- return an `ical` URL that can be used to `open $URL` to show the particular event in Calendar.app
-- parse Google meet URLs from notes
-- print out calendar entries with a templating engine
+- JSON by default
+- templating engine for
+- for emoji lovers ❤️
+  - separate leading emojis from event title
+  - add emojis based on title
+- start and end time in relative and absolute terms
+- `ical` URL that can be used to show the event in Calendar.app
+- parse meeting URLs from notes (Google, Zoom, Teams)
+- natural language parser for date selection
 
 ## Examples
 
@@ -29,7 +31,7 @@ Example output in JSON
       "color": "#E195DA",
       "label": "Some calendar",
       "type": "caldav",
-      "source": ""
+      "source": "Personal"
     },
     "title": {
       "full": "🏆 Release plan",
@@ -44,13 +46,15 @@ Example output in JSON
       "end": {
         "at": "2024-09-02T19:00:00+02:00",
         "in": 90
-      }
+      },
+      "all_day": false,
+      "duration": 60
     },
     "services": [
       { "ical": "ical://ekevent/9675DF46-4040-4762-A70B-6CD65DC01C36?method=show&options=more" }
     ],
     "tags": [ "timeblock" ]
- }
+  }
 ]
 ```
 
@@ -72,7 +76,7 @@ You get
 - 13:00 - 14:00 🕐 Meeting [ ](ical://ekevent/59856934-5D89-45A2-9C11-0E3877F1B082?method=show&options=more) #work
 ```
 
-For more details, consult [Docs/Templating](Docs/Templating.md).
+For more details, see [Docs/Templating](Docs/Templating.md).
 
 ## Usage
 
@@ -83,11 +87,13 @@ Example commands (use `plan --help` for full usage)
 - `plan calendars` List available calendars
 - `plan next` Returns the current or next event within the next hour
 - `plan today` Returns all events for today
+- `plan on [expression]` Return all events on the given days e.g. `plan on "next monday"`
 
 ## Use cases
 
-`plan` can help with your "productivity" setup. It plays very well with Sketchybar and Obsidian.
-But with the default output being JSON, and the templating engine, you can easily make `plan` fit your individual needs.
+`plan` can help with your productivity setup.
+
+It plays very well with Sketchybar and Obsidian and with the default output format being JSON, and the templating engine, you can easily make `plan` fit your individual needs.
 
 ### Sketchybar
 
