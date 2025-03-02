@@ -20,7 +20,7 @@ struct Usage: ParsableCommand {
     if version {
       StdOut.print(Version.value)
     } else {
-      StdOut.print(Plan.helpMessage())
+      StdOut.print(Cli.helpMessage())
     }
   }
 }

@@ -27,7 +27,7 @@ struct Today: ParsableCommand {
     ]
     )
 
-    Main.run(
+    Plan.run(
       start: start, end: end, opts: opts,
       selector: eventSelector,
       transformer: EventTransformer(rules: Loader.readConfig()?.iconize ?? [])

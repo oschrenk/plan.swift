@@ -6,7 +6,7 @@ import Foundation
 ///
 /// This the main entry point
 @main
-struct Plan: ParsableCommand {
+struct Cli: ParsableCommand {
   static var configuration = CommandConfiguration(
     abstract: "Unofficial Calendar.app companion CLI to view today's events in various forms",
     subcommands: [

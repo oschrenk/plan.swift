@@ -1,7 +1,7 @@
 import EventKit
 import Foundation
 
-enum Main {
+enum Plan {
   static func run(
     start: Date,
     end: Date,
@@ -45,7 +45,8 @@ enum Main {
       .select(events: unsortedEvents)
       .map { transformer.transform(event: $0) }
     if opts.templatePath.isEmpty {
-      events.printAsJson()
+      let render = events.renderAsJson()
+      StdOut.print(render)
     } else {
       if let render = Template.render(path: opts.templatePath, events: events) {
         StdOut.print(render)
