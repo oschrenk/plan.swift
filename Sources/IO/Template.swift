@@ -2,7 +2,7 @@ import Foundation
 import Stencil
 
 class Template {
-  static func render(path: String, events: [Event]) -> String? {
+  func render(path: String, events: [Event]) -> String? {
     guard let template = File.read(from: path) else {
       return nil
     }
