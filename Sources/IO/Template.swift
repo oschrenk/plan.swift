@@ -2,11 +2,16 @@ import Foundation
 import Stencil
 
 class Template {
-  func render(path: String, events: [Event]) -> String? {
+  let template: String
+
+  init?(path: String) {
     guard let template = File.read(from: path) else {
       return nil
     }
+    self.template = template
+  }
 
+  func render(events: [Event]) -> String? {
     let ext = Extension()
     ext.registerFilter("format") { (value: Any?, arguments: [Any?]) in
       guard let format = arguments.first as? String else {

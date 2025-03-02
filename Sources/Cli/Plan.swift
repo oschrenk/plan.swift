@@ -48,10 +48,14 @@ enum Plan {
       let render = events.renderAsJson()
       StdOut.print(render)
     } else {
-      if let render = Template().render(path: opts.templatePath, events: events) {
-        StdOut.print(render)
+      if let template = Template(path: opts.templatePath) {
+        if let render = template.render(events: events) {
+          StdOut.print(render)
+        } else {
+          StdErr.print("Failed to render template at `\(opts.templatePath)`")
+        }
       } else {
-        StdErr.print("Failed to render template at `\(opts.templatePath)`")
+        StdErr.print("Failed to load template at `\(opts.templatePath)`")
       }
     }
   }
