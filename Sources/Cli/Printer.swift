@@ -1,4 +1,3 @@
-
 class Printer {
   func print(events: [Event], templatePath: String) {
     if templatePath.isEmpty {
