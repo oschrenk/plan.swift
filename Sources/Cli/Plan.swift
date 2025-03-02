@@ -8,7 +8,7 @@ class Plan {
     opts: SharedOptions,
     selector: EventSelectorI,
     transformer: EventTransformer
-  ) {
+  ) -> [Event] {
     Log.setDebug(opts.debug)
 
     let calendarFilter = CalendarFilter.build(
@@ -41,10 +41,8 @@ class Plan {
       eventFilter: eventFilter
     )
 
-    let events = selector
+    return selector
       .select(events: unsortedEvents)
       .map { transformer.transform(event: $0) }
-
-    Printer().print(events: events, templatePath: opts.templatePath)
   }
 }

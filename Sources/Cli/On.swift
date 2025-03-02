@@ -43,10 +43,12 @@ struct On: ParsableCommand {
     ]
     )
 
-    Plan().events(
+    let events = Plan().events(
       start: start, end: end, opts: opts,
       selector: eventSelector,
       transformer: EventTransformer(rules: Loader.readConfig()?.iconize ?? [])
     )
+
+    Printer().print(events: events, templatePath: opts.templatePath)
   }
 }
