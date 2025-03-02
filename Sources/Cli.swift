@@ -12,6 +12,7 @@ struct Cli: ParsableCommand {
     subcommands: [
       Add.self,
       Calendars.self,
+      Hours.self,
       Next.self,
       On.self,
       ShowConfig.self,
