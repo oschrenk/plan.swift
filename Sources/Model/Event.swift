@@ -189,7 +189,7 @@ extension EKEvent {
 
 extension [Event] {
   /// Prints the array of Events as JSON
-  func printAsJson() {
+  func renderAsJson() -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
     let encoder = JSONEncoder()
@@ -201,11 +201,14 @@ extension [Event] {
         data: data,
         encoding: .utf8
       ) {
-        StdOut.print(json)
+        return json
       }
     } catch {
       StdErr.print("Failed to print events as JSON")
     }
+    // guru exception
+    // but deserves better error handling
+    return ""
   }
 }
 

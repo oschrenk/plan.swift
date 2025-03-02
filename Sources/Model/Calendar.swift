@@ -121,7 +121,7 @@ extension EKCalendar {
 }
 
 extension [PlanCalendar] {
-  func printAsJson() {
+  func renderAsJson() -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
     let encoder = JSONEncoder()
@@ -133,19 +133,26 @@ extension [PlanCalendar] {
         data: data,
         encoding: .utf8
       ) {
-        StdOut.print(json)
+        return json
       }
     } catch {
-      StdErr.print("fail")
+      StdErr.print("Failed to print calendars as JSON")
     }
+
+    // guru exception
+    // but deserves better error handling
+    return ""
   }
 
-  func printAsPlain() {
+  func renderAsPlain() -> String {
     let sorted = self.sorted(by: { cal1, cal2 in
       cal1.label < cal2.label
     })
+    var render = ""
     for calendar in sorted {
-      StdOut.print("\(calendar.id) \(calendar.label) \(calendar.type) \(calendar.source)")
+      render += "\(calendar.id) \(calendar.label) \(calendar.type) \(calendar.source)\n"
     }
+
+    return render
   }
 }
