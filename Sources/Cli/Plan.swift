@@ -1,8 +1,8 @@
 import EventKit
 import Foundation
 
-enum Plan {
-  static func run(
+class Plan {
+  func events(
     start: Date,
     end: Date,
     opts: SharedOptions,

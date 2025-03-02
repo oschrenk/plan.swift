@@ -34,7 +34,7 @@ struct Next: ParsableCommand {
     ]
     )
 
-    Plan.run(
+    Plan().events(
       start: start, end: end, opts: opts,
       selector: eventSelector,
       transformer: EventTransformer(rules: Loader.readConfig()?.iconize ?? [])
