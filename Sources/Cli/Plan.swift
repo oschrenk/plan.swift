@@ -44,21 +44,26 @@ class Plan {
     let events = selector
       .select(events: unsortedEvents)
       .map { transformer.transform(event: $0) }
-    if opts.templatePath.isEmpty {
+
+    print(events: events, templatePath: opts.templatePath)
+  }
+
+  func print(events: [Event], templatePath: String) {
+    if templatePath.isEmpty {
       if let render = events.renderAsJson() {
         StdOut.print(render)
       } else {
         StdErr.print("Failed to render JSON")
       }
     } else {
-      if let template = Template(path: opts.templatePath) {
+      if let template = Template(path: templatePath) {
         if let render = template.render(events: events) {
           StdOut.print(render)
         } else {
-          StdErr.print("Failed to render template at `\(opts.templatePath)`")
+          StdErr.print("Failed to render template at `\(templatePath)`")
         }
       } else {
-        StdErr.print("Failed to load template at `\(opts.templatePath)`")
+        StdErr.print("Failed to load template at `\(templatePath)`")
       }
     }
   }
