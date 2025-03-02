@@ -45,8 +45,11 @@ enum Plan {
       .select(events: unsortedEvents)
       .map { transformer.transform(event: $0) }
     if opts.templatePath.isEmpty {
-      let render = events.renderAsJson()
-      StdOut.print(render)
+      if let render = events.renderAsJson() {
+        StdOut.print(render)
+      } else {
+        StdErr.print("Failed to render JSON")
+      }
     } else {
       if let template = Template(path: opts.templatePath) {
         if let render = template.render(events: events) {

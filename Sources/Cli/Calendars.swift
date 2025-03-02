@@ -69,11 +69,17 @@ struct Calendars: ParsableCommand {
 
     switch format {
     case .json:
-      let render = calendars.renderAsJson()
-      StdOut.print(render)
+      if let render = calendars.renderAsJson() {
+        StdOut.print(render)
+      } else {
+        StdErr.print("Failed to render calendars as JSON")
+      }
     case .plain:
-      let render = calendars.renderAsPlain()
-      StdOut.print(render)
+      if let render = calendars.renderAsPlain() {
+        StdOut.print(render)
+      } else {
+        StdErr.print("Failed to render calendars as plain text")
+      }
     }
   }
 }

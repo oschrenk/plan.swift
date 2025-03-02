@@ -121,7 +121,7 @@ extension EKCalendar {
 }
 
 extension [PlanCalendar] {
-  func renderAsJson() -> String {
+  func renderAsJson() -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
     let encoder = JSONEncoder()
@@ -140,11 +140,10 @@ extension [PlanCalendar] {
     }
 
     // guru exception
-    // but deserves better error handling
-    return ""
+    return nil
   }
 
-  func renderAsPlain() -> String {
+  func renderAsPlain() -> String? {
     let sorted = self.sorted(by: { cal1, cal2 in
       cal1.label < cal2.label
     })
