@@ -34,4 +34,12 @@ import Testing
 
     #expect(output == expected)
   }
+
+  @Test func testObsidianNotes() {
+    let input = "obsidian://open?vault=test&file=10%20Journals%2FPersonal%2Fweek%2011"
+    let output = Service.fromNotes(notes: input)
+    let expected: [Service: String] = [Service.obsidian: input]
+
+    #expect(output == expected)
+  }
 }
