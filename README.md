@@ -1,4 +1,6 @@
-# README
+<p align="center" width="100%">
+  <img alt="Plan Icon" width="128px" src="./Assets/icon.png">
+</p>
 
 A macOS terminal tool to fetch calendar events from `Calendar.app`
 
