@@ -65,6 +65,12 @@ final class EventRepo {
     eventStore.refreshSourcesIfNecessary()
 
     let calendars = fetchEkCalendars(filter: calendarFilter)
+    // an emoty list means, no valid selection, but unfortunately the api for
+    // eventStore.predicateForEvents treats nil and an emptyList as a means
+    // to retrieve all calendars, so we short circuit
+    if calendars.isEmpty {
+      return []
+    }
 
     let predicate = eventStore.predicateForEvents(
       withStart: start,
