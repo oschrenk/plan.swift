@@ -39,7 +39,7 @@ struct Event: Codable, ReverseCodable, Equatable {
   let schedule: Schedule
   let location: String
   let meeting: Meeting
-  let services: [Service: String]
+  let services: [String: String]
   let tags: [String]
 
   enum CodingKeys: String, CodingKey, CaseIterable {
@@ -99,7 +99,7 @@ struct Event: Codable, ReverseCodable, Equatable {
     )
     let location = ""
     let meeting = Meeting(organizer: "", attendees: attendees)
-    let services: [Service: String] = [:]
+    let services: [String: String] = [:]
 
     return Event(
       id: id,
@@ -150,13 +150,14 @@ extension String {
 
 extension EKEvent {
   /// Convenience method to build services URLs from EKEvent
-  func listServices() -> [Service: String] {
-    Service.fromEvent(
+  func listServices() -> [String: String] {
+    return Dictionary(uniqueKeysWithValues: Service.fromEvent(
       notes: notes ?? "",
       calendarItemIdentifier: calendarItemIdentifier,
       isAllDay: isAllDay,
       hasRecurrenceRules: hasRecurrenceRules,
       startDate: startDate
+    ).map { key, value in (key.rawValue, value) }
     )
   }
 
