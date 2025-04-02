@@ -37,14 +37,14 @@ struct SharedOptions: ParsableArguments {
   )) var selectTags: [String] = []
 
   @Option(help: ArgumentHelp(
-    "Select calendars <v>. A comma separated list of calendar UUIDs",
+    "Select calendar(s) with id <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
-  )) var selectCalendars: [String] = []
+  )) var selectCalendarIds: [String] = []
 
   @Option(help: ArgumentHelp(
-    "Ignore calendars <v>. A comma separated list of calendar UUIDs",
+    "Ignore calendar(s) with id <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
-  )) var ignoreCalendars: [String] = []
+  )) var ignoreCalendarIds: [String] = []
 
   @Option(help: ArgumentHelp(
     "Select calendar sources <s>. A comma separated list of calendar sources",

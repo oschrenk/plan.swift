@@ -12,8 +12,8 @@ class Plan {
     Log.setDebug(opts.debug)
 
     let calendarFilter = CalendarFilter.build(
-      selectCalendars: opts.selectCalendars,
-      ignoreCalendars: opts.ignoreCalendars,
+      selectCalendarIds: opts.selectCalendarIds,
+      ignoreCalendarIds: opts.ignoreCalendarIds,
       selectCalendarSources: opts.selectCalendarSources,
       ignoreCalendarSources: opts.ignoreCalendarSources,
       selectCalendarTypes: opts.selectCalendarTypes,

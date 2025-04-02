@@ -157,8 +157,8 @@ enum CalendarFilter {
   }
 
   static func build(
-    selectCalendars: [String] = [],
-    ignoreCalendars: [String] = [],
+    selectCalendarIds: [String] = [],
+    ignoreCalendarIds: [String] = [],
     selectCalendarSources: [String] = [],
     ignoreCalendarSources: [String] = [],
     selectCalendarTypes: [EKCalendarType] = [],
@@ -166,16 +166,16 @@ enum CalendarFilter {
   ) -> CalendarFilterI {
     var filters: [CalendarFilterI] = []
 
-    if !selectCalendars.isEmpty {
-      let scf: CalendarFilterI = CalendarFilter.Select(uuids: selectCalendars)
+    if !selectCalendarIds.isEmpty {
+      let scf: CalendarFilterI = CalendarFilter.Select(uuids: selectCalendarIds)
       filters.append(scf)
-      Log.write("added filter before: selectCalendars(\(selectCalendars))")
+      Log.write("added filter before: selectCalendars(\(selectCalendarIds))")
     }
 
-    if !ignoreCalendars.isEmpty {
-      let icf: CalendarFilterI = CalendarFilter.Ignore(uuids: ignoreCalendars)
+    if !ignoreCalendarIds.isEmpty {
+      let icf: CalendarFilterI = CalendarFilter.Ignore(uuids: ignoreCalendarIds)
       filters.append(icf)
-      Log.write("added filter before: ignoreCalendars(\(ignoreCalendars))")
+      Log.write("added filter before: ignoreCalendars(\(ignoreCalendarIds))")
     }
 
     if !selectCalendarSources.isEmpty {
