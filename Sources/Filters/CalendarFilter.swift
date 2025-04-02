@@ -202,10 +202,8 @@ enum CalendarFilter {
       Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 
-    let filterBefore: CalendarFilterI = filters.isEmpty ?
+    return filters.isEmpty ?
       CalendarFilter.Accept() :
       CalendarFilter.Combined(filters: filters)
-
-    return filterBefore
   }
 }
