@@ -12,34 +12,34 @@ import Testing
     #expect(actual == expected, "The calendar was not accepted")
   }
 
-  @Test func testSelectCalendarsMatching() {
+  @Test func testSelectCalendarIdMatching() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.Select(uuids: [calendar.id]).accept(calendar)
+    let actual = CalendarFilter.SelectIds(uuids: [calendar.id]).accept(calendar)
 
     #expect(actual == expected, "The calendar was not accepted")
   }
 
-  @Test func testSelectCalendarsEmptyArray() {
+  @Test func testSelectCalendarIdsEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.Select(uuids: []).accept(calendar)
+    let actual = CalendarFilter.SelectIds(uuids: []).accept(calendar)
 
     #expect(actual == expected, "The calendar was not accepted")
   }
 
-  @Test func testIgnoreCalendarsMatching() {
+  @Test func testIgnoreCalendarIdMatching() {
     let calendar = PlanCalendar.generate()
     let expected = false
-    let actual = CalendarFilter.Ignore(uuids: [calendar.id]).accept(calendar)
+    let actual = CalendarFilter.IgnoreIds(uuids: [calendar.id]).accept(calendar)
 
     #expect(actual == expected, "The calendar was accepted")
   }
 
-  @Test func testIgnoreCalendarsEmptyArray() {
+  @Test func testIgnoreCalendarIdsEmptyArray() {
     let calendar = PlanCalendar.generate()
     let expected = true
-    let actual = CalendarFilter.Ignore(uuids: []).accept(calendar)
+    let actual = CalendarFilter.IgnoreIds(uuids: []).accept(calendar)
 
     #expect(actual == expected, "The calendar was not accepted")
   }

@@ -12,7 +12,7 @@ enum CalendarFilter {
     }
   }
 
-  class Select: CalendarFilterI {
+  class SelectIds: CalendarFilterI {
     let uuids: [String]
 
     init(uuids: [String]) {
@@ -33,7 +33,7 @@ enum CalendarFilter {
     }
   }
 
-  class Ignore: CalendarFilterI {
+  class IgnoreIds: CalendarFilterI {
     let uuids: [String]
 
     init(uuids: [String]) {
@@ -167,13 +167,13 @@ enum CalendarFilter {
     var filters: [CalendarFilterI] = []
 
     if !selectCalendarIds.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.Select(uuids: selectCalendarIds)
+      let f: CalendarFilterI = CalendarFilter.SelectIds(uuids: selectCalendarIds)
       filters.append(f)
       Log.write("added filter before: selectCalendars(\(selectCalendarIds))")
     }
 
     if !ignoreCalendarIds.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.Ignore(uuids: ignoreCalendarIds)
+      let f: CalendarFilterI = CalendarFilter.IgnoreIds(uuids: ignoreCalendarIds)
       filters.append(f)
       Log.write("added filter before: ignoreCalendars(\(ignoreCalendarIds))")
     }
