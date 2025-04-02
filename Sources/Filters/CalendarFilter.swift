@@ -167,14 +167,14 @@ enum CalendarFilter {
     var filters: [CalendarFilterI] = []
 
     if !selectCalendarIds.isEmpty {
-      let scf: CalendarFilterI = CalendarFilter.Select(uuids: selectCalendarIds)
-      filters.append(scf)
+      let f: CalendarFilterI = CalendarFilter.Select(uuids: selectCalendarIds)
+      filters.append(f)
       Log.write("added filter before: selectCalendars(\(selectCalendarIds))")
     }
 
     if !ignoreCalendarIds.isEmpty {
-      let icf: CalendarFilterI = CalendarFilter.Ignore(uuids: ignoreCalendarIds)
-      filters.append(icf)
+      let f: CalendarFilterI = CalendarFilter.Ignore(uuids: ignoreCalendarIds)
+      filters.append(f)
       Log.write("added filter before: ignoreCalendars(\(ignoreCalendarIds))")
     }
 
@@ -191,14 +191,14 @@ enum CalendarFilter {
     }
 
     if !selectCalendarTypes.isEmpty {
-      let sct: CalendarFilterI = CalendarFilter.SelectTypes(types: selectCalendarTypes)
-      filters.append(sct)
+      let f: CalendarFilterI = CalendarFilter.SelectTypes(types: selectCalendarTypes)
+      filters.append(f)
       Log.write("added filter before: selectCalendarTypes(\(selectCalendarTypes))")
     }
 
     if !ignoreCalendarTypes.isEmpty {
-      let ict: CalendarFilterI = CalendarFilter.IgnoreTypes(types: ignoreCalendarTypes)
-      filters.append(ict)
+      let f: CalendarFilterI = CalendarFilter.IgnoreTypes(types: ignoreCalendarTypes)
+      filters.append(f)
       Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
     }
 
