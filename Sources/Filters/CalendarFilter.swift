@@ -55,6 +55,49 @@ enum CalendarFilter {
     }
   }
 
+  class SelectLabels: CalendarFilterI {
+    let labels: [String]
+
+    init(labels: [String]) {
+      self.labels = labels
+    }
+
+    func accept(_ calendar: PlanCalendar?) -> Bool {
+      // if no selection, allow everything
+      if labels.isEmpty {
+        return true
+      }
+      // if event has no valid calendar, don't show
+      if calendar == nil {
+        return false
+      }
+
+      return labels.contains(calendar!.label)
+    }
+  }
+
+  class IgnoreLabels: CalendarFilterI {
+    let labels: [String]
+
+    init(labels: [String]) {
+      self.labels = labels
+    }
+
+    func accept(_ calendar: PlanCalendar?) -> Bool {
+      // if no selection, allow everything
+      if labels.isEmpty {
+        return true
+      }
+
+      // if event has no valid calendar, don't show
+      if calendar == nil {
+        return false
+      }
+
+      return !labels.contains(calendar!.source)
+    }
+  }
+
   class SelectSources: CalendarFilterI {
     let sources: [String]
 

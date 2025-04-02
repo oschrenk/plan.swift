@@ -44,6 +44,38 @@ import Testing
     #expect(actual == expected, "The calendar was not accepted")
   }
 
+  @Test func testSelectCalendarLabelMatching() {
+    let calendar = PlanCalendar.generate()
+    let expected = true
+    let actual = CalendarFilter.SelectLabels(labels: [calendar.label]).accept(calendar)
+
+    #expect(actual == expected, "The calendar was not accepted")
+  }
+
+  @Test func testSelectCalendarLabelsEmptyArray() {
+    let calendar = PlanCalendar.generate()
+    let expected = true
+    let actual = CalendarFilter.SelectLabels(labels: []).accept(calendar)
+
+    #expect(actual == expected, "The calendar was not accepted")
+  }
+
+  @Test func testIgnoreCalendarLabelMatching() {
+    let calendar = PlanCalendar.generate()
+    let expected = false
+    let actual = CalendarFilter.IgnoreLabels(labels: [calendar.label]).accept(calendar)
+
+    #expect(actual == expected, "The calendar was accepted")
+  }
+
+  @Test func testIgnoreCalendarLabelsEmptyArray() {
+    let calendar = PlanCalendar.generate()
+    let expected = true
+    let actual = CalendarFilter.IgnoreLabels(labels: []).accept(calendar)
+
+    #expect(actual == expected, "The calendar was not accepted")
+  }
+
   @Test func testIgnoreCalendarSourcesMatching() {
     let source = "Personal"
     let calendar = PlanCalendar.generate(source: source)
