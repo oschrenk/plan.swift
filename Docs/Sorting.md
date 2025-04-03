@@ -19,7 +19,7 @@ Most fields of the JSON can be used for sorting
 - `calendar.label`
 - `calendar.color`
 - `title.full`
-- `title.description`
+- `title.label`
 - `title.icon`
 - `schedule.start.at`
 - `schedule.start.in`

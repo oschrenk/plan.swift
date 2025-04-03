@@ -34,7 +34,7 @@
         "full": {
           "type": "string"
         },
-        "description": {
+        "label": {
           "type": "string"
         },
         "icon": {
@@ -43,7 +43,7 @@
       },
       "required": [
         "full",
-        "description",
+        "label",
         "icon"
       ]
     },

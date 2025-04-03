@@ -38,7 +38,7 @@ Example output in JSON
     },
     "title": {
       "full": "🏆 Release plan",
-      "description": "Release plan",
+      "label": "Release plan",
       "icon": "🏆"
     },
     "schedule": {

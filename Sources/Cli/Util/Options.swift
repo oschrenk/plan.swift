@@ -148,7 +148,7 @@ class Sorting {
     "calendar.label", // String
     "calendar.color", // String
     "title.full", // String
-    "title.description", // String
+    "title.label", // String
     "title.icon", // String
     "schedule.start.at", // Date
     "schedule.start.in", // Int
