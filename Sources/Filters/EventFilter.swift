@@ -1,5 +1,5 @@
 /// Filter events based on various criteria
-protocol EventFilterI {
+protocol EventFilterI: CustomStringConvertible {
   func accept(_ event: Event) -> Bool
 }
 
@@ -9,17 +9,29 @@ enum EventFilter {
     func accept(_: Event) -> Bool {
       return true
     }
+
+    var description: String {
+      return "EventFilter.Accept()"
+    }
   }
 
   class IgnoreAllDay: EventFilterI {
     func accept(_ event: Event) -> Bool {
       return !event.schedule.allDay
     }
+
+    var description: String {
+      return "EventFilter.IgnoreAllDay()"
+    }
   }
 
   class SelectAllDay: EventFilterI {
     func accept(_ event: Event) -> Bool {
       return event.schedule.allDay
+    }
+
+    var description: String {
+      return "EventFilter.SelectAllDay()"
     }
   }
 
@@ -37,6 +49,10 @@ enum EventFilter {
         true
       }
     }
+
+    var description: String {
+      return "EventFilter.IgnorePatternTitle(\(pattern))"
+    }
   }
 
   class SelectPatternTitle: EventFilterI {
@@ -53,6 +69,10 @@ enum EventFilter {
         false
       }
     }
+
+    var description: String {
+      return "EventFilter.SelectPatternTitle(\(pattern))"
+    }
   }
 
   class MinNumAttendees: EventFilterI {
@@ -64,6 +84,10 @@ enum EventFilter {
 
     func accept(_ event: Event) -> Bool {
       return event.meeting.attendees.count >= count
+    }
+
+    var description: String {
+      return "EventFilter.MinNumAttendees(\(count))"
     }
   }
 
@@ -77,6 +101,10 @@ enum EventFilter {
     func accept(_ event: Event) -> Bool {
       return event.meeting.attendees.count <= count
     }
+
+    var description: String {
+      return "EventFilter.MaxNumAttendees(\(count))"
+    }
   }
 
   class MinDuration: EventFilterI {
@@ -89,6 +117,10 @@ enum EventFilter {
     func accept(_ event: Event) -> Bool {
       return event.schedule.duration >= minutes
     }
+
+    var description: String {
+      return "EventFilter.MinDuration(\(minutes))"
+    }
   }
 
   class MaxDuration: EventFilterI {
@@ -100,6 +132,10 @@ enum EventFilter {
 
     func accept(_ event: Event) -> Bool {
       return event.schedule.duration <= minutes
+    }
+
+    var description: String {
+      return "EventFilter.MaxDuration(\(minutes))"
     }
   }
 
@@ -119,6 +155,10 @@ enum EventFilter {
 
       return !hasMatchingTag
     }
+
+    var description: String {
+      return "EventFilter.IgnoreTags(\(tags))"
+    }
   }
 
   class SelectTags: EventFilterI {
@@ -137,6 +177,10 @@ enum EventFilter {
 
       return hasMatchingTag
     }
+
+    var description: String {
+      return "EventFilter.SelectTags(\(tags))"
+    }
   }
 
   class Combined: EventFilterI {
@@ -149,6 +193,10 @@ enum EventFilter {
     func accept(_ event: Event) -> Bool {
       return filters.allSatisfy { $0.accept(event) }
     }
+
+    var description: String {
+      return "EventFilter.Combined(\(filters))"
+    }
   }
 
   // swiftlint:disable:next function_body_length
@@ -160,61 +208,61 @@ enum EventFilter {
     if opts.ignoreAllDayEvents {
       let f: EventFilterI = EventFilter.IgnoreAllDay()
       filters.append(f)
-      Log.write("added event filter: ignoreAllDay")
+      Log.write("added \(f)")
     }
 
     if opts.selectAllDayEvents {
       let f: EventFilterI = EventFilter.SelectAllDay()
       filters.append(f)
-      Log.write("added event filter: selectAllDay")
+      Log.write("added \(f)")
     }
 
     if !opts.ignorePatternTitle.isEmpty {
       let f: EventFilterI = EventFilter.IgnorePatternTitle(pattern: opts.ignorePatternTitle)
       filters.append(f)
-      Log.write("added filter after: ignorePatternTitle(\(opts.ignorePatternTitle))")
+      Log.write("added \(f)")
     }
 
     if !opts.selectPatternTitle.isEmpty {
       let f: EventFilterI = EventFilter.SelectPatternTitle(pattern: opts.selectPatternTitle)
       filters.append(f)
-      Log.write("added filter after: selectPatternTitle(\(opts.selectPatternTitle))")
+      Log.write("added \(f)")
     }
 
     if !opts.ignoreTags.isEmpty {
       let f: EventFilterI = EventFilter.IgnoreTags(tags: opts.ignoreTags)
       filters.append(f)
-      Log.write("added filter after: ignoreTags(\(opts.ignoreTags))")
+      Log.write("added \(f)")
     }
 
     if !opts.selectTags.isEmpty {
       let f: EventFilterI = EventFilter.SelectTags(tags: opts.selectTags)
       filters.append(f)
-      Log.write("added filter after: selectTags(\(opts.selectTags))")
+      Log.write("added \(f)")
     }
 
     if opts.minNumAttendees ?? -1 >= 0 {
       let f: EventFilterI = EventFilter.MinNumAttendees(count: opts.minNumAttendees!)
       filters.append(f)
-      Log.write("added filter after: minNumAttendees(\(opts.minNumAttendees!))")
+      Log.write("added \(f)")
     }
 
     if opts.maxNumAttendees ?? -1 >= 0 {
       let f: EventFilterI = EventFilter.MaxNumAttendees(count: opts.maxNumAttendees!)
       filters.append(f)
-      Log.write("added filter after: maxNumAttendees(\(opts.maxNumAttendees!))")
+      Log.write("added \(f)")
     }
 
     if opts.minDuration ?? -1 >= 0 {
       let f: EventFilterI = EventFilter.MinDuration(minutes: opts.minDuration!)
       filters.append(f)
-      Log.write("added filter after: minDuration(\(opts.minDuration!))")
+      Log.write("added \(f)")
     }
 
     if opts.maxDuration ?? -1 >= 0 {
       let f: EventFilterI = EventFilter.MaxDuration(minutes: opts.maxDuration!)
       filters.append(f)
-      Log.write("added filter after: maxDuration(\(opts.maxDuration!))")
+      Log.write("added \(f)")
     }
 
     let final: EventFilterI = filters.isEmpty ?
