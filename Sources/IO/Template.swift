@@ -34,6 +34,16 @@ class Template {
       return value
     }
 
+    // extension `<String>|slugify`
+    // transforms a string into a slug
+    ext.registerFilter("slugify") { (value: Any?, _: [Any?]) in
+      if let value = value as? String {
+        return value.slugify()
+      }
+
+      return value
+    }
+
     let context = ["events": events]
     let environment = Environment(
       loader: DictionaryLoader(templates: ["default": template]),

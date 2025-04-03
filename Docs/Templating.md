@@ -34,6 +34,7 @@ This is mostly standard [Stencil](https://stencil.fuller.li/en/latest/) templati
 You have access to
 - an `events` array
 - a custom `format` filter for date/time formatting (see cheatsheet [here](https://www.advancedswift.com/date-formatter-cheatsheet-formulas-swift/))
+- a custom `slugify` filter to create a url friendly version of it
 
 It assumes:
 - that your calendar names are without spaces

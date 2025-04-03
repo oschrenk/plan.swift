@@ -12,3 +12,8 @@ This project uses parts of the Apache licensed [MeetingBar](https://github.com/l
 This project has copies/variations of the [regular expressions](https://github.com/leits/MeetingBar/blob/b4af1de5d0d490c2a69c29024843995211865977/MeetingBar/MeetingServices.swift#L264) to identify services.
 
 See their license [here](https://github.com/leits/MeetingBar/blob/master/LICENSE)
+## dirtyhenry/swift-blocks
+
+This project uses parts of the MIT licensed [dirtyhenry/swift-blocks](https://github.com/dirtyhenry/swift-blocks) project.
+
+In particular the method to slugify a string, see [here](about)
