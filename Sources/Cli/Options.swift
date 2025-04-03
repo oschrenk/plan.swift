@@ -20,6 +20,16 @@ struct CalendarOptions: ParsableArguments {
   )) var ignoreCalendarIds: [String] = []
 
   @Option(help: ArgumentHelp(
+    "Select calendar(s) with label <v>. A comma separated list of calendar labels",
+    valueName: "v"
+  )) var selectCalendarLabels: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Ignore calendar(s) with label <v>. A comma separated list of calendar labels",
+    valueName: "v"
+  )) var ignoreCalendarLabels: [String] = []
+
+  @Option(help: ArgumentHelp(
     "Select calendar sources <s>. A comma separated list of calendar sources",
     valueName: "s"
   )) var selectCalendarSources: [String] = []
