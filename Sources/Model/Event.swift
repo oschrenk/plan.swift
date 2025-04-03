@@ -87,7 +87,8 @@ struct Event: Codable, ReverseCodable, Equatable {
     attendees: [String] = [],
     now: Date = Date(),
     startDate: Date = Date(),
-    endDate: Date = Date()
+    endDate: Date = Date(),
+    services: [String: String] = [:]
   ) -> Event {
     let cal = PlanCalendar.Unknown
     let title = Title(text: title)
@@ -99,7 +100,6 @@ struct Event: Codable, ReverseCodable, Equatable {
     )
     let location = ""
     let meeting = Meeting(organizer: "", attendees: attendees)
-    let services: [String: String] = [:]
 
     return Event(
       id: id,

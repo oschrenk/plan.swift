@@ -179,6 +179,42 @@ enum EventFilter {
     }
   }
 
+  class IgnoreServices: EventFilterI {
+    let services: [String]
+
+    init(services: [String]) {
+      self.services = services
+    }
+
+    func accept(_ event: Event) -> Bool {
+      let intersection = Set(services).intersection(Set(event.services.keys))
+      let hasMatchingService = !intersection.isEmpty
+      return !hasMatchingService
+    }
+
+    var description: String {
+      return "EventFilter.IgnoreServices(\(services))"
+    }
+  }
+
+  class SelectServices: EventFilterI {
+    let services: [String]
+
+    init(services: [String]) {
+      self.services = services
+    }
+
+    func accept(_ event: Event) -> Bool {
+      let intersection = Set(services).intersection(Set(event.services.keys))
+      let hasMatchingService = !intersection.isEmpty
+      return hasMatchingService
+    }
+
+    var description: String {
+      return "EventFilter.SelectServices(\(services))"
+    }
+  }
+
   class Combined: EventFilterI {
     let filters: [EventFilterI]
 
@@ -195,6 +231,9 @@ enum EventFilter {
     }
   }
 
+  // ignoring cyclomatic_complexity, since they are
+  // required checks and just add filters
+  // swiftlint:disable:next cyclomatic_complexity
   static func build(
     opts: EventOptions
   ) -> (EventFilterI) {
@@ -227,6 +266,14 @@ enum EventFilter {
 
     if !opts.selectTags.isEmpty {
       add(EventFilter.SelectTags(tags: opts.selectTags))
+    }
+
+    if !opts.ignoreServices.isEmpty {
+      add(EventFilter.IgnoreServices(services: opts.ignoreServices))
+    }
+
+    if !opts.selectServices.isEmpty {
+      add(EventFilter.SelectServices(services: opts.selectServices))
     }
 
     if opts.minNumAttendees ?? -1 >= 0 {

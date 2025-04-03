@@ -43,6 +43,38 @@ import Testing
     #expect(actual == expected)
   }
 
+  @Test func testIgnoreServicesNoServices() {
+    let event = Event.generate()
+    let expected = true
+    let actual = EventFilter.IgnoreServices(services: []).accept(event)
+
+    #expect(actual == expected)
+  }
+
+  @Test func testIgnoreServiceMatchingService() {
+    let event = Event.generate(services: ["zoom": "example"])
+    let expected = false
+    let actual = EventFilter.IgnoreServices(services: ["zoom"]).accept(event)
+
+    #expect(actual == expected)
+  }
+
+  @Test func testIgnoreServiceNotMatchingServices() {
+    let event = Event.generate(services: ["zoom": "example"])
+    let expected = true
+    let actual = EventFilter.IgnoreServices(services: ["teams"]).accept(event)
+
+    #expect(actual == expected)
+  }
+
+  @Test func testSelectServicesMatchingServices() {
+    let event = Event.generate(services: ["zoom": "example"])
+    let expected = true
+    let actual = EventFilter.SelectServices(services: ["zoom"]).accept(event)
+
+    #expect(actual == expected)
+  }
+
   @Test func testIgnoreAnAllDayEvent() {
     let event = Event.generate(allDay: true)
     let expected = false

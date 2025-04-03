@@ -86,6 +86,18 @@ struct EventOptions: ParsableArguments {
   )) var selectTags: [String] = []
 
   @Option(help: ArgumentHelp(
+    "Ignore events which services contain the service <s> " +
+      "A comma separated list of services",
+    valueName: "s"
+  )) var ignoreServices: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Select events which services contain the service <s> " +
+      "A comma separated list of services",
+    valueName: "s"
+  )) var selectServices: [String] = []
+
+  @Option(help: ArgumentHelp(
     "Minimum (inclusive) number <n> of attendees",
     valueName: "n"
   )) var minNumAttendees: Int?
