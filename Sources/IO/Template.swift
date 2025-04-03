@@ -13,6 +13,12 @@ class Template {
 
   func render(events: [Event]) -> String? {
     let ext = Extension()
+    // extension `<Date>|format:""`
+    // with format being date format eg:
+    //   yyyy: Represents the four-digit year.
+    //   MM: Represents two-digit month.
+    //   dd: Represents two-digit day.
+    //   HH: Represents two-digit hour in 24-hour format.
     ext.registerFilter("format") { (value: Any?, arguments: [Any?]) in
       guard let format = arguments.first as? String else {
         throw TemplateSyntaxError("Not a valid format")
