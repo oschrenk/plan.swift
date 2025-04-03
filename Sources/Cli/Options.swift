@@ -66,12 +66,12 @@ struct EventOptions: ParsableArguments {
   @Option(help: ArgumentHelp(
     "Ignore titles matching the given pattern <p>",
     valueName: "p"
-  )) var ignorePatternTitle: String = ""
+  )) var ignoreTitle: String = ""
 
   @Option(help: ArgumentHelp(
     "Select titles matching the given pattern <p>",
     valueName: "p"
-  )) var selectPatternTitle: String = ""
+  )) var selectTitle: String = ""
 
   @Option(help: ArgumentHelp(
     "Ignore events which notes contain the tag <t> " +

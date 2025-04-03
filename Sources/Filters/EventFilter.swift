@@ -35,7 +35,7 @@ enum EventFilter {
     }
   }
 
-  class IgnorePatternTitle: EventFilterI {
+  class IgnoreTitle: EventFilterI {
     let pattern: String
 
     init(pattern: String) {
@@ -51,11 +51,11 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.IgnorePatternTitle(\(pattern))"
+      return "EventFilter.IgnoreTitle(\(pattern))"
     }
   }
 
-  class SelectPatternTitle: EventFilterI {
+  class SelectTitle: EventFilterI {
     let pattern: String
 
     init(pattern: String) {
@@ -71,7 +71,7 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.SelectPatternTitle(\(pattern))"
+      return "EventFilter.SelectTitle(\(pattern))"
     }
   }
 
@@ -213,12 +213,12 @@ enum EventFilter {
       add(EventFilter.SelectAllDay())
     }
 
-    if !opts.ignorePatternTitle.isEmpty {
-      add(EventFilter.IgnorePatternTitle(pattern: opts.ignorePatternTitle))
+    if !opts.ignoreTitle.isEmpty {
+      add(EventFilter.IgnoreTitle(pattern: opts.ignoreTitle))
     }
 
-    if !opts.selectPatternTitle.isEmpty {
-      add(EventFilter.SelectPatternTitle(pattern: opts.selectPatternTitle))
+    if !opts.selectTitle.isEmpty {
+      add(EventFilter.SelectTitle(pattern: opts.selectTitle))
     }
 
     if !opts.ignoreTags.isEmpty {

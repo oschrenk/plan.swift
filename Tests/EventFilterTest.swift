@@ -70,7 +70,7 @@ import Testing
   @Test func testIgnoringEventMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = false
-    let actual = EventFilter.IgnorePatternTitle(pattern: "foo").accept(event)
+    let actual = EventFilter.IgnoreTitle(pattern: "foo").accept(event)
 
     #expect(actual == expected)
   }
@@ -78,7 +78,7 @@ import Testing
   @Test func testNotSelectingEventNotMatchingTitle() {
     let event = Event.generate(title: "Development standup")
     let expected = false
-    let actual = EventFilter.SelectPatternTitle(pattern: "foo").accept(event)
+    let actual = EventFilter.SelectTitle(pattern: "foo").accept(event)
 
     #expect(actual == expected)
   }
@@ -86,7 +86,7 @@ import Testing
   @Test func testAcceptingEventNotMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = true
-    let actual = EventFilter.IgnorePatternTitle(pattern: "bar").accept(event)
+    let actual = EventFilter.IgnoreTitle(pattern: "bar").accept(event)
 
     #expect(actual == expected)
   }
