@@ -27,12 +27,7 @@ struct Calendars: ParsableCommand {
     Log.setDebug(debug)
 
     let calendarFilter = CalendarFilter.build(
-      selectCalendarIds: opts.selectCalendarIds,
-      ignoreCalendarIds: opts.ignoreCalendarIds,
-      selectCalendarSources: opts.selectCalendarSources,
-      ignoreCalendarSources: opts.ignoreCalendarSources,
-      selectCalendarTypes: opts.selectCalendarTypes,
-      ignoreCalendarTypes: opts.ignoreCalendarTypes
+      opts: opts
     )
 
     let service = EventService(repo: EventRepo())

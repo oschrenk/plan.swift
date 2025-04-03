@@ -200,49 +200,44 @@ enum CalendarFilter {
   }
 
   static func build(
-    selectCalendarIds: [String] = [],
-    ignoreCalendarIds: [String] = [],
-    selectCalendarSources: [String] = [],
-    ignoreCalendarSources: [String] = [],
-    selectCalendarTypes: [EKCalendarType] = [],
-    ignoreCalendarTypes: [EKCalendarType] = []
+    opts: CalendarOptions
   ) -> CalendarFilterI {
     var filters: [CalendarFilterI] = []
 
-    if !selectCalendarIds.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.SelectIds(uuids: selectCalendarIds)
+    if !opts.selectCalendarIds.isEmpty {
+      let f: CalendarFilterI = CalendarFilter.SelectIds(uuids: opts.selectCalendarIds)
       filters.append(f)
-      Log.write("added filter before: selectCalendars(\(selectCalendarIds))")
+      Log.write("added filter before: selectCalendars(\(opts.selectCalendarIds))")
     }
 
-    if !ignoreCalendarIds.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.IgnoreIds(uuids: ignoreCalendarIds)
+    if !opts.ignoreCalendarIds.isEmpty {
+      let f: CalendarFilterI = CalendarFilter.IgnoreIds(uuids: opts.ignoreCalendarIds)
       filters.append(f)
-      Log.write("added filter before: ignoreCalendars(\(ignoreCalendarIds))")
+      Log.write("added filter before: ignoreCalendars(\(opts.ignoreCalendarIds))")
     }
 
-    if !selectCalendarSources.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.SelectSources(sources: selectCalendarSources)
+    if !opts.selectCalendarSources.isEmpty {
+      let f: CalendarFilterI = CalendarFilter.SelectSources(sources: opts.selectCalendarSources)
       filters.append(f)
-      Log.write("added filter before: selectSources(\(selectCalendarSources))")
+      Log.write("added filter before: selectSources(\(opts.selectCalendarSources))")
     }
 
-    if !ignoreCalendarSources.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.IgnoreSources(sources: ignoreCalendarSources)
+    if !opts.ignoreCalendarSources.isEmpty {
+      let f: CalendarFilterI = CalendarFilter.IgnoreSources(sources: opts.ignoreCalendarSources)
       filters.append(f)
-      Log.write("added filter before: ignoreSources(\(ignoreCalendarSources))")
+      Log.write("added filter before: ignoreSources(\(opts.ignoreCalendarSources))")
     }
 
-    if !selectCalendarTypes.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.SelectTypes(types: selectCalendarTypes)
+    if !opts.selectCalendarTypes.isEmpty {
+      let f: CalendarFilterI = CalendarFilter.SelectTypes(types: opts.selectCalendarTypes)
       filters.append(f)
-      Log.write("added filter before: selectCalendarTypes(\(selectCalendarTypes))")
+      Log.write("added filter before: selectCalendarTypes(\(opts.selectCalendarTypes))")
     }
 
-    if !ignoreCalendarTypes.isEmpty {
-      let f: CalendarFilterI = CalendarFilter.IgnoreTypes(types: ignoreCalendarTypes)
+    if !opts.ignoreCalendarTypes.isEmpty {
+      let f: CalendarFilterI = CalendarFilter.IgnoreTypes(types: opts.ignoreCalendarTypes)
       filters.append(f)
-      Log.write("added filter before: ignoreCalendarTypes(\(ignoreCalendarTypes))")
+      Log.write("added filter before: ignoreCalendarTypes(\(opts.ignoreCalendarTypes))")
     }
 
     return filters.isEmpty ?
