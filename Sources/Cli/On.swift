@@ -16,10 +16,10 @@ struct On: ParsableCommand {
   var calendar: CalendarOptions
 
   @OptionGroup
-  var general: Options
+  var eventOptions: EventOptions
 
   @OptionGroup
-  var eventOptions: EventOptions
+  var general: Options
 
   @Argument(help: "Date expression")
   var expression: String

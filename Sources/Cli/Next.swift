@@ -12,13 +12,13 @@ struct Next: ParsableCommand {
   )
 
   @OptionGroup
-  var general: Options
+  var calendar: CalendarOptions
 
   @OptionGroup
   var eventOptions: EventOptions
 
   @OptionGroup
-  var calendar: CalendarOptions
+  var general: Options
 
   @Option(help: ArgumentHelp(
     "Fetch events within <m> minutes",
