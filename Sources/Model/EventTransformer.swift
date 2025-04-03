@@ -16,7 +16,11 @@ class EventTransformer {
     for rule in rules where event.title.label.range(
       of: rule.regex, options: .regularExpression
     ) != nil {
-      return event |> (Event.titleLens * Title.iconLens) *~ rule.icon
+      let withIcon = event
+        |> (Event.titleLens * Title.iconLens) *~ rule.icon
+      let withFull = withIcon
+        |> (Event.titleLens * Title.fullLens) *~ "\(rule.icon) \(event.title.full)"
+      return withFull
     }
     return event
   }

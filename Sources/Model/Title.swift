@@ -89,4 +89,13 @@ extension Title {
       icon: icon
     ) }
   )
+
+  static let fullLens = Lens<Title, String>(
+    get: { title in title.full },
+    set: { full, title in Title(
+      full: full,
+      label: title.label,
+      icon: title.icon
+    ) }
+  )
 }
