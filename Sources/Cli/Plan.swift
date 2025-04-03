@@ -5,7 +5,7 @@ class Plan {
   func events(
     start: Date,
     end: Date,
-    opts: SharedOptions,
+    opts: Options,
     selector: EventSelectorI,
     transformer: EventTransformer
   ) -> [Event] {

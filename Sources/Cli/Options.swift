@@ -2,8 +2,8 @@ import ArgumentParser
 import EventKit
 import Foundation
 
-/// Shared arguments between `today` and `next` subcommands.
-struct SharedOptions: ParsableArguments {
+/// Shared options
+struct Options: ParsableArguments {
   @Flag(help: ArgumentHelp(
     "Ignore all day events"
   ))

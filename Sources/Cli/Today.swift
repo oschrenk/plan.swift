@@ -10,7 +10,7 @@ struct Today: ParsableCommand {
   )
 
   @OptionGroup
-  var opts: SharedOptions
+  var opts: Options
 
   mutating func run() {
     let today = FCalendar.current.startOfDay(for: Date())

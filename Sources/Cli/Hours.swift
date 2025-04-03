@@ -11,7 +11,7 @@ struct Hours: ParsableCommand {
   )
 
   @OptionGroup
-  var opts: SharedOptions
+  var opts: Options
 
   @Argument(help: "Date expression")
   var expression: String

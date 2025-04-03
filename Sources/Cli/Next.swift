@@ -12,7 +12,7 @@ struct Next: ParsableCommand {
   )
 
   @OptionGroup
-  var opts: SharedOptions
+  var opts: Options
 
   @Option(help: ArgumentHelp(
     "Fetch events within <m> minutes",
