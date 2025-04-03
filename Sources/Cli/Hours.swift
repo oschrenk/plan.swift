@@ -23,12 +23,11 @@ struct Hours: ParsableCommand {
   var expression: String
 
   mutating func run() throws {
-    let parser = DateParser(rules: EN.all + Common.all)
     var userDate: Date
-    do {
-      let result = try parser.parse(text: expression, base: Date())
-      userDate = result.date
-    } catch {
+    if let date = DateArgument.parse(s: expression) {
+      userDate = date
+    } else {
+      // try natural date parsing
       StdErr.print("Can't parse date")
       throw ExitCode.failure
     }
