@@ -21,12 +21,12 @@ struct Calendars: ParsableCommand {
   )) var format: CalendarFormat = .json
 
   @Option(help: ArgumentHelp(
-    "Select calendars <v>. A comma separated list of calendar UUIDs",
+    "Select calendar(s) with id <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
   )) var selectCalendarIds: [String] = []
 
   @Option(help: ArgumentHelp(
-    "Ignore calendars <v>. A comma separated list of calendar UUIDs",
+    "Ignore calendar(s) with id <v>. A comma separated list of calendar UUIDs",
     valueName: "v"
   )) var ignoreCalendarIds: [String] = []
 
