@@ -7,7 +7,7 @@ import when
 /// List spent/planned hours
 struct Hours: ParsableCommand {
   static var configuration = CommandConfiguration(
-    abstract: "List spent/planned hours"
+    abstract: "List hours per event on ..."
   )
 
   @OptionGroup
@@ -19,7 +19,7 @@ struct Hours: ParsableCommand {
   @OptionGroup
   var general: Options
 
-  @Argument(help: "Date expression")
+  @Argument(help: "Date expression eg. \"2025-04-03\" or \"last tuesday\"")
   var expression: String
 
   mutating func run() throws {

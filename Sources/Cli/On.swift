@@ -21,7 +21,7 @@ struct On: ParsableCommand {
   @OptionGroup
   var general: Options
 
-  @Argument(help: "Date expression")
+  @Argument(help: "Date expression eg. \"2025-04-03\" or \"last tuesday\"")
   var expression: String
 
   mutating func run() throws {
