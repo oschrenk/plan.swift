@@ -151,79 +151,70 @@ enum EventFilter {
     }
   }
 
-  // swiftlint:disable:next function_parameter_count function_body_length
+  // swiftlint:disable:next function_body_length
   static func build(
-    ignoreAllDay: Bool,
-    selectAllDay: Bool,
-    ignorePatternTitle: String,
-    selectPatternTitle: String,
-    ignoreTags: [String],
-    selectTags: [String],
-    minNumAttendees: Int?,
-    maxNumAttendees: Int?,
-    minDuration: Int?,
-    maxDuration: Int?
+    opts: EventOptions
   ) -> (EventFilterI) {
     var filters: [EventFilterI] = []
 
-    if ignoreAllDay {
+    if opts.ignoreAllDayEvents {
       let iad: EventFilterI = EventFilter.IgnoreAllDay()
       filters.append(iad)
       Log.write("added event filter: ignoreAllDay")
     }
 
-    if selectAllDay {
+    if opts.selectAllDayEvents {
       let sad: EventFilterI = EventFilter.SelectAllDay()
       filters.append(sad)
       Log.write("added event filter: selectAllDay")
     }
 
-    if !ignorePatternTitle.isEmpty {
-      let ipt: EventFilterI = EventFilter.IgnorePatternTitle(pattern: ignorePatternTitle)
+    if !opts.ignorePatternTitle.isEmpty {
+      let ipt: EventFilterI = EventFilter.IgnorePatternTitle(pattern: opts.ignorePatternTitle)
       filters.append(ipt)
-      Log.write("added filter after: ignorePatternTitle(\(ignorePatternTitle))")
+      Log.write("added filter after: ignorePatternTitle(\(opts.ignorePatternTitle))")
     }
 
-    if !selectPatternTitle.isEmpty {
-      let spt: EventFilterI = EventFilter.SelectPatternTitle(pattern: selectPatternTitle)
+    if !opts.selectPatternTitle.isEmpty {
+      let spt: EventFilterI = EventFilter.SelectPatternTitle(pattern: opts.selectPatternTitle)
       filters.append(spt)
-      Log.write("added filter after: selectPatternTitle(\(selectPatternTitle))")
+      Log.write("added filter after: selectPatternTitle(\(opts.selectPatternTitle))")
     }
 
-    if !ignoreTags.isEmpty {
-      let rtf: EventFilterI = EventFilter.IgnoreTags(tags: ignoreTags)
+    if !opts.ignoreTags.isEmpty {
+      let rtf: EventFilterI = EventFilter.IgnoreTags(tags: opts.ignoreTags)
       filters.append(rtf)
-      Log.write("added filter after: ignoreTags(\(ignoreTags))")
+      Log.write("added filter after: ignoreTags(\(opts.ignoreTags))")
     }
 
-    if !selectTags.isEmpty {
-      let stf: EventFilterI = EventFilter.SelectTags(tags: selectTags)
+    if !opts.selectTags.isEmpty {
+      let stf: EventFilterI = EventFilter.SelectTags(tags: opts.selectTags)
       filters.append(stf)
-      Log.write("added filter after: selectTags(\(selectTags))")
+      Log.write("added filter after: selectTags(\(opts.selectTags))")
     }
 
-    if minNumAttendees ?? -1 >= 0 {
-      let mina: EventFilterI = EventFilter.MinNumAttendees(count: minNumAttendees!)
+    if opts.minNumAttendees ?? -1 >= 0 {
+      let mina: EventFilterI = EventFilter.MinNumAttendees(count: opts.minNumAttendees!)
       filters.append(mina)
-      Log.write("added filter after: minNumAttendees(\(minNumAttendees!))")
+      Log.write("added filter after: minNumAttendees(\(opts.minNumAttendees!))")
     }
 
-    if maxNumAttendees ?? -1 >= 0 {
-      let maxa: EventFilterI = EventFilter.MaxNumAttendees(count: maxNumAttendees!)
+    if opts.maxNumAttendees ?? -1 >= 0 {
+      let maxa: EventFilterI = EventFilter.MaxNumAttendees(count: opts.maxNumAttendees!)
       filters.append(maxa)
-      Log.write("added filter after: maxNumAttendees(\(maxNumAttendees!))")
+      Log.write("added filter after: maxNumAttendees(\(opts.maxNumAttendees!))")
     }
 
-    if minDuration ?? -1 >= 0 {
-      let mind: EventFilterI = EventFilter.MinDuration(minutes: minDuration!)
+    if opts.minDuration ?? -1 >= 0 {
+      let mind: EventFilterI = EventFilter.MinDuration(minutes: opts.minDuration!)
       filters.append(mind)
-      Log.write("added filter after: minDuration(\(minDuration!))")
+      Log.write("added filter after: minDuration(\(opts.minDuration!))")
     }
 
-    if maxDuration ?? -1 >= 0 {
-      let maxd: EventFilterI = EventFilter.MaxDuration(minutes: maxDuration!)
+    if opts.maxDuration ?? -1 >= 0 {
+      let maxd: EventFilterI = EventFilter.MaxDuration(minutes: opts.maxDuration!)
       filters.append(maxd)
-      Log.write("added filter after: maxDuration(\(maxDuration!))")
+      Log.write("added filter after: maxDuration(\(opts.maxDuration!))")
     }
 
     let final: EventFilterI = filters.isEmpty ?

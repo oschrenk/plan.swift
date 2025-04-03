@@ -11,30 +11,17 @@ class Plan {
   ) -> [Event] {
     Log.setDebug(opts.general.debug)
 
-    let calendarFilter = CalendarFilter.build(
-      opts: opts.calendar
-    )
-    let eventFilter = EventFilter.build(
-      ignoreAllDay: opts.events.ignoreAllDayEvents,
-      selectAllDay: opts.events.selectAllDayEvents,
-      ignorePatternTitle: opts.events.ignorePatternTitle,
-      selectPatternTitle: opts.events.selectPatternTitle,
-      ignoreTags: opts.events.ignoreTags,
-      selectTags: opts.events.selectTags,
-      minNumAttendees: opts.events.minNumAttendees,
-      maxNumAttendees: opts.events.maxNumAttendees,
-      minDuration: opts.events.minDuration,
-      maxDuration: opts.events.maxDuration
-    )
-
-    let service = EventService(repo: EventRepo())
-
-    let unsortedEvents = service.fetch(
-      start: start,
-      end: end,
-      calendarFilter: calendarFilter,
-      eventFilter: eventFilter
-    )
+    let unsortedEvents = EventService(repo: EventRepo())
+      .fetch(
+        start: start,
+        end: end,
+        calendarFilter: CalendarFilter.build(
+          opts: opts.calendar
+        ),
+        eventFilter: EventFilter.build(
+          opts: opts.events
+        )
+      )
 
     return selector
       .select(events: unsortedEvents)
