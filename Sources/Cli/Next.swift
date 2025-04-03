@@ -15,6 +15,9 @@ struct Next: ParsableCommand {
   var general: Options
 
   @OptionGroup
+  var eventOptions: EventOptions
+
+  @OptionGroup
   var calendar: CalendarOptions
 
   @Option(help: ArgumentHelp(
@@ -27,6 +30,8 @@ struct Next: ParsableCommand {
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
 
+    let opts = AllOptions(calendar: calendar, events: eventOptions, general: general)
+
     let orders = general.sortBy.isEmpty ? [Order.Default] : general.sortBy
 
     let eventSelector = EventSelector.Combined(selectors: [
@@ -38,7 +43,7 @@ struct Next: ParsableCommand {
     )
 
     let events = Plan().events(
-      start: start, end: end, opts: AllOptions(calendar: calendar, general: general),
+      start: start, end: end, opts: opts,
       selector: eventSelector,
       transformer: EventTransformer(rules: Loader.readConfig()?.iconize ?? [])
     )

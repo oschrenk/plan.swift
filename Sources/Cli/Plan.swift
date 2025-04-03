@@ -20,16 +20,16 @@ class Plan {
       ignoreCalendarTypes: opts.calendar.ignoreCalendarTypes
     )
     let eventFilter = EventFilter.build(
-      ignoreAllDay: opts.general.ignoreAllDayEvents,
-      selectAllDay: opts.general.selectAllDayEvents,
-      ignorePatternTitle: opts.general.ignorePatternTitle,
-      selectPatternTitle: opts.general.selectPatternTitle,
-      ignoreTags: opts.general.ignoreTags,
-      selectTags: opts.general.selectTags,
-      minNumAttendees: opts.general.minNumAttendees,
-      maxNumAttendees: opts.general.maxNumAttendees,
-      minDuration: opts.general.minDuration,
-      maxDuration: opts.general.maxDuration
+      ignoreAllDay: opts.events.ignoreAllDayEvents,
+      selectAllDay: opts.events.selectAllDayEvents,
+      ignorePatternTitle: opts.events.ignorePatternTitle,
+      selectPatternTitle: opts.events.selectPatternTitle,
+      ignoreTags: opts.events.ignoreTags,
+      selectTags: opts.events.selectTags,
+      minNumAttendees: opts.events.minNumAttendees,
+      maxNumAttendees: opts.events.maxNumAttendees,
+      minDuration: opts.events.minDuration,
+      maxDuration: opts.events.maxDuration
     )
 
     let service = EventService(repo: EventRepo())

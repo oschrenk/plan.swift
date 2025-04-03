@@ -4,6 +4,7 @@ import Foundation
 
 struct AllOptions {
   let calendar: CalendarOptions
+  let events: EventOptions
   let general: Options
 }
 
@@ -41,8 +42,7 @@ struct CalendarOptions: ParsableArguments {
   )) var ignoreCalendarTypes: [EKCalendarType] = []
 }
 
-/// Shared options
-struct Options: ParsableArguments {
+struct EventOptions: ParsableArguments {
   @Flag(help: ArgumentHelp(
     "Ignore all day events"
   ))
@@ -94,7 +94,10 @@ struct Options: ParsableArguments {
     "Maximum (inclusive) length <m> (in minutes) of duration",
     valueName: "m"
   )) var maxDuration: Int?
+}
 
+/// Shared options
+struct Options: ParsableArguments {
   @Option(help: ArgumentHelp(
     "Template path <p>",
     valueName: "p"

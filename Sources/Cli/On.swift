@@ -18,6 +18,9 @@ struct On: ParsableCommand {
   @OptionGroup
   var general: Options
 
+  @OptionGroup
+  var eventOptions: EventOptions
+
   @Argument(help: "Date expression")
   var expression: String
 
@@ -36,6 +39,8 @@ struct On: ParsableCommand {
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
 
+    let opts = AllOptions(calendar: calendar, events: eventOptions, general: general)
+
     let orders = general.sortBy.isEmpty ? [Order.Default] : general.sortBy
 
     let eventSelector = EventSelector.Combined(selectors: [
@@ -47,7 +52,7 @@ struct On: ParsableCommand {
     )
 
     let events = Plan().events(
-      start: start, end: end, opts: AllOptions(calendar: calendar, general: general),
+      start: start, end: end, opts: opts,
       selector: eventSelector,
       transformer: EventTransformer(rules: Loader.readConfig()?.iconize ?? [])
     )
