@@ -257,6 +257,13 @@ enum CalendarFilter {
       add(CalendarFilter.IgnoreIds(uuids: opts.ignoreCalendarIds))
     }
 
+    if !opts.selectCalendarLabels.isEmpty {
+      add(CalendarFilter.SelectLabels(labels: opts.selectCalendarLabels))
+    }
+
+    if !opts.ignoreCalendarLabels.isEmpty {
+      add(CalendarFilter.IgnoreLabels(labels: opts.ignoreCalendarLabels))
+    }
     if !opts.selectCalendarSources.isEmpty {
       add(CalendarFilter.SelectSources(sources: opts.selectCalendarSources))
     }
