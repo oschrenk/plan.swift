@@ -2,6 +2,45 @@ import ArgumentParser
 import EventKit
 import Foundation
 
+struct AllOptions {
+  let calendar: CalendarOptions
+  let general: Options
+}
+
+struct CalendarOptions: ParsableArguments {
+  @Option(help: ArgumentHelp(
+    "Select calendar(s) with id <v>. A comma separated list of calendar UUIDs",
+    valueName: "v"
+  )) var selectCalendarIds: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Ignore calendar(s) with id <v>. A comma separated list of calendar UUIDs",
+    valueName: "v"
+  )) var ignoreCalendarIds: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Select calendar sources <s>. A comma separated list of calendar sources",
+    valueName: "s"
+  )) var selectCalendarSources: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Ignore calendar sources <s>. A comma separated list of calendar sources",
+    valueName: "s"
+  )) var ignoreCalendarSources: [String] = []
+
+  @Option(help: ArgumentHelp(
+    "Select calendar types <v>. A comma separated list of calendar types. " +
+      "Available: [local|caldav|exchange|subscription|birthday]",
+    valueName: "v"
+  )) var selectCalendarTypes: [EKCalendarType] = []
+
+  @Option(help: ArgumentHelp(
+    "Ignore calendar types <v>. A comma separated list of calendar types. " +
+      "Available: [local|caldav|exchange|subscription|birthday]",
+    valueName: "v"
+  )) var ignoreCalendarTypes: [EKCalendarType] = []
+}
+
 /// Shared options
 struct Options: ParsableArguments {
   @Flag(help: ArgumentHelp(
@@ -35,38 +74,6 @@ struct Options: ParsableArguments {
       "eg. 'tag:timeblock'. A comma separated list of tags",
     valueName: "t"
   )) var selectTags: [String] = []
-
-  @Option(help: ArgumentHelp(
-    "Select calendar(s) with id <v>. A comma separated list of calendar UUIDs",
-    valueName: "v"
-  )) var selectCalendarIds: [String] = []
-
-  @Option(help: ArgumentHelp(
-    "Ignore calendar(s) with id <v>. A comma separated list of calendar UUIDs",
-    valueName: "v"
-  )) var ignoreCalendarIds: [String] = []
-
-  @Option(help: ArgumentHelp(
-    "Select calendar sources <s>. A comma separated list of calendar sources",
-    valueName: "s"
-  )) var selectCalendarSources: [String] = []
-
-  @Option(help: ArgumentHelp(
-    "Ignore calendar sources <s>. A comma separated list of calendar sources",
-    valueName: "s"
-  )) var ignoreCalendarSources: [String] = []
-
-  @Option(help: ArgumentHelp(
-    "Select calendar types <v>. A comma separated list of calendar types. " +
-      "Available: [local|caldav|exchange|subscription|birthday]",
-    valueName: "v"
-  )) var selectCalendarTypes: [EKCalendarType] = []
-
-  @Option(help: ArgumentHelp(
-    "Ignore calendar types <v>. A comma separated list of calendar types. " +
-      "Available: [local|caldav|exchange|subscription|birthday]",
-    valueName: "v"
-  )) var ignoreCalendarTypes: [EKCalendarType] = []
 
   @Option(help: ArgumentHelp(
     "Minimum (inclusive) number <n> of attendees",

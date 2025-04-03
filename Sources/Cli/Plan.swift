@@ -5,31 +5,31 @@ class Plan {
   func events(
     start: Date,
     end: Date,
-    opts: Options,
+    opts: AllOptions,
     selector: EventSelectorI,
     transformer: EventTransformer
   ) -> [Event] {
-    Log.setDebug(opts.debug)
+    Log.setDebug(opts.general.debug)
 
     let calendarFilter = CalendarFilter.build(
-      selectCalendarIds: opts.selectCalendarIds,
-      ignoreCalendarIds: opts.ignoreCalendarIds,
-      selectCalendarSources: opts.selectCalendarSources,
-      ignoreCalendarSources: opts.ignoreCalendarSources,
-      selectCalendarTypes: opts.selectCalendarTypes,
-      ignoreCalendarTypes: opts.ignoreCalendarTypes
+      selectCalendarIds: opts.calendar.selectCalendarIds,
+      ignoreCalendarIds: opts.calendar.ignoreCalendarIds,
+      selectCalendarSources: opts.calendar.selectCalendarSources,
+      ignoreCalendarSources: opts.calendar.ignoreCalendarSources,
+      selectCalendarTypes: opts.calendar.selectCalendarTypes,
+      ignoreCalendarTypes: opts.calendar.ignoreCalendarTypes
     )
     let eventFilter = EventFilter.build(
-      ignoreAllDay: opts.ignoreAllDayEvents,
-      selectAllDay: opts.selectAllDayEvents,
-      ignorePatternTitle: opts.ignorePatternTitle,
-      selectPatternTitle: opts.selectPatternTitle,
-      ignoreTags: opts.ignoreTags,
-      selectTags: opts.selectTags,
-      minNumAttendees: opts.minNumAttendees,
-      maxNumAttendees: opts.maxNumAttendees,
-      minDuration: opts.minDuration,
-      maxDuration: opts.maxDuration
+      ignoreAllDay: opts.general.ignoreAllDayEvents,
+      selectAllDay: opts.general.selectAllDayEvents,
+      ignorePatternTitle: opts.general.ignorePatternTitle,
+      selectPatternTitle: opts.general.selectPatternTitle,
+      ignoreTags: opts.general.ignoreTags,
+      selectTags: opts.general.selectTags,
+      minNumAttendees: opts.general.minNumAttendees,
+      maxNumAttendees: opts.general.maxNumAttendees,
+      minDuration: opts.general.minDuration,
+      maxDuration: opts.general.maxDuration
     )
 
     let service = EventService(repo: EventRepo())

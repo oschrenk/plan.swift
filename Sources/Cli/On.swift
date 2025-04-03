@@ -13,7 +13,10 @@ struct On: ParsableCommand {
   )
 
   @OptionGroup
-  var opts: Options
+  var calendar: CalendarOptions
+
+  @OptionGroup
+  var general: Options
 
   @Argument(help: "Date expression")
   var expression: String
@@ -33,7 +36,7 @@ struct On: ParsableCommand {
     let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
     let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
 
-    let orders = opts.sortBy.isEmpty ? [Order.Default] : opts.sortBy
+    let orders = general.sortBy.isEmpty ? [Order.Default] : general.sortBy
 
     let eventSelector = EventSelector.Combined(selectors: [
       // first sort
@@ -44,11 +47,11 @@ struct On: ParsableCommand {
     )
 
     let events = Plan().events(
-      start: start, end: end, opts: opts,
+      start: start, end: end, opts: AllOptions(calendar: calendar, general: general),
       selector: eventSelector,
       transformer: EventTransformer(rules: Loader.readConfig()?.iconize ?? [])
     )
 
-    Printer().print(events: events, templatePath: opts.templatePath)
+    Printer().print(events: events, templatePath: general.templatePath)
   }
 }
