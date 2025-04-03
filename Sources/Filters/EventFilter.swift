@@ -199,70 +199,54 @@ enum EventFilter {
     }
   }
 
-  // swiftlint:disable:next function_body_length
   static func build(
     opts: EventOptions
   ) -> (EventFilterI) {
     var filters: [EventFilterI] = []
 
-    if opts.ignoreAllDayEvents {
-      let f: EventFilterI = EventFilter.IgnoreAllDay()
+    func add(_ f: EventFilterI) {
       filters.append(f)
       Log.write("added \(f)")
+    }
+
+    if opts.ignoreAllDayEvents {
+      add(EventFilter.IgnoreAllDay())
     }
 
     if opts.selectAllDayEvents {
-      let f: EventFilterI = EventFilter.SelectAllDay()
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.SelectAllDay())
     }
 
     if !opts.ignorePatternTitle.isEmpty {
-      let f: EventFilterI = EventFilter.IgnorePatternTitle(pattern: opts.ignorePatternTitle)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.IgnorePatternTitle(pattern: opts.ignorePatternTitle))
     }
 
     if !opts.selectPatternTitle.isEmpty {
-      let f: EventFilterI = EventFilter.SelectPatternTitle(pattern: opts.selectPatternTitle)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.SelectPatternTitle(pattern: opts.selectPatternTitle))
     }
 
     if !opts.ignoreTags.isEmpty {
-      let f: EventFilterI = EventFilter.IgnoreTags(tags: opts.ignoreTags)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.IgnoreTags(tags: opts.ignoreTags))
     }
 
     if !opts.selectTags.isEmpty {
-      let f: EventFilterI = EventFilter.SelectTags(tags: opts.selectTags)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.SelectTags(tags: opts.selectTags))
     }
 
     if opts.minNumAttendees ?? -1 >= 0 {
-      let f: EventFilterI = EventFilter.MinNumAttendees(count: opts.minNumAttendees!)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.MinNumAttendees(count: opts.minNumAttendees!))
     }
 
     if opts.maxNumAttendees ?? -1 >= 0 {
-      let f: EventFilterI = EventFilter.MaxNumAttendees(count: opts.maxNumAttendees!)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.MaxNumAttendees(count: opts.maxNumAttendees!))
     }
 
     if opts.minDuration ?? -1 >= 0 {
-      let f: EventFilterI = EventFilter.MinDuration(minutes: opts.minDuration!)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.MinDuration(minutes: opts.minDuration!))
     }
 
     if opts.maxDuration ?? -1 >= 0 {
-      let f: EventFilterI = EventFilter.MaxDuration(minutes: opts.maxDuration!)
-      filters.append(f)
-      Log.write("added \(f)")
+      add(EventFilter.MaxDuration(minutes: opts.maxDuration!))
     }
 
     let final: EventFilterI = filters.isEmpty ?
