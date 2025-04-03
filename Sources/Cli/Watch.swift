@@ -6,7 +6,8 @@ import Foundation
 /// Watch for calendar changes
 struct Watch: ParsableCommand {
   static var configuration = CommandConfiguration(
-    abstract: "Fire hook event on calendar changes"
+    abstract: "Fire hook event on calendar changes",
+    shouldDisplay: false
   )
 
   mutating func run() {
