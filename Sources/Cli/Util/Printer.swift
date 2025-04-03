@@ -9,7 +9,7 @@ class Printer {
     } else {
       if let template = Template(path: templatePath) {
         if let render = template.render(events: events) {
-          StdOut.print(render)
+          StdOut.print(render.trimmingCharacters(in: .whitespacesAndNewlines))
         } else {
           StdErr.print("Failed to render template at `\(templatePath)`")
         }
