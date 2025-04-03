@@ -1,20 +1,21 @@
-<p align="center" width="100%">
+<div align="center" width="100%">
   <img alt="Plan Icon" width="128px" src="./Assets/icon.png">
-</p>
-
-A macOS terminal tool to fetch calendar events from `Calendar.app`
+  <br>
+  <p>macOS terminal tool to fetch calendar events from `Calendar.app`
+  </p>
+</div>
 
 ## Features
 
 - JSON by default
-- templating engine for
+- integrated templating engine
 - for emoji lovers ❤️
   - separate leading emojis from event title
   - add emojis based on title
 - start and end time in relative and absolute terms
 - `ical` URL that can be used to show the event in Calendar.app
 - parse meeting URLs from notes (Google, Zoom, Teams)
-- natural language parser for date selection
+- natural language parser
 
 ## Examples
 
@@ -67,15 +68,15 @@ Example output in JSON
 With `template.md`:
 
 ```markdown
-{% for e in events %}- {{ e.schedule.start.at|format:"HH:mm"}} - {{ e.schedule.end.at|format:"HH:mm"}}{{ e.title.full }} [ ]({{e.services["ical"]}}) #{{ e.calendar.label|lowercase }}
+{% for e in events %}- {{ e.schedule.start.at|format:"HH:mm"}} - {{ e.schedule.end.at|format:"HH:mm"}} [{{ e.title.full }}]({{e.services["ical"]}}) #{{ e.calendar.label|lowercase }}
 {% endfor %}
 ```
 
 You get
 
 ```markdown
-- 12:15 - 12:45 🥗 Lunch [ ](ical://ekevent/CC23ADF2-9303-42C4-A854-BE12F2081E16?method=show&options=more) #private
-- 13:00 - 14:00 🕐 Meeting [ ](ical://ekevent/59856934-5D89-45A2-9C11-0E3877F1B082?method=show&options=more) #work
+- 12:15 - 12:45 [🥗 Lunch](ical://ekevent/CC23ADF2-9303-42C4-A854-BE12F2081E16?method=show&options=more) #private
+- 13:00 - 14:00 [🕐 Meeting](ical://ekevent/59856934-5D89-45A2-9C11-0E3877F1B082?method=show&options=more) #work
 ```
 
 For more details, see [Docs/Templating](Docs/Templating.md).
@@ -99,11 +100,12 @@ It plays very well with Sketchybar and Obsidian and with the default output form
 
 ### Sketchybar
 
-You can use it with [Sketchybar](https://felixkratz.github.io/SketchyBar/) to show the next event.
+You can use it with [Sketchybar](https://felixkratz.github.io/SketchyBar/) to show the next event. For more details, read [Docs/Sketchybar](./Docs/External/Sketchybar.md)
+
 
 ### Obsidian
 
-You can use it with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Obsidian](Docs/Obsidian.md) and [Docs/Templating](Docs/Templating.md).
+You can use it with [Obsidian](https://obsidian.md/) to inject today's schedule into your notes. For more details, consult [Docs/Obsidian](./Docs/External/Obsidian.md) and [Docs/Templating](./Docs/Templating.md).
 
 ## Templating
 

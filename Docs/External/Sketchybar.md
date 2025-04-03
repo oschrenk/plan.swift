@@ -93,7 +93,7 @@ require("items.calendar").new().add("right")
 
 # Advanced
 
-> [!warn] This feature is currently under review. It works when run in a terminal but not when run as a service.
+> [!warn] This feature is currently in beta and under review. It works when run in a terminal but not when run as a service as it requires special macOS permissions.
 
 You can use `plan watch` feature to notify Sketchybar of any changes.
 

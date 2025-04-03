@@ -1,6 +1,4 @@
-# Usecases
-
-# Sum hours
+# Hours
 
 Sum hours spent
 
