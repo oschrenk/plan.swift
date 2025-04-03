@@ -54,12 +54,12 @@ struct CalendarOptions: ParsableArguments {
 
 struct EventOptions: ParsableArguments {
   @Flag(help: ArgumentHelp(
-    "Ignore all day events"
+    "Ignore every all-day events"
   ))
   var ignoreAllDayEvents: Bool = false
 
   @Flag(help: ArgumentHelp(
-    "Select all day events"
+    "Select only all-day events"
   ))
   var selectAllDayEvents: Bool = false
 
