@@ -26,12 +26,10 @@ struct Calendars: ParsableCommand {
   mutating func run() {
     Log.setDebug(debug)
 
-    let calendarFilter = CalendarFilter.build(
-      opts: opts
-    )
-
-    let service = EventService(repo: EventRepo())
-    let calendars = service.calendars(filter: calendarFilter)
+    let calendars = EventService(repo: EventRepo())
+      .calendars(filter: CalendarFilter.build(
+        opts: opts
+      ))
 
     switch format {
     case .json:
