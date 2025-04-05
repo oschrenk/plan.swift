@@ -12,6 +12,7 @@ enum EventSelector {
     }
   }
 
+  /// Select the first `count` events
   class Prefix: EventSelectorI {
     let count: Int
 
@@ -24,6 +25,7 @@ enum EventSelector {
     }
   }
 
+  /// Sort the events
   class Sorted: EventSelectorI {
     let comparators: [EventComparator]
 
