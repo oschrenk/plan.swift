@@ -8,7 +8,7 @@ typealias FCalendar = Foundation.Calendar
 /// List next event(s)
 struct Next: ParsableCommand {
   static var configuration = CommandConfiguration(
-    abstract: "List next event(s)"
+    abstract: "List next event"
   )
 
   @OptionGroup
