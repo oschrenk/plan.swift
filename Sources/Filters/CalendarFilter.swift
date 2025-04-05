@@ -110,7 +110,7 @@ enum CalendarFilter {
         return false
       }
 
-      return !labels.contains(calendar!.source)
+      return !labels.contains(calendar!.label)
     }
 
     var description: String {
