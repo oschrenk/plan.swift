@@ -11,6 +11,9 @@ tasks:
       - swift run {{.APP_NAME}} next
     silent: true
   build:
+    watch: true
+    sources:
+      - '**/*.swift'
     cmds:
       - swift build
     silent: true
