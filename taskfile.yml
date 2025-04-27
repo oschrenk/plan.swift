@@ -65,10 +65,9 @@ tasks:
   release:
     requires:
       vars: [APP_NAME, RELEASE_DIR]
-    deps: [tag]
     cmds:
       - /opt/homebrew/bin/gh auth status
-      - /opt/homebrew/bin/gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/plan-"$APP_VERSION".tar.gz
+      - /opt/homebrew/bin/gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/plan-"$(echo "$APP_VERSION" | cut -c2-)".tar.gz
   sha:
     requires:
       vars: [APP_NAME, RELEASE_DIR]
