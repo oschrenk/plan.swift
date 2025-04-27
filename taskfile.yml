@@ -52,8 +52,13 @@ tasks:
     cmds:
       - rm -rf "{{.BIN_DIR}}/{{.APP_NAME}}"
     silent: true
-  tag:
+  tar:
     deps: [artifacts]
+    cmds:
+      - cp {{.RELEASE_DIR}}/{{.APP_NAME}} {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
+      - tar -czf {{.RELEASE_DIR}}/plan-"$(echo "$APP_VERSION" | cut -c2-)".tar.gz -C .build/release {{.APP_NAME}}-darwin-arm64 "Completions/"
+  tag:
+    deps: [tar]
     cmds:
       - git tag "$APP_VERSION"
       - git push origin "$APP_VERSION"
@@ -63,8 +68,7 @@ tasks:
     deps: [tag]
     cmds:
       - /opt/homebrew/bin/gh auth status
-      - cp {{.RELEASE_DIR}}/{{.APP_NAME}} {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
-      - /opt/homebrew/bin/gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/{{.APP_NAME}}-*
+      - /opt/homebrew/bin/gh release create --generate-notes "$APP_VERSION" {{.RELEASE_DIR}}/plan-"$APP_VERSION".tar.gz
   sha:
     requires:
       vars: [APP_NAME, RELEASE_DIR]
