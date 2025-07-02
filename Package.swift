@@ -9,7 +9,7 @@ let package = Package(
     .macOS(.v15),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.1"),
+    .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.6.1"),
     .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.0"),
     .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.15.1"),
     .package(url: "https://github.com/bigMOTOR/swift-lens", from: "1.1.0"),
