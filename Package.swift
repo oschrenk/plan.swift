@@ -13,7 +13,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.1"),
     // override transitive swift-case-paths:1.0.0 to resolve issue with Swift 6.2
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
-    .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.15.1"),
+    .package(url: "https://github.com/swiftstencil/swiftpm-stencil", from: "0.15.2"),
     .package(url: "https://github.com/bigMOTOR/swift-lens", from: "1.1.0"),
     .package(url: "https://github.com/hectr/swift-when", revision: "0306cc7c39ba72e54eb35512beb9140421ec81ab"),
   ],
@@ -23,13 +23,13 @@ let package = Package(
       dependencies: [
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
         .product(name: "Parsing", package: "swift-parsing"),
-        .product(name: "Stencil", package: "Stencil"),
+        .product(name: "Stencil", package: "swiftpm-stencil"),
         .product(name: "swift-lens", package: "swift-lens"),
         .product(name: "when", package: "swift-when"),
       ],
       path: "Sources",
       swiftSettings: [
-        .unsafeFlags(["-suppress-warnings"])
+        .unsafeFlags(["-suppress-warnings"]),
       ]
     ),
     .testTarget(

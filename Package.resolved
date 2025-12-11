@@ -1,15 +1,6 @@
 {
-  "originHash" : "d2b2df8b3539950e8f7bbd08024a513c27e5e3347bdbf74f0a1c64374bb95678",
+  "originHash" : "275f592f57624bc840cabd7a30d664892aa8c48afdee1aacc5492839a19dca67",
   "pins" : [
-    {
-      "identity" : "pathkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kylef/PathKit.git",
-      "state" : {
-        "revision" : "3bfd2737b700b9a36565a8c94f4ad2b050a5e574",
-        "version" : "1.0.1"
-      }
-    },
     {
       "identity" : "spectre",
       "kind" : "remoteSourceControl",
@@ -17,15 +8,6 @@
       "state" : {
         "revision" : "26cc5e9ae0947092c7139ef7ba612e34646086c7",
         "version" : "0.10.1"
-      }
-    },
-    {
-      "identity" : "stencil",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/stencilproject/Stencil.git",
-      "state" : {
-        "revision" : "4f222ac85d673f35df29962fc4c36ccfdaf9da5b",
-        "version" : "0.15.1"
       }
     },
     {
@@ -79,6 +61,24 @@
       "location" : "https://github.com/hectr/swift-when",
       "state" : {
         "revision" : "0306cc7c39ba72e54eb35512beb9140421ec81ab"
+      }
+    },
+    {
+      "identity" : "swiftpm-pathkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/astzweig/swiftpm-pathkit.git",
+      "state" : {
+        "revision" : "5d164c34f35fa7241d77357e965acde80efcb6d9",
+        "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swiftpm-stencil",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftstencil/swiftpm-stencil",
+      "state" : {
+        "revision" : "02f61d55a47b2c247b27e213b23bab116b6399ad",
+        "version" : "0.15.2"
       }
     },
     {
