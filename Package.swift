@@ -9,7 +9,7 @@ let package = Package(
     .macOS(.v15),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.1"),
+    .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.6.2"),
     .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.1"),
     // override transitive swift-case-paths:1.0.0 to resolve issue with Swift 6.2
     .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
@@ -27,7 +27,10 @@ let package = Package(
         .product(name: "swift-lens", package: "swift-lens"),
         .product(name: "when", package: "swift-when"),
       ],
-      path: "Sources"
+      path: "Sources",
+      swiftSettings: [
+        .unsafeFlags(["-suppress-warnings"])
+      ]
     ),
     .testTarget(
       name: "test",
