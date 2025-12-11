@@ -10,7 +10,9 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-argument-parser", exact: "1.5.1"),
-    .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.0"),
+    .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.1"),
+    // override transitive swift-case-paths:1.0.0 to resolve issue with Swift 6.2
+    .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
     .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.15.1"),
     .package(url: "https://github.com/bigMOTOR/swift-lens", from: "1.1.0"),
     .package(url: "https://github.com/hectr/swift-when", revision: "0306cc7c39ba72e54eb35512beb9140421ec81ab"),
