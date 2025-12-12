@@ -26,9 +26,11 @@ struct Next: ParsableCommand {
   )) var within: Int = 60
 
   mutating func run() {
+    var cal = FCalendar.current
+    cal.timeZone = TimeZone.current
     let today = Date()
-    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
-    let end = FCalendar.current.date(byAdding: .minute, value: within, to: today)!
+    let start = cal.date(byAdding: .day, value: 0, to: today)!
+    let end = cal.date(byAdding: .minute, value: within, to: today)!
 
     let opts = AllOptions(calendar: calendar, events: eventOptions, general: general)
 

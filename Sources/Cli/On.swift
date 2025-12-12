@@ -34,9 +34,11 @@ struct On: ParsableCommand {
       throw ExitCode.failure
     }
 
-    let today = FCalendar.current.startOfDay(for: userDate)
-    let start = FCalendar.current.date(byAdding: .day, value: 0, to: today)!
-    let end = FCalendar.current.date(byAdding: .day, value: 1, to: today)!
+    var cal = FCalendar.current
+    cal.timeZone = TimeZone.current
+    let today = cal.startOfDay(for: userDate)
+    let start = cal.date(byAdding: .day, value: 0, to: today)!
+    let end = cal.date(byAdding: .day, value: 1, to: today)!
 
     let opts = AllOptions(calendar: calendar, events: eventOptions, general: general)
 
