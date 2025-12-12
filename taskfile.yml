@@ -36,6 +36,8 @@ tasks:
         sh: git rev-parse --short HEAD
     cmds:
       - sed -i '' "s/APP_VERSION/$APP_VERSION-$CURRENT_HASH/g" Sources/Version.swift
+      - rm -rf {{.RELEASE_DIR}}/Completions
+      - cp -r Completions {{.RELEASE_DIR}}
       - swift build --configuration release --disable-sandbox --arch arm64
       - git checkout Sources/Version.swift
     silent: true
