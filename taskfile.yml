@@ -65,6 +65,7 @@ tasks:
       - git tag "$APP_VERSION"
       - git push origin "$APP_VERSION"
   release:
+    deps: [tag]
     requires:
       vars: [APP_NAME, RELEASE_DIR]
     cmds:
