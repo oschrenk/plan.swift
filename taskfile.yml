@@ -36,8 +36,6 @@ tasks:
         sh: git rev-parse --short HEAD
     cmds:
       - sed -i '' "s/APP_VERSION/$APP_VERSION-$CURRENT_HASH/g" Sources/Version.swift
-      - rm -rf {{.RELEASE_DIR}}/Completions
-      - cp -r Completions {{.RELEASE_DIR}}
       - swift build --configuration release --disable-sandbox --arch arm64
       - git checkout Sources/Version.swift
     silent: true
@@ -58,7 +56,7 @@ tasks:
     deps: [artifacts]
     cmds:
       - cp {{.RELEASE_DIR}}/{{.APP_NAME}} {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
-      - tar -czf {{.RELEASE_DIR}}/plan-"$(echo "$APP_VERSION" | cut -c2-)".tar.gz -C .build/release {{.APP_NAME}}-darwin-arm64 "Completions/"
+      - tar -czf {{.RELEASE_DIR}}/plan-"$(echo "$APP_VERSION" | cut -c2-)".tar.gz -C .build/release {{.APP_NAME}}-darwin-arm64
   tag:
     deps: [tar]
     cmds:
