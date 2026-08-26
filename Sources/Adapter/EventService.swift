@@ -39,7 +39,7 @@ final class EventService {
     calendarFilter: CalendarFilterI,
     eventFilter: EventFilterI
   ) -> [Event] {
-    return eventRepo
+    eventRepo
       .fetchEvents(start, end, calendarFilter)
       .filter { event in
         eventFilter.accept(event)

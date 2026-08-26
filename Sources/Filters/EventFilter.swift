@@ -7,31 +7,31 @@ protocol EventFilterI: CustomStringConvertible {
 enum EventFilter {
   class Accept: EventFilterI {
     func accept(_: Event) -> Bool {
-      return true
+      true
     }
 
     var description: String {
-      return "EventFilter.Accept()"
+      "EventFilter.Accept()"
     }
   }
 
   class IgnoreAllDay: EventFilterI {
     func accept(_ event: Event) -> Bool {
-      return !event.schedule.allDay
+      !event.schedule.allDay
     }
 
     var description: String {
-      return "EventFilter.IgnoreAllDay()"
+      "EventFilter.IgnoreAllDay()"
     }
   }
 
   class SelectAllDay: EventFilterI {
     func accept(_ event: Event) -> Bool {
-      return event.schedule.allDay
+      event.schedule.allDay
     }
 
     var description: String {
-      return "EventFilter.SelectAllDay()"
+      "EventFilter.SelectAllDay()"
     }
   }
 
@@ -51,7 +51,7 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.IgnoreTitle(\(pattern))"
+      "EventFilter.IgnoreTitle(\(pattern))"
     }
   }
 
@@ -71,7 +71,7 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.SelectTitle(\(pattern))"
+      "EventFilter.SelectTitle(\(pattern))"
     }
   }
 
@@ -83,11 +83,11 @@ enum EventFilter {
     }
 
     func accept(_ event: Event) -> Bool {
-      return event.meeting.attendees.count >= count
+      event.meeting.attendees.count >= count
     }
 
     var description: String {
-      return "EventFilter.MinNumAttendees(\(count))"
+      "EventFilter.MinNumAttendees(\(count))"
     }
   }
 
@@ -99,11 +99,11 @@ enum EventFilter {
     }
 
     func accept(_ event: Event) -> Bool {
-      return event.meeting.attendees.count <= count
+      event.meeting.attendees.count <= count
     }
 
     var description: String {
-      return "EventFilter.MaxNumAttendees(\(count))"
+      "EventFilter.MaxNumAttendees(\(count))"
     }
   }
 
@@ -115,11 +115,11 @@ enum EventFilter {
     }
 
     func accept(_ event: Event) -> Bool {
-      return event.schedule.duration >= minutes
+      event.schedule.duration >= minutes
     }
 
     var description: String {
-      return "EventFilter.MinDuration(\(minutes))"
+      "EventFilter.MinDuration(\(minutes))"
     }
   }
 
@@ -131,11 +131,11 @@ enum EventFilter {
     }
 
     func accept(_ event: Event) -> Bool {
-      return event.schedule.duration <= minutes
+      event.schedule.duration <= minutes
     }
 
     var description: String {
-      return "EventFilter.MaxDuration(\(minutes))"
+      "EventFilter.MaxDuration(\(minutes))"
     }
   }
 
@@ -153,7 +153,7 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.IgnoreTags(\(tags))"
+      "EventFilter.IgnoreTags(\(tags))"
     }
   }
 
@@ -175,7 +175,7 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.SelectTags(\(tags))"
+      "EventFilter.SelectTags(\(tags))"
     }
   }
 
@@ -193,7 +193,7 @@ enum EventFilter {
     }
 
     var description: String {
-      return "EventFilter.IgnoreServices(\(services))"
+      "EventFilter.IgnoreServices(\(services))"
     }
   }
 
@@ -206,12 +206,11 @@ enum EventFilter {
 
     func accept(_ event: Event) -> Bool {
       let intersection = Set(services).intersection(Set(event.services.keys))
-      let hasMatchingService = !intersection.isEmpty
-      return hasMatchingService
+      return !intersection.isEmpty
     }
 
     var description: String {
-      return "EventFilter.SelectServices(\(services))"
+      "EventFilter.SelectServices(\(services))"
     }
   }
 
@@ -223,11 +222,11 @@ enum EventFilter {
     }
 
     func accept(_ event: Event) -> Bool {
-      return filters.allSatisfy { $0.accept(event) }
+      filters.allSatisfy { $0.accept(event) }
     }
 
     var description: String {
-      return "EventFilter.Combined(\(filters))"
+      "EventFilter.Combined(\(filters))"
     }
   }
 

@@ -15,6 +15,6 @@ enum StdIn {
   /// Return stdin lines as array
   /// - Returns: Array of strings
   static func readLines() -> [String] {
-    return AnyIterator { Swift.readLine() }.map { $0 }
+    AnyIterator { Swift.readLine() }.map { $0 }
   }
 }

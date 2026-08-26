@@ -19,7 +19,7 @@ class EventComparator: SortComparator {
   }
 
   static func == (lhs: EventComparator, rhs: EventComparator) -> Bool {
-    return lhs.field == rhs.field
+    lhs.field == rhs.field
   }
 
   func compare(_ lhs: Event, _ rhs: Event) -> ComparisonResult {
@@ -59,17 +59,16 @@ class IntComparator: SortComparator, Hashable {
   }
 
   static func == (lhs: IntComparator, rhs: IntComparator) -> Bool {
-    return lhs.order == rhs.order
+    lhs.order == rhs.order
   }
 
   func compare(_ lhs: Int, _ rhs: Int) -> ComparisonResult {
-    let result: ComparisonResult
-    if lhs < rhs {
-      result = .orderedAscending
+    let result: ComparisonResult = if lhs < rhs {
+      .orderedAscending
     } else if lhs > rhs {
-      result = .orderedDescending
+      .orderedDescending
     } else {
-      result = .orderedSame
+      .orderedSame
     }
     return order == .forward ? result : result.reversed
   }
@@ -87,17 +86,16 @@ class StringComparator: SortComparator, Hashable {
   }
 
   static func == (lhs: StringComparator, rhs: StringComparator) -> Bool {
-    return lhs.order == rhs.order
+    lhs.order == rhs.order
   }
 
   func compare(_ lhs: String, _ rhs: String) -> ComparisonResult {
-    let result: ComparisonResult
-    if lhs < rhs {
-      result = .orderedAscending
+    let result: ComparisonResult = if lhs < rhs {
+      .orderedAscending
     } else if lhs > rhs {
-      result = .orderedDescending
+      .orderedDescending
     } else {
-      result = .orderedSame
+      .orderedSame
     }
     return order == .forward ? result : result.reversed
   }
@@ -115,17 +113,16 @@ class DateComparator: SortComparator, Hashable {
   }
 
   static func == (lhs: DateComparator, rhs: DateComparator) -> Bool {
-    return lhs.order == rhs.order
+    lhs.order == rhs.order
   }
 
   func compare(_ lhs: Date, _ rhs: Date) -> ComparisonResult {
-    let result: ComparisonResult
-    if lhs < rhs {
-      result = .orderedAscending
+    let result: ComparisonResult = if lhs < rhs {
+      .orderedAscending
     } else if lhs > rhs {
-      result = .orderedDescending
+      .orderedDescending
     } else {
-      result = .orderedSame
+      .orderedSame
     }
     return order == .forward ? result : result.reversed
   }
@@ -134,9 +131,9 @@ class DateComparator: SortComparator, Hashable {
 extension ComparisonResult {
   var reversed: ComparisonResult {
     switch self {
-    case .orderedAscending: return .orderedDescending
-    case .orderedSame: return .orderedSame
-    case .orderedDescending: return .orderedAscending
+    case .orderedAscending: .orderedDescending
+    case .orderedSame: .orderedSame
+    case .orderedDescending: .orderedAscending
     }
   }
 }

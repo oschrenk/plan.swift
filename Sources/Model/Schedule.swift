@@ -20,8 +20,7 @@ struct Schedule: Codable, ReverseCodable, Equatable {
   }
 
   static func == (lhs: Schedule, rhs: Schedule) -> Bool {
-    return
-      lhs.start == rhs.start &&
+    lhs.start == rhs.start &&
       lhs.end == rhs.end &&
       lhs.allDay == rhs.allDay
   }
@@ -34,7 +33,7 @@ struct Schedule: Codable, ReverseCodable, Equatable {
   }
 
   static func reverseCodingKeys() -> [String: String] {
-    return [
+    [
       CodingKeys.start.rawValue: "start",
       CodingKeys.end.rawValue: "end",
       CodingKeys.allDay.rawValue: "allDay",

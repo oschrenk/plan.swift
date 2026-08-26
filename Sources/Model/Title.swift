@@ -25,7 +25,7 @@ struct Title: Codable, ReverseCodable, Equatable {
   }
 
   static func reverseCodingKeys() -> [String: String] {
-    return [
+    [
       CodingKeys.full.rawValue: "full",
       CodingKeys.label.rawValue: "label",
       CodingKeys.icon.rawValue: "icon",
@@ -33,19 +33,13 @@ struct Title: Codable, ReverseCodable, Equatable {
   }
 
   static func == (lhs: Title, rhs: Title) -> Bool {
-    return
-      lhs.full == rhs.full
+    lhs.full == rhs.full
   }
 }
 
 struct Legend: Codable, Equatable {
   let description: String
   let icon: String
-
-  static func == (lhs: Legend, rhs: Legend) -> Bool {
-    lhs.description == rhs.description &&
-      lhs.icon == rhs.icon
-  }
 
   static let Empty = Legend(description: "", icon: "")
 }
@@ -62,7 +56,9 @@ extension Character {
     unicodeScalars.count > 1 && unicodeScalars.first?.properties.isEmoji ?? false
   }
 
-  var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
+  var isEmoji: Bool {
+    isSimpleEmoji || isCombinedIntoEmoji
+  }
 }
 
 extension String {

@@ -2,8 +2,8 @@ import Foundation
 @testable import plan
 import Testing
 
-@Suite final class EventFilterTests {
-  @Test func testAlwaysAccept() {
+final class EventFilterTests {
+  @Test func alwaysAccept() {
     let event = Event.generate()
     let expected = true
     let actual = EventFilter.Accept().accept(event)
@@ -11,7 +11,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreTagsNoTags() {
+  @Test func ignoreTagsNoTags() {
     let event = Event.generate(tags: ["timeblock"])
     let expected = true
     let actual = EventFilter.IgnoreTags(tags: []).accept(event)
@@ -19,7 +19,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreTagsMatchingTags() {
+  @Test func ignoreTagsMatchingTags() {
     let event = Event.generate(tags: ["timeblock"])
     let expected = false
     let actual = EventFilter.IgnoreTags(tags: ["timeblock"]).accept(event)
@@ -27,7 +27,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreTagsNotMatchingTags() {
+  @Test func ignoreTagsNotMatchingTags() {
     let event = Event.generate(tags: ["foo"])
     let expected = true
     let actual = EventFilter.IgnoreTags(tags: ["timeblock"]).accept(event)
@@ -35,7 +35,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testSelectTagsMatchingTags() {
+  @Test func selectTagsMatchingTags() {
     let event = Event.generate(tags: ["timeblock"])
     let expected = true
     let actual = EventFilter.SelectTags(tags: ["timeblock"]).accept(event)
@@ -43,7 +43,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreServicesNoServices() {
+  @Test func ignoreServicesNoServices() {
     let event = Event.generate()
     let expected = true
     let actual = EventFilter.IgnoreServices(services: []).accept(event)
@@ -51,7 +51,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreServiceMatchingService() {
+  @Test func ignoreServiceMatchingService() {
     let event = Event.generate(services: ["zoom": "example"])
     let expected = false
     let actual = EventFilter.IgnoreServices(services: ["zoom"]).accept(event)
@@ -59,7 +59,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreServiceNotMatchingServices() {
+  @Test func ignoreServiceNotMatchingServices() {
     let event = Event.generate(services: ["zoom": "example"])
     let expected = true
     let actual = EventFilter.IgnoreServices(services: ["teams"]).accept(event)
@@ -67,7 +67,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testSelectServicesMatchingServices() {
+  @Test func selectServicesMatchingServices() {
     let event = Event.generate(services: ["zoom": "example"])
     let expected = true
     let actual = EventFilter.SelectServices(services: ["zoom"]).accept(event)
@@ -75,7 +75,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoreAnAllDayEvent() {
+  @Test func ignoreAnAllDayEvent() {
     let event = Event.generate(allDay: true)
     let expected = false
     let actual = EventFilter.IgnoreAllDay().accept(event)
@@ -83,7 +83,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testSelectAnAllDayEvent() {
+  @Test func selectAnAllDayEvent() {
     let event = Event.generate(allDay: true)
     let expected = true
     let actual = EventFilter.SelectAllDay().accept(event)
@@ -91,7 +91,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptAnNonAllDayEvent() {
+  @Test func acceptAnNonAllDayEvent() {
     let event = Event.generate(allDay: false)
     let expected = true
     let actual = EventFilter.IgnoreAllDay().accept(event)
@@ -99,7 +99,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testIgnoringEventMatchingTitle() {
+  @Test func ignoringEventMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = false
     let actual = EventFilter.IgnoreTitle(pattern: "foo").accept(event)
@@ -107,7 +107,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testNotSelectingEventNotMatchingTitle() {
+  @Test func notSelectingEventNotMatchingTitle() {
     let event = Event.generate(title: "Development standup")
     let expected = false
     let actual = EventFilter.SelectTitle(pattern: "foo").accept(event)
@@ -115,7 +115,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptingEventNotMatchingTitle() {
+  @Test func acceptingEventNotMatchingTitle() {
     let event = Event.generate(title: "foo matching")
     let expected = true
     let actual = EventFilter.IgnoreTitle(pattern: "bar").accept(event)
@@ -123,7 +123,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptingEventWithAtLeastTwoAttendees() {
+  @Test func acceptingEventWithAtLeastTwoAttendees() {
     let event = Event.generate(attendees: ["personA", "personB"])
     let expected = true
     let actual = EventFilter.MinNumAttendees(count: 2).accept(event)
@@ -131,7 +131,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptingEventWithTooFewAttendees() {
+  @Test func acceptingEventWithTooFewAttendees() {
     let event = Event.generate(attendees: ["personA", "personB"])
     let expected = false
     let actual = EventFilter.MinNumAttendees(count: 3).accept(event)
@@ -139,7 +139,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptingEventWithFewAttendees() {
+  @Test func acceptingEventWithFewAttendees() {
     let event = Event.generate(attendees: ["personA", "personB"])
     let expected = true
     let actual = EventFilter.MaxNumAttendees(count: 3).accept(event)
@@ -147,7 +147,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptingEventWithTooManyAttendees() {
+  @Test func acceptingEventWithTooManyAttendees() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = false
     let actual = EventFilter.MaxNumAttendees(count: 2).accept(event)
@@ -155,10 +155,10 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptingEventWithMinDuration() {
+  @Test func acceptingEventWithMinDuration() throws {
     let now = Date()
-    let start = FCalendar.current.date(byAdding: .minute, value: 0, to: now)!
-    let end = FCalendar.current.date(byAdding: .minute, value: 200, to: now)!
+    let start = try #require(FCalendar.current.date(byAdding: .minute, value: 0, to: now))
+    let end = try #require(FCalendar.current.date(byAdding: .minute, value: 200, to: now))
 
     let event = Event.generate(startDate: start, endDate: end)
     let expected = true
@@ -167,10 +167,10 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testNotAcceptingEventWithMaxDuration() {
+  @Test func notAcceptingEventWithMaxDuration() throws {
     let now = Date()
-    let start = FCalendar.current.date(byAdding: .minute, value: 0, to: now)!
-    let end = FCalendar.current.date(byAdding: .minute, value: 200, to: now)!
+    let start = try #require(FCalendar.current.date(byAdding: .minute, value: 0, to: now))
+    let end = try #require(FCalendar.current.date(byAdding: .minute, value: 200, to: now))
 
     let event = Event.generate(startDate: start, endDate: end)
     let expected = false
@@ -179,7 +179,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testAcceptCombinedFilter() {
+  @Test func acceptCombinedFilter() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = true
     let min = EventFilter.MinNumAttendees(count: 2)
@@ -190,7 +190,7 @@ import Testing
     #expect(actual == expected)
   }
 
-  @Test func testRejectCombinedFilter() {
+  @Test func rejectCombinedFilter() {
     let event = Event.generate(attendees: ["personA", "personB", "personC"])
     let expected = false
     let min = EventFilter.MinNumAttendees(count: 4)

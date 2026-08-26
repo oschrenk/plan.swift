@@ -12,15 +12,6 @@ struct PlanCalendar: Codable, ReverseCodable, Equatable {
   /// color of the calendar
   let color: String
 
-  static func == (lhs: PlanCalendar, rhs: PlanCalendar) -> Bool {
-    return
-      lhs.id == rhs.id &&
-      lhs.type == rhs.type &&
-      lhs.source == rhs.source &&
-      lhs.label == rhs.label &&
-      lhs.color == rhs.color
-  }
-
   /// Generate a new PlanCalendar
   static func generate(
     type: EKCalendarType = EKCalendarType.calDAV,
@@ -56,7 +47,7 @@ struct PlanCalendar: Codable, ReverseCodable, Equatable {
   }
 
   static func reverseCodingKeys() -> [String: String] {
-    return [
+    [
       CodingKeys.id.rawValue: "id",
       CodingKeys.type.rawValue: "type",
       CodingKeys.source.rawValue: "source",
@@ -73,13 +64,12 @@ extension CGColor {
     let green: CGFloat = components?[1] ?? 0.0
     let blue: CGFloat = components?[2] ?? 0.0
 
-    let hexString = String(
+    return String(
       format: "#%02lX%02lX%02lX",
       lroundf(Float(red * 255)),
       lroundf(Float(green * 255)),
       lroundf(Float(blue * 255))
     )
-    return hexString
   }
 }
 
@@ -87,17 +77,17 @@ extension EventKit.EKCalendarType: Swift.CustomStringConvertible {
   public var description: String {
     switch self {
     case .local:
-      return "local"
+      "local"
     case .calDAV:
-      return "caldav"
+      "caldav"
     case .exchange:
-      return "exchange"
+      "exchange"
     case .subscription:
-      return "subscription"
+      "subscription"
     case .birthday:
-      return "birthday"
+      "birthday"
     default:
-      return "unknown"
+      "unknown"
     }
   }
 }

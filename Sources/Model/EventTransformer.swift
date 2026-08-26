@@ -18,9 +18,8 @@ class EventTransformer {
     ) != nil {
       let withIcon = event
         |> (Event.titleLens * Title.iconLens) *~ rule.icon
-      let withFull = withIcon
+      return withIcon
         |> (Event.titleLens * Title.fullLens) *~ "\(rule.icon) \(event.title.full)"
-      return withFull
     }
     return event
   }

@@ -8,7 +8,7 @@ enum EventSelector {
   class All: EventSelectorI {
     typealias T = Event
     func select(events: [Event]) -> [Event] {
-      return events
+      events
     }
   }
 
@@ -21,7 +21,7 @@ enum EventSelector {
     }
 
     func select(events: [Event]) -> [Event] {
-      return Array(events.prefix(count))
+      Array(events.prefix(count))
     }
   }
 
@@ -34,7 +34,7 @@ enum EventSelector {
     }
 
     func select(events: [Event]) -> [Event] {
-      return comparators.reduce(events) {
+      comparators.reduce(events) {
         $0.sorted(using: $1)
       }
     }
@@ -48,7 +48,7 @@ enum EventSelector {
     }
 
     func select(events: [Event]) -> [Event] {
-      return selectors.reduce(events) { $1.select(events: $0) }
+      selectors.reduce(events) { $1.select(events: $0) }
     }
   }
 }

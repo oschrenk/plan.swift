@@ -5,7 +5,7 @@ final class Order: ArgumentParser.ExpressibleByArgument, Hashable {
   let field: String
   let direction: Direction
 
-  public init?(argument: String) {
+  init?(argument: String) {
     let obj = Order.parse(s: argument.lowercased())
     if obj != nil {
       field = obj!.field
@@ -28,7 +28,7 @@ final class Order: ArgumentParser.ExpressibleByArgument, Hashable {
   static let Default: Order = .parse(s: "schedule.start.in:asc")!
 
   static func == (lhs: Order, rhs: Order) -> Bool {
-    return lhs.field == rhs.field && lhs.direction == rhs.direction
+    lhs.field == rhs.field && lhs.direction == rhs.direction
   }
 
   static func parse(s: String) -> Order? {
