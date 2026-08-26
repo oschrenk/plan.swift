@@ -1,3 +1,16 @@
+# Rules are pinned explicitly so a swiftformat upgrade cannot silently
+# reformat the tree: without --rules the active set is whatever the installed
+# version defaults to, which is what caused the 24-file churn in 84b7e7f.
+#
+# Regenerate after a deliberate upgrade with:
+#   swiftformat --rules | grep -v '(disabled)' | grep -v '(deprecated)'
+#
+# Deprecated rules are left out on purpose - they are aliases that eventually
+# get removed, and an unknown rule name is a hard error. That includes
+# throwingTests, so new force-unwraps in tests are no longer auto-rewritten to
+# `try #require(...)`.
+--rules andOperator,anyObjectProtocol,applicationMain,assertionFailures,blankLineAfterImports,blankLinesAroundMark,blankLinesAtEndOfScope,blankLinesAtStartOfScope,blankLinesBetweenChainedFunctions,blankLinesBetweenImports,blankLinesBetweenScopes,braces,conditionalAssignment,consecutiveBlankLines,consecutiveSpaces,consistentSwitchCaseSpacing,docComments,docCommentsBeforeModifiers,duplicateImports,elseOnSameLine,emptyBraces,enumNamespaces,environmentEntry,extensionAccessControl,fileHeader,fileMacro,genericExtensions,headerFileName,hoistAwait,hoistPatternLet,hoistTry,indent,initCoderUnavailable,leadingDelimiters,linebreakAtEndOfFile,linebreaks,modifierOrder,modifiersOnSameLine,noForceTryInTests,noForceUnwrapInTests,numberFormatting,opaqueGenericParameters,preferForLoop,preferKeyPath,redundantAsync,redundantBackticks,redundantBreak,redundantClosure,redundantEmptyView,redundantEquatable,redundantExtensionACL,redundantFileprivate,redundantGet,redundantInit,redundantInternal,redundantLet,redundantLetError,redundantMemberwiseInit,redundantNilInit,redundantObjc,redundantOptionalBinding,redundantParens,redundantPattern,redundantPublic,redundantRawValues,redundantReturn,redundantSelf,redundantStaticSelf,redundantSwiftTestingSuite,redundantSwiftUIGroup,redundantThrows,redundantType,redundantTypedThrows,redundantVariable,redundantViewBuilder,redundantVoidReturnType,semicolons,simplifyGenericConstraints,sortDeclarations,sortImports,sortTypealiases,spaceAroundBraces,spaceAroundBrackets,spaceAroundComments,spaceAroundGenerics,spaceAroundOperators,spaceAroundParens,spaceInsideBraces,spaceInsideBrackets,spaceInsideComments,spaceInsideGenerics,spaceInsideParens,strongOutlets,strongifiedSelf,swiftTestingTestCaseNames,todos,trailingClosures,trailingCommas,trailingSpace,typeSugar,unusedArguments,void,wrap,wrapArguments,wrapAttributes,wrapFunctionBodies,wrapIfExpressionBodies,wrapIfStatementBodies,wrapLoopBodies,wrapMultilineStatementBraces,wrapPropertyBodies,wrapSingleLineComments,yodaConditions
+
 # 2 spaces
 --indent 2
 --smarttabs false
