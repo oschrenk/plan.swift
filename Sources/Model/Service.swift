@@ -68,7 +68,7 @@ enum Service: String, Codable, ExpressibleByArgument, CodingKeyRepresentable {
 
     var dateComponent = ""
     if hasRecurrenceRules {
-      if let startDate = startDate {
+      if let startDate {
         formatter.timeZone = TimeZone.current
         if !isAllDay {
           formatter.timeZone = TimeZone(secondsFromGMT: 0)

@@ -1,8 +1,8 @@
 @testable import plan
 import Testing
 
-@Suite final class ObjectTests {
-  @Test func testKeyPathOnKeywords() {
+final class ObjectTests {
+  @Test func keyPathOnKeywords() {
     let event = Event.generate(title: "test")
 
     #expect(throws: Never.self) {
@@ -13,7 +13,7 @@ import Testing
     }
   }
 
-  @Test func testNotComparable() {
+  @Test func notComparable() {
     let event = Event.generate(title: "test")
     #expect(throws: Object.PathError.self) {
       try Object.valueForKeyPath(event, "schedule.start")

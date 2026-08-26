@@ -8,7 +8,7 @@ final class EventRepo {
 
   private func grantAccess() -> EKEventStore {
     if #available(macOS 14, *) {
-      self.eventStore.requestFullAccessToEvents { granted, maybeError in
+      eventStore.requestFullAccessToEvents { granted, maybeError in
         if granted {
           self.eventStore.reset()
         } else {
@@ -37,7 +37,7 @@ final class EventRepo {
   }
 
   func fetchCalendars(filter: CalendarFilterI) -> [PlanCalendar] {
-    return fetchEkCalendars(filter: filter).map { $0.asCal() }
+    fetchEkCalendars(filter: filter).map { $0.asCal() }
   }
 
   /// Returns a list of events

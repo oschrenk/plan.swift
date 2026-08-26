@@ -8,11 +8,11 @@ protocol CalendarFilterI: CustomStringConvertible {
 enum CalendarFilter {
   class Accept: CalendarFilterI {
     func accept(_: PlanCalendar?) -> Bool {
-      return true
+      true
     }
 
     var description: String {
-      return "CalendarFilter.Accept()"
+      "CalendarFilter.Accept()"
     }
   }
 
@@ -37,7 +37,7 @@ enum CalendarFilter {
     }
 
     var description: String {
-      return "CalendarFilter.SelectIds(\(uuids))"
+      "CalendarFilter.SelectIds(\(uuids))"
     }
   }
 
@@ -63,7 +63,7 @@ enum CalendarFilter {
     }
 
     var description: String {
-      return "CalendarFilter.IgnoreIds(\(uuids))"
+      "CalendarFilter.IgnoreIds(\(uuids))"
     }
   }
 
@@ -88,7 +88,7 @@ enum CalendarFilter {
     }
 
     var description: String {
-      return "CalendarFilter.SelectLabels(\(labels))"
+      "CalendarFilter.SelectLabels(\(labels))"
     }
   }
 
@@ -114,7 +114,7 @@ enum CalendarFilter {
     }
 
     var description: String {
-      return "CalendarFilter.IgnoreLabels(\(labels))"
+      "CalendarFilter.IgnoreLabels(\(labels))"
     }
   }
 
@@ -139,7 +139,7 @@ enum CalendarFilter {
     }
 
     var description: String {
-      return "CalendarFilter.SelectSources(\(sources))"
+      "CalendarFilter.SelectSources(\(sources))"
     }
   }
 
@@ -165,7 +165,7 @@ enum CalendarFilter {
     }
 
     var description: String {
-      return "CalendarFilter.IgnoreSources(\(sources))"
+      "CalendarFilter.IgnoreSources(\(sources))"
     }
   }
 
@@ -188,11 +188,11 @@ enum CalendarFilter {
       }
 
       let type: String = calendar!.type.description
-      return types.map { $0.description }.contains(type)
+      return types.map(\.description).contains(type)
     }
 
     var description: String {
-      return "CalendarFilter.SelectTypes(\(types))"
+      "CalendarFilter.SelectTypes(\(types))"
     }
   }
 
@@ -215,11 +215,11 @@ enum CalendarFilter {
       }
 
       let type: String = calendar!.type.description
-      return !types.map { $0.description }.contains(type)
+      return !types.map(\.description).contains(type)
     }
 
     var description: String {
-      return "CalendarFilter.IgnoreTypes(\(types))"
+      "CalendarFilter.IgnoreTypes(\(types))"
     }
   }
 
@@ -231,11 +231,11 @@ enum CalendarFilter {
     }
 
     func accept(_ calendar: PlanCalendar?) -> Bool {
-      return filters.allSatisfy { $0.accept(calendar) }
+      filters.allSatisfy { $0.accept(calendar) }
     }
 
     var description: String {
-      return "CalendarFilter.Combined(\(filters))"
+      "CalendarFilter.Combined(\(filters))"
     }
   }
 

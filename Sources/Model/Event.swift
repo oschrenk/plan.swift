@@ -2,23 +2,23 @@ import EventKit
 import Foundation
 import swift_lens
 
-/// An Event describes an event
-///
-/// It's constructed from an EKEvent
-///
-/// An EKEvent has three different identifiers
-/// 1. calendarItemIdentifier (via EKCalendarItem)
-/// 2. calendarItemExternalIdentifier (via EKCalendarItem)
-/// 3. eventIdentifier (via EKEvent)
+// An Event describes an event
+//
+// It's constructed from an EKEvent
+//
+// An EKEvent has three different identifiers
+// 1. calendarItemIdentifier (via EKCalendarItem)
+// 2. calendarItemExternalIdentifier (via EKCalendarItem)
+// 3. eventIdentifier (via EKEvent)
 
-/// My current understanding is, to use
-/// 1) to interact with the Calendar.app eg. show event
-/// 2) to interact with external systems
-/// 3) to retrieve items from the underlying local event store
+// My current understanding is, to use
+// 1) to interact with the Calendar.app eg. show event
+// 2) to interact with external systems
+// 3) to retrieve items from the underlying local event store
 
-/// re 1)
-/// > is set when the calendar item is created and can be used as a local identifier
-/// see also https://developer.apple.com/documentation/eventkit/ekcalendaritem/1507075-calendaritemidentifier
+// re 1)
+// > is set when the calendar item is created and can be used as a local identifier
+// see also https://developer.apple.com/documentation/eventkit/ekcalendaritem/1507075-calendaritemidentifier
 
 /// re 2) calendarItemExternalIdentifier]
 /// > identifier as provided by the calendar server.
@@ -53,20 +53,8 @@ struct Event: Codable, ReverseCodable, Equatable {
     case tags
   }
 
-  static func == (lhs: Event, rhs: Event) -> Bool {
-    return
-      lhs.id == rhs.id &&
-      lhs.calendar == rhs.calendar &&
-      lhs.title == rhs.title &&
-      lhs.schedule == rhs.schedule &&
-      lhs.location == rhs.location &&
-      lhs.meeting == rhs.meeting &&
-      lhs.services == rhs.services &&
-      lhs.tags == rhs.tags
-  }
-
   static func reverseCodingKeys() -> [String: String] {
-    return [
+    [
       CodingKeys.id.rawValue: "id",
       CodingKeys.calendar.rawValue: "calendar",
       CodingKeys.title.rawValue: "title",
@@ -151,7 +139,7 @@ extension String {
 extension EKEvent {
   /// Convenience method to build services URLs from EKEvent
   func listServices() -> [String: String] {
-    return Dictionary(uniqueKeysWithValues: Service.fromEvent(
+    Dictionary(uniqueKeysWithValues: Service.fromEvent(
       notes: notes ?? "",
       calendarItemIdentifier: calendarItemIdentifier,
       isAllDay: isAllDay,
@@ -163,7 +151,7 @@ extension EKEvent {
 
   /// Converts an EKEvent to an Event struct
   func asEvent() -> Event {
-    guard let startDate = startDate, let endDate = endDate else {
+    guard let startDate, let endDate else {
       fatalError("Event start or end date is missing")
     }
 

@@ -1,8 +1,8 @@
 @testable import plan
 import Testing
 
-@Suite final class LegendTests {
-  @Test func testWithoutEmoji() {
+final class LegendTests {
+  @Test func withoutEmoji() {
     let input = "Banana"
     let expected = Legend(description: "Banana", icon: "")
     let output = input.asLegend()
@@ -10,7 +10,7 @@ import Testing
     #expect(output == expected)
   }
 
-  @Test func testLeadingSimpleEmoji() {
+  @Test func leadingSimpleEmoji() {
     let input = "🍌 Banana"
     let expected = Legend(description: "Banana", icon: "🍌")
     let output = input.asLegend()
@@ -18,7 +18,7 @@ import Testing
     #expect(output == expected)
   }
 
-  @Test func testLeadingCombinedEmoji() {
+  @Test func leadingCombinedEmoji() {
     // 'Thumbs up' with 'Emoji Modifier Fitzpatrick Type-4':
     let input = "👍🏽 Thumb"
     let expected = Legend(description: "Thumb", icon: "👍🏽")
