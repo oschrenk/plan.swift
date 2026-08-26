@@ -1,0 +1,37 @@
+name: build
+
+on:
+  # No `tags: ["v*"]` trigger: `task release` pushes the tag before
+  # `task nix-hash` has updated flake.nix, so at the tag the flake pairs the
+  # new version with the previous release's hash and `nix build` would fail.
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    # plan ships a darwin-arm64 binary only, so there is nothing to build on
+    # linux runners.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - uses: cachix/install-nix-action@a49548c11d9846ad46ecc0115273879b045f001c # v31.10.7
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: oschrenk
+          # A write token for the cache, generated in its settings on
+          # app.cachix.org, stored as the CACHIX_AUTH_TOKEN repository secret.
+          # Prefer that over a personal token: workflow secrets are readable by
+          # anyone who can edit a workflow file.
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          # PRs build/pull to validate, but only main populates the cache.
+          skipPush: ${{ github.event_name == 'pull_request' }}
+
+      # Paths built here are pushed to the cache automatically by cachix-action.
+      - run: nix build .#plan --print-build-logs

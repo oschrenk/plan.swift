@@ -113,6 +113,44 @@ For more details, consult [Docs/Templating](Docs/Templating.md).
 
 ## Installation
 
+**Via Nix**
+
+```
+nix profile install github:oschrenk/plan.swift
+```
+
+The flake offers prebuilt binaries from `oschrenk.cachix.org`; nix will prompt
+you to trust the substituter on first use.
+
+With home-manager, the module also renders `~/.config/plan/config.json`:
+
+```nix
+{
+  inputs.plan.url = "github:oschrenk/plan.swift";
+
+  # in your home-manager configuration
+  imports = [ inputs.plan.homeModules.plan ];
+
+  programs.plan = {
+    enable = true;
+
+    iconize = [
+      { field = "title.label"; regex = "Yoga"; icon = "🪷"; }
+      { field = "title.label"; regex = "1:1";  icon = "🤝"; }
+    ];
+
+    hooks = [
+      {
+        path = lib.getExe pkgs.sketchybar;
+        args = [ "--trigger" "calendar_changed" ];
+      }
+    ];
+  };
+}
+```
+
+See [Docs/Config](Docs/Config.md) for what the options mean.
+
 **Via GitHub**
 
 - installs to `$HOME/.local/bin/plan` (make sure it's in `$PATH`)

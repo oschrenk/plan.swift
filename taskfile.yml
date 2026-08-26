@@ -35,7 +35,10 @@ tasks:
       CURRENT_HASH:
         sh: git rev-parse --short HEAD
     cmds:
-      - sed -i '' "s/APP_VERSION/$APP_VERSION-$CURRENT_HASH/g" Sources/Version.swift
+      # BSD and GNU sed spell `-i` differently and `nix develop` puts GNU sed
+      # ahead of /usr/bin/sed, so write through a temp file instead.
+      - sed "s/APP_VERSION/$APP_VERSION-$CURRENT_HASH/g" Sources/Version.swift > Sources/Version.swift.tmp
+      - mv Sources/Version.swift.tmp Sources/Version.swift
       - swift build --configuration release --disable-sandbox --arch arm64
       - git checkout Sources/Version.swift
     silent: true
@@ -74,6 +77,22 @@ tasks:
       vars: [APP_NAME, RELEASE_DIR]
     cmds:
       - sha256sum {{.RELEASE_DIR}}/{{.APP_NAME}}-*
+  # Run after `task release`, never before: `release` re-runs `tar`, and
+  # tar/gzip embed mtimes, so a locally rebuilt archive is not byte-identical
+  # to the one that was uploaded. Prefetching the published URL is the only
+  # way to get the hash `flake.nix` actually needs.
+  nix-hash:
+    requires:
+      vars: [APP_NAME]
+    cmds:
+      - |
+        VERSION="$(echo "$APP_VERSION" | cut -c2-)"
+        HASH=$(nix store prefetch-file --json \
+          "https://github.com/oschrenk/plan.swift/releases/download/$APP_VERSION/{{.APP_NAME}}-$VERSION.tar.gz" \
+          | jq -r .hash)
+        sed "s|hash = \"sha256-[^\"]*\";|hash = \"$HASH\";|" flake.nix > flake.nix.tmp
+        mv flake.nix.tmp flake.nix
+        echo "flake.nix hash -> $HASH"
   clean:
     cmds:
       - rm -rf .build
