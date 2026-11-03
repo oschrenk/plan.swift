@@ -4,17 +4,18 @@ import Foundation
 ///
 /// An event counts in full on the day it starts. Events that start outside of
 /// the period don't count.
-struct HoursReport: Equatable {
+struct HoursReport: Codable, Equatable {
   let total: Double
   let days: [Day]
 
-  struct Day: Equatable {
+  struct Day: Codable, Equatable {
     let date: Date
     let total: Double
     let titles: [String: Double]
   }
 
   private static let MinutesPerHour = 60.0
+  private static let DateFormat = "yyyy-MM-dd"
   private static let DayLabelFormat = "yyyy-MM-dd EEE"
   private static let HoursFormat = "%6.2f"
   private static let TitleIndent = "  "
@@ -59,6 +60,21 @@ struct HoursReport: Equatable {
       let padding = String(repeating: " ", count: width - Self.displayWidth(label))
       return "\(label)\(padding) \(String(format: Self.HoursFormat, hours))"
     }.joined(separator: "\n")
+  }
+
+  func renderAsJson() -> String? {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.dateFormat = Self.DateFormat
+    let encoder = JSONEncoder()
+    encoder.dateEncodingStrategy = .formatted(formatter)
+    encoder.outputFormatting = [.withoutEscapingSlashes, .prettyPrinted, .sortedKeys]
+    do {
+      return try String(data: encoder.encode(self), encoding: .utf8)
+    } catch {
+      StdErr.print("Failed to print hours as JSON")
+      return nil
+    }
   }
 
   /// Terminals draw emoji such as title icons two columns wide

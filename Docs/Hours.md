@@ -17,3 +17,25 @@ An event counts in full on the day it starts.
 2026-10-20 Tue   0.00
 Total            5.00
 ```
+
+Use `--json` for machine-readable output.
+
+```json
+{
+  "days" : [
+    {
+      "date" : "2026-10-19",
+      "titles" : {
+        "🕐 Timewax" : 5
+      },
+      "total" : 5
+    },
+    {
+      "date" : "2026-10-20",
+      "titles" : {},
+      "total" : 0
+    }
+  ],
+  "total" : 5
+}
+```

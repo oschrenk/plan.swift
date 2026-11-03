@@ -66,4 +66,22 @@ final class HoursReportTests {
     Total            6.00
     """)
   }
+
+  @Test func rendersJsonWithPlainDates() throws {
+    let report = HoursReport.build(
+      events: [event("A", from: date(19, 9), to: date(19, 10))],
+      period: DateInterval(start: date(19), end: date(20)),
+      calendar: cal
+    )
+
+    let json = try #require(report.renderAsJson())
+    let object = try #require(
+      JSONSerialization.jsonObject(with: Data(json.utf8)) as? [String: Any]
+    )
+    let days = try #require(object["days"] as? [[String: Any]])
+
+    #expect(Set(object.keys) == ["total", "days"])
+    #expect(days[0]["date"] as? String == "2026-10-19")
+    #expect(days[0]["titles"] as? [String: Double] == ["A": 1])
+  }
 }

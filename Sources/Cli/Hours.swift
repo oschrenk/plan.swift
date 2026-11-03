@@ -24,6 +24,11 @@ struct Hours: ParsableCommand {
     valueName: "n"
   )) var weeksAgo: Int?
 
+  @Flag(help: ArgumentHelp(
+    "Print as JSON"
+  ))
+  var json: Bool = false
+
   @Argument(help: ArgumentHelp(
     "Date expression eg. \"2025-04-03\" or \"last tuesday\". " +
       "Defaults to the current week"
@@ -78,6 +83,13 @@ struct Hours: ParsableCommand {
     )
 
     let report = HoursReport.build(events: events, period: period, calendar: cal)
-    StdOut.print(report.renderAsText())
+    if json {
+      guard let render = report.renderAsJson() else {
+        throw ExitCode.failure
+      }
+      StdOut.print(render)
+    } else {
+      StdOut.print(report.renderAsText())
+    }
   }
 }
