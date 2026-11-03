@@ -45,7 +45,7 @@
           src = pkgs.fetchurl {
             url = "https://github.com/oschrenk/plan.swift/releases/download/v${version}/plan-${version}.tar.gz";
             # Regenerate after a release with `task nix-hash`.
-            hash = "sha256-NXjN+44SIXHbmGliMOzKgWAV0Ieu1X8pbxcnX7GR9aA=";
+            hash = "sha256-GHzQtRsOlGBnrGp2R38iIL1p6YgXkhro5kmbBLQLsNQ=";
           };
 
           # The tarball holds its files at the archive root, not under a
