@@ -19,18 +19,45 @@ struct Hours: ParsableCommand {
   @OptionGroup
   var general: Options
 
-  @Argument(help: "Date expression eg. \"2025-04-03\" or \"last tuesday\"")
-  var expression: String
+  @Option(help: ArgumentHelp(
+    "List the week <n> weeks before the current week",
+    valueName: "n"
+  )) var weeksAgo: Int?
+
+  @Argument(help: ArgumentHelp(
+    "Date expression eg. \"2025-04-03\" or \"last tuesday\". " +
+      "Defaults to the current week"
+  ))
+  var expression: String?
+
+  func validate() throws {
+    if expression != nil, weeksAgo != nil {
+      throw ValidationError("Use either a date expression or --weeks-ago")
+    }
+    if let weeksAgo, weeksAgo < 0 {
+      throw ValidationError("--weeks-ago must not be negative")
+    }
+  }
+
+  static func week(weeksAgo: Int, now: Date, calendar: FCalendar) -> DateInterval {
+    let dayInWeek = calendar.date(byAdding: .weekOfYear, value: -weeksAgo, to: now)!
+    return calendar.dateInterval(of: .weekOfYear, for: dayInWeek)!
+  }
 
   mutating func run() throws {
     var cal = FCalendar.current
     cal.timeZone = TimeZone.current
 
-    guard let userDate = DateArgument.parse(s: expression) else {
-      StdErr.print("Can't parse date")
-      throw ExitCode.failure
+    let period: DateInterval
+    if let expression {
+      guard let userDate = DateArgument.parse(s: expression) else {
+        StdErr.print("Can't parse date")
+        throw ExitCode.failure
+      }
+      period = cal.dateInterval(of: .day, for: userDate)!
+    } else {
+      period = Self.week(weeksAgo: weeksAgo ?? 0, now: Date(), calendar: cal)
     }
-    let period = cal.dateInterval(of: .day, for: userDate)!
 
     let opts = AllOptions(calendar: calendar, events: eventOptions, general: general)
 

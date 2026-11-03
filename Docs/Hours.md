@@ -3,7 +3,9 @@
 Sum hours per day and title
 
 ```
-plan hours --select-title "Work" "next monday"
+plan hours                                     # current week
+plan hours --weeks-ago 2                       # the week two weeks ago
+plan hours --select-title "Work" "next monday" # a single day
 ```
 
 Every day of the period prints, also without events.
